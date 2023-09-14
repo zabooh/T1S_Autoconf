@@ -11,9 +11,7 @@ git clone -b "v5.4.0"               %H3_GITHUB%/wolfssl.git %H3_INSTALL%/wolfssl
 git clone -b "v3.9.2"               %H3_GITHUB%/net.git %H3_INSTALL%/net
 git clone -b "v3.8.0"               %H3_GITHUB%/crypto.git %H3_INSTALL%/crypto     
 git clone -b "v1.1.0"               %H3_GITHUB%/devices.git %H3_INSTALL%/Devices
-
-rem set net_10base_t1s to v1.3.0 by changing the yml file
-copy .\patches\harmony-manifest-success.yml  ..\apps\tcpip_iperf_lan865x\firmware\src\config\FreeRTOS\
+git clone -b "v1.3.0"               %H3_GITHUB%/net_10base_t1s.git  %H3_INSTALL%/net_10base_t1s  
 
 pause
 @ECHO ON
