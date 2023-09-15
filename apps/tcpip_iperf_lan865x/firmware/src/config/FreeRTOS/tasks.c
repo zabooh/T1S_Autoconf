@@ -80,6 +80,17 @@ static void lAPP_Tasks(  void *pvParameters  )
         vTaskDelay(1U / portTICK_PERIOD_MS);
     }
 }
+/* Handle for the BC_COM_Tasks. */
+TaskHandle_t xBC_COM_Tasks;
+
+static void lBC_COM_Tasks(  void *pvParameters  )
+{   
+    while(true)
+    {
+        BC_COM_Tasks();
+        vTaskDelay(1U / portTICK_PERIOD_MS);
+    }
+}
 
 TaskHandle_t xSYS_CMD_Tasks;
 void lSYS_CMD_Tasks(  void *pvParameters  )
@@ -148,6 +159,14 @@ void SYS_Tasks ( void )
                 NULL,
                 1,
                 &xAPP_Tasks);
+
+    /* Create OS Thread for BC_COM_Tasks. */
+    (void) xTaskCreate((TaskFunction_t) lBC_COM_Tasks,
+                "BC_COM_Tasks",
+                1024,
+                NULL,
+                1,
+                &xBC_COM_Tasks);
 
 
 

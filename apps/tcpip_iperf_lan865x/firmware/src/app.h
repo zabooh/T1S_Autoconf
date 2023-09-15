@@ -32,6 +32,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
+#include "config/default/system/time/sys_time.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -62,9 +63,17 @@ typedef enum
 {
     /* Application's state machine's initial state. */
     APP_STATE_INIT=0,
-    APP_STATE_SERVICE_TASKS,
-    /* TODO: Define states used by the application state machine. */
-
+    APP_STATE_START_REQUEST,
+    APP_STATE_WAIT_FOR_REQUEST_TO_BE_SENT,
+    APP_STATE_WAIT_FOR_IDLE_TO_START_LISTENING,
+    APP_STATE_WAIT_FOR_REQUESTED_ANSWER,        
+    APP_STATE_PROCESS_REQUESTED_DATA,
+    APP_STATE_DECIDE_TO_BE_CONTROL_NODE,
+    APP_STATE_CONTROL_NODE_WAIT_FOR_REQUEST,
+    APP_STATE_CONTROL_NODE_ANSWER_REQUEST,
+    APP_STATE_CONTROL_NODE_RESTART_LISTENING,
+    APP_STATE_IDLE,
+    APP_VOID
 } APP_STATES;
 
 
@@ -85,7 +94,9 @@ typedef struct
 {
     /* The application's current state */
     APP_STATES state;
-
+    SYS_TIME_HANDLE timer_client_hdl;
+    uint32_t countdown;
+    
     /* TODO: Define any additional data used by the application. */
 
 } APP_DATA;

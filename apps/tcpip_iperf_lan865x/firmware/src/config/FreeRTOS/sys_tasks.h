@@ -60,6 +60,9 @@
 /* Declaration of  APP_Tasks task handle */
 extern TaskHandle_t xAPP_Tasks;
 
+/* Declaration of  BC_COM_Tasks task handle */
+extern TaskHandle_t xBC_COM_Tasks;
+
 
 /* Declaration of SYS_COMMAND task handle */
 extern TaskHandle_t xSYS_CMD_Tasks;

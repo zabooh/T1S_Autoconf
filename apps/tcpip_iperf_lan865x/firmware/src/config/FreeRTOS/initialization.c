@@ -540,6 +540,7 @@ void SYS_Initialize ( void* data )
 
     /* MISRAC 2012 deviation block end */
     APP_Initialize();
+    BC_COM_Initialize();
 
 
     NVIC_Initialize();

@@ -79,6 +79,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "app.h"
+#include "bc_com.h"
 
 
 
