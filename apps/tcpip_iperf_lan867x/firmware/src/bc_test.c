@@ -171,15 +171,19 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
 #ifdef MY_NODE_0
                 BC_TEST_DEBUG_PRINT("MY_NODE_0 %s %s\n\r", __DATE__, __TIME__);
-                bc_test.state = BC_TEST_STATE_DECIDE_TO_BE_CONTROL_NODE;
 #endif
 #ifdef MY_NODE_1
                 BC_TEST_DEBUG_PRINT("MY_NODE_1 %s %s\n\r", __DATE__, __TIME__);
+#endif
                 bc_test.state = BC_TEST_STATE_WAIT_FOR_REQUEST_TO_BE_SENT;
                 BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
+                auto_conf_msg_transmit.ip4.Val = 0x12345678;
+                auto_conf_msg_transmit.nodeid = 0xAA;
+                auto_conf_msg_transmit.randommssg[19] = 0x55;
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
+                BC_TEST_DEBUG_PRINT("BC_Test: Data Sent - 1\n\r");
+                BC_TEST_DumpMem((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 bc_test.countdown = 50;
-#endif                                           
             }
             break;
 
@@ -206,6 +210,8 @@ void BC_TEST_Tasks(void) {
         case BC_TEST_STATE_WAIT_FOR_REQUESTED_ANSWER:
             if (BC_COM_is_data_received() == true) {
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
+                BC_TEST_DEBUG_PRINT("BC_Test: Data Received - 1\n\r");
+                BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
                 BC_COM_stop_listen();
                 bc_test.state = BC_TEST_STATE_PROCESS_REQUESTED_DATA;
                 break;
@@ -213,8 +219,6 @@ void BC_TEST_Tasks(void) {
             if (bc_test.countdown == 0) {
                 BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
                 BC_COM_stop_listen();
-
-
                 bc_test.state = BC_TEST_STATE_DECIDE_TO_BE_CONTROL_NODE;
             }
             break;
@@ -233,8 +237,9 @@ void BC_TEST_Tasks(void) {
 
         case BC_TEST_STATE_CONTROL_NODE_WAIT_FOR_REQUEST:
             if (BC_COM_is_data_received() == true) {
-                BC_TEST_DEBUG_PRINT("BC_TEST: Requested data received\n\r");
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
+                BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - 2\n\r");
+                BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
                 BC_COM_stop_listen();
                 bc_test.state = BC_TEST_STATE_CONTROL_NODE_ANSWER_REQUEST;
             }
@@ -243,8 +248,9 @@ void BC_TEST_Tasks(void) {
         case BC_TEST_STATE_CONTROL_NODE_ANSWER_REQUEST:
             if (BC_COM_is_idle() == true) {
                 memcpy((void*) &auto_conf_msg_transmit, (void*) &auto_conf_msg_receive, sizeof (AUTOCONFMSG));
-                auto_conf_msg_transmit.nodeid++;
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
+                BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - 2\n\r");
+                BC_TEST_DumpMem((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 bc_test.state = BC_TEST_STATE_CONTROL_NODE_RESTART_LISTENING;
             }
             break;
@@ -276,6 +282,8 @@ void BC_TEST_TimerCallback(uintptr_t context) {
 
 char *app_states_str[] = {
     "BC_TEST_STATE_INIT",
+    "BC_TEST_STATE_TCPIP_WAIT_INIT",
+    "BC_TEST_STATE_TCPIP_WAIT_FOR_IP",
     "BC_TEST_STATE_START_REQUEST",
     "BC_TEST_STATE_WAIT_FOR_REQUEST_TO_BE_SENT",
     "BC_TEST_STATE_WAIT_FOR_IDLE_TO_START_LISTENING",
@@ -297,7 +305,7 @@ void BC_TEST_Print_State_Change(void) {
     }
 }
 
-void BC_Test_DumpMem(uint32_t addr, uint32_t count) {
+void BC_TEST_DumpMem(uint32_t addr, uint32_t count) {
     uint32_t ix, jx;
     uint8_t *puc;
     char str[64];

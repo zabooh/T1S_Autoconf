@@ -181,7 +181,7 @@ extern "C" {
 
     void BC_TEST_Tasks(void);
 
-    void BC_Test_DumpMem(uint32_t addr, uint32_t count);
+    void BC_TEST_DumpMem(uint32_t addr, uint32_t count);
 
     //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

@@ -135,7 +135,7 @@ void BC_COM_Tasks(void) {
             break;
 
         case BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION:
-            if (TCPIP_UDP_IsConnected(bc_com.udp_server_socket) == true ) {
+            if (TCPIP_UDP_IsConnected(bc_com.udp_server_socket) == true) {
                 BC_COM_DEBUG_PRINT("BC_COM: is Connected\n\r");
                 bc_com.state = BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY;
             }
@@ -143,7 +143,7 @@ void BC_COM_Tasks(void) {
 
         case BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY:
             if ((bc_com.receive_data_count = TCPIP_UDP_GetIsReady(bc_com.udp_server_socket)) != 0) {
-                BC_COM_DEBUG_PRINT("BC_COM: Get is Ready %d\n\r",bc_com.receive_data_count);
+                BC_COM_DEBUG_PRINT("BC_COM: Get is Ready %d\n\r", bc_com.receive_data_count);
                 if (bc_com.receive_data_count >= bc_com.receive_number_of_data_to_read) {
                     bc_com.state = BC_COM_STATE_SERVER_DATA_READ;
                     break;
@@ -169,9 +169,9 @@ void BC_COM_Tasks(void) {
             bc_com.state = BC_COM_STATE_IDLE;
             break;
 
-            
 
-            /************ Client States ************/ 
+
+            /************ Client States ************/
         case BC_COM_STATE_CLIENT_OPEN:
             bc_com.ipAddr.Val = 0xFFFFFFFF;
             bc_com.udp_client_socket = TCPIP_UDP_ClientOpen(IP_ADDRESS_TYPE_IPV4, BC_COM_UDP_SERVER_PORT, (IP_MULTI_ADDRESS*) & bc_com.ipAddr);
@@ -196,7 +196,6 @@ void BC_COM_Tasks(void) {
 
         case BC_COM_STATE_CLIENT_DATA_WRITE:
             BC_COM_DEBUG_PRINT("BC_COM: Put Data %08x %08x %08x\n\r",(int)bc_com.udp_client_socket, (int)bc_com.transmit_buffer, (int)bc_com.transmit_count);
-            BC_Test_DumpMem((uint32_t)bc_com.transmit_buffer,(uint32_t)bc_com.transmit_count);
             TCPIP_UDP_ArrayPut(bc_com.udp_client_socket, bc_com.transmit_buffer, bc_com.transmit_count);
             TCPIP_UDP_Flush(bc_com.udp_client_socket);
             bc_com.state = BC_COM_STATE_CLIENT_HOLD;
@@ -212,31 +211,35 @@ void BC_COM_Tasks(void) {
             bc_com.state = BC_COM_STATE_IDLE;
             break;
 
-            
+
 
         case BC_COM_STATE_IDLE:
             break;
 
-            
-        /*************** SIMPLE SEND TEST ***************/    
+
+            /*************** SIMPLE SEND TEST ***************/
         case BC_COM_STATE_TEST_SEND:
             BC_COM_DEBUG_PRINT("Test: Open Socket\n\r");
-            TCPIP_Helper_StringToIPAddress("255.255.255.255",&bc_com.ipAddr);
-            BC_COM_DEBUG_PRINT("Test: Open %08x\n\r",bc_com.ipAddr.Val);
+            TCPIP_Helper_StringToIPAddress("255.255.255.255", &bc_com.ipAddr);
+            BC_COM_DEBUG_PRINT("Test: Open %08x\n\r", bc_com.ipAddr.Val);
             bc_com.udp_client_socket = INVALID_UDP_SOCKET;
-            bc_com.udp_client_socket = TCPIP_UDP_ClientOpen(IP_ADDRESS_TYPE_IPV4, BC_COM_UDP_SERVER_PORT, (IP_MULTI_ADDRESS*) & bc_com.ipAddr);                   
-            BC_COM_DEBUG_PRINT("Test: Socket %d\n\r",bc_com.udp_client_socket);
-            while( TCPIP_UDP_IsConnected(bc_com.udp_client_socket) == false) {BC_COM_DEBUG_PRINT("Test: Wait For Open\n\r");}            
+            bc_com.udp_client_socket = TCPIP_UDP_ClientOpen(IP_ADDRESS_TYPE_IPV4, BC_COM_UDP_SERVER_PORT, (IP_MULTI_ADDRESS*) & bc_com.ipAddr);
+            BC_COM_DEBUG_PRINT("Test: Socket %d\n\r", bc_com.udp_client_socket);
+            while (TCPIP_UDP_IsConnected(bc_com.udp_client_socket) == false) {
+                BC_COM_DEBUG_PRINT("Test: Wait For Open\n\r");
+            }
             BC_COM_DEBUG_PRINT("Test: Client Connected to Server\n\r");
-            int amount=0;
-            while ( amount = TCPIP_UDP_PutIsReady(bc_com.udp_client_socket) == 0) {BC_COM_DEBUG_PRINT("Test: Wait for Put is Ready\n\r");}
-            BC_COM_DEBUG_PRINT("Test: Client Put is Ready %d\n\r",amount);
+            int amount = 0;
+            while (amount = TCPIP_UDP_PutIsReady(bc_com.udp_client_socket) == 0) {
+                BC_COM_DEBUG_PRINT("Test: Wait for Put is Ready\n\r");
+            }
+            BC_COM_DEBUG_PRINT("Test: Client Put is Ready %d\n\r", amount);
             uint8_t test_data[48];
-            memset(test_data,0x55,48);            
-            TCPIP_UDP_ArrayPut(bc_com.udp_client_socket, (uint8_t*) &test_data, 48);
-            TCPIP_UDP_Flush(bc_com.udp_client_socket);    
+            memset(test_data, 0x55, 48);
+            TCPIP_UDP_ArrayPut(bc_com.udp_client_socket, (uint8_t*) & test_data, 48);
+            TCPIP_UDP_Flush(bc_com.udp_client_socket);
             bc_com.state = BC_COM_STATE_IDLE;
-            break;            
+            break;
 
         default:
         {
@@ -270,13 +273,13 @@ bool BC_COM_listen(int32_t count) {
     return true;
 }
 
-bool BC_COM_is_data_received(void) {    
+bool BC_COM_is_data_received(void) {
     return bc_com.receive_data_has_been_received;
 }
 
 void BC_COM_read_data(uint8_t *buffer) {
     BC_COM_DEBUG_PRINT("BC_COM_read_data()\n\r");
-    memcpy(buffer, bc_com.receive_buffer, bc_com.receive_number_of_data_to_read);    
+    memcpy(buffer, bc_com.receive_buffer, bc_com.receive_number_of_data_to_read);
     bc_com.receive_buffer = 0;
     bc_com.receive_data_has_been_received = false;
 }
@@ -323,7 +326,7 @@ bool BC_COM_is_idle(void) {
     }
 }
 
-void BC_COM_Start_Test(void){
+void BC_COM_Start_Test(void) {
     bc_com.state = BC_COM_STATE_TEST_SEND;
 }
 
@@ -344,6 +347,7 @@ char *bc_com_states_str[] = {
     "BC_COM_TIMEOUT",
     "BC_COM_STATE_SERVICE_TASKS",
     "BC_COM_STATE_IDLE",
+    "BC_COM_STATE_TEST_SEND",
     "BC_COM_VOID"
 };
 
