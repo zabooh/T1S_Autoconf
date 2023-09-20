@@ -156,7 +156,15 @@ extern "C" {
 #define DRV_ETHPHY_LAN867x_NEG_DONE_TMO                   0
 #define DRV_ETHPHY_LAN867x_RESET_CLR_TMO                  500
 #define DRV_ETHPHY_PLCA_ENABLED
+
+#ifdef MY_NODE_0    
 #define DRV_ETHPHY_PLCA_LOCAL_NODE_ID             0
+#endif 
+
+#ifdef MY_NODE_1
+#define DRV_ETHPHY_PLCA_LOCAL_NODE_ID             1
+#endif     
+    
 #define DRV_ETHPHY_PLCA_NODE_COUNT                8
 #define DRV_ETHPHY_PLCA_MAX_BURST_COUNT           0
 #define DRV_ETHPHY_PLCA_BURST_TIMER               128
@@ -270,9 +278,17 @@ extern "C" {
 #define TCPIP_IF_GMAC  
 
 #define TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX0              "MCHPBOARD_C"
+    
+#ifdef MY_NODE_0   
 #define TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0               "00:04:25:1C:A0:02"
-
 #define TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0         "192.168.100.11"
+#endif
+    
+#ifdef MY_NODE_1    
+#define TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0               "00:04:25:1C:A0:03"
+#define TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0         "192.168.100.12"
+#endif
+    
 #define TCPIP_NETWORK_DEFAULT_IP_MASK_IDX0            "255.255.255.0"
 #define TCPIP_NETWORK_DEFAULT_GATEWAY_IDX0            "192.168.0.1"
 #define TCPIP_NETWORK_DEFAULT_DNS_IDX0                "192.168.0.1"
