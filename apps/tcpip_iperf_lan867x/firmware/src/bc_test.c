@@ -29,8 +29,7 @@
 
 #include "bc_com.h"
 #include "bc_test.h"
-#include "system/console/sys_console.h"
-#include "config/FreeRTOS/library/tcpip/tcpip.h"
+#include "config/FreeRTOS/definitions.h"
 
 
 #define __BC_TEST_DEBUG_PRINT 
@@ -74,6 +73,8 @@ AUTOCONFMSG auto_conf_msg_receive;
  */
 
 BC_TEST_DATA bc_test;
+
+extern SYSTEM_OBJECTS sysObj;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -125,6 +126,9 @@ void BC_TEST_Initialize(void) {
  */
 
 void BC_TEST_Tasks(void) {
+    TCPIP_NET_HANDLE netH;
+    static IPV4_ADDR dwLastIP = {-1};
+    SYS_STATUS tcpipStat;
 
     BC_TEST_Print_State_Change();
 
@@ -133,22 +137,48 @@ void BC_TEST_Tasks(void) {
             bc_test.countdown = 10;
             bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
             SYS_TIME_TimerStart(bc_test.timer_client_hdl);
-            bc_test.state = BC_TEST_STATE_START_REQUEST;
+            bc_test.state = BC_TEST_STATE_TCPIP_WAIT_INIT;
+            break;
+
+        case BC_TEST_STATE_TCPIP_WAIT_INIT:
+            tcpipStat = TCPIP_STACK_Status(sysObj.tcpip);
+            if (tcpipStat < 0) {
+                BC_TEST_DEBUG_PRINT("BC_TEST: TCP/IP stack initialization failed!\r\n");
+                bc_test.state = BC_TEST_STATE_IDLE;
+            } else if (tcpipStat == SYS_STATUS_READY) {
+                BC_TEST_DEBUG_PRINT("BC_TEST: TCP/IP stack successful!\r\n");
+                bc_test.state = BC_TEST_STATE_TCPIP_WAIT_FOR_IP;
+            }
+            break;
+
+        case BC_TEST_STATE_TCPIP_WAIT_FOR_IP:
+            netH = TCPIP_STACK_IndexToNet(0);
+            if (!TCPIP_STACK_NetIsReady(netH)) {
+                break;
+            }
+            bc_test.MyIpAddr.Val = TCPIP_STACK_NetAddress(netH);
+            bc_test.MyMacAddr = (TCPIP_MAC_ADDR*) TCPIP_STACK_NetAddressMac(netH);
+            if (dwLastIP.Val != bc_test.MyIpAddr.Val) {
+                dwLastIP.Val = bc_test.MyIpAddr.Val;
+                BC_TEST_DEBUG_PRINT("IP Address : %d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
+                BC_TEST_DEBUG_PRINT("MAC Address: %02x:%02x:%02x:%02x:%02x:%02x\r\n", bc_test.MyMacAddr->v[0], bc_test.MyMacAddr->v[1], bc_test.MyMacAddr->v[2], bc_test.MyMacAddr->v[3], bc_test.MyMacAddr->v[4], bc_test.MyMacAddr->v[5]);
+                bc_test.state = BC_TEST_STATE_START_REQUEST;
+            }
             break;
 
         case BC_TEST_STATE_START_REQUEST:
             if (bc_test.countdown == 0) {
                 BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
 #ifdef MY_NODE_0
-                BC_TEST_DEBUG_PRINT("MY_NODE_0 %s %s\n\r",__DATE__,__TIME__);
+                BC_TEST_DEBUG_PRINT("MY_NODE_0 %s %s\n\r", __DATE__, __TIME__);
                 bc_test.state = BC_TEST_STATE_DECIDE_TO_BE_CONTROL_NODE;
 #endif
 #ifdef MY_NODE_1
-                BC_TEST_DEBUG_PRINT("MY_NODE_1 %s %s\n\r",__DATE__,__TIME__);
+                BC_TEST_DEBUG_PRINT("MY_NODE_1 %s %s\n\r", __DATE__, __TIME__);
                 bc_test.state = BC_TEST_STATE_WAIT_FOR_REQUEST_TO_BE_SENT;
                 BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
-                bc_test.countdown = 50;                     
+                bc_test.countdown = 50;
 #endif                                           
             }
             break;
@@ -266,6 +296,39 @@ void BC_TEST_Print_State_Change(void) {
         BC_TEST_DEBUG_PRINT("%s\n\r", app_states_str[states]);
     }
 }
+
+void BC_Test_DumpMem(uint32_t addr, uint32_t count) {
+    uint32_t ix, jx;
+    uint8_t *puc;
+    char str[64];
+    int flag = 0;
+
+    puc = (uint8_t *) addr;
+    puc = (uint8_t *) addr;
+
+    jx = 0;
+    for (ix = 0; ix < count; ix++) {
+        if ((ix % 16) == 0) {
+            if (flag == 1) {
+                str[16] = 0;
+                BC_TEST_DEBUG_PRINT("   %s\n\r", str);
+            }
+            BC_TEST_DEBUG_PRINT("%08x: ", puc);
+            flag = 1;
+            jx = 0;
+        }
+        BC_TEST_DEBUG_PRINT(" %02x", *puc);
+        if ((*puc > 31) && (*puc < 127))
+            str[jx++] = *puc;
+        else
+            str[jx++] = '.';
+        puc++;
+    }
+    str[jx] = 0;
+    BC_TEST_DEBUG_PRINT("   %s", str);
+    BC_TEST_DEBUG_PRINT("\n\r");
+}
+
 
 /*******************************************************************************
  End of File

@@ -86,6 +86,7 @@ extern "C" {
         BC_COM_TIMEOUT,
         BC_COM_STATE_SERVICE_TASKS,
         BC_COM_STATE_IDLE,
+        BC_COM_STATE_TEST_SEND,
         BC_COM_VOID
     } BC_COM_STATES;
 
@@ -218,7 +219,8 @@ extern "C" {
     void BC_COM_stop_send(void);
 
     bool BC_COM_is_idle(void);
-
+    void BC_COM_Start_Test(void);
+    
     //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
