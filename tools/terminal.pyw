@@ -144,7 +144,12 @@ def update_com_port_label_x():
    com_port_label_3.config(text=f"COM-Port A: {com_port_serial_dict.get(com_port_entry_1.get(), 'Nicht verfügbar')}")    
    com_port_label_4.config(text=f"COM-Port B: {com_port_serial_dict.get(com_port_entry_2.get(), 'Nicht verfügbar')}")
     
+def clear_text_left():
+    text_widget_1.delete(1.0, tk.END)
 
+def clear_text_right():
+    text_widget_2.delete(1.0, tk.END)    
+    
 #######################################################################################
 # 
 #   Main
@@ -199,7 +204,16 @@ com_port_entry_2.pack(side=tk.LEFT)
 
 # Button zum Starten des Python-Programms "terminal.pyw" oben rechts hinzufügen
 start_button = tk.Button(com_port_frame, text="Show COM Ports", command=start_terminal_program)
-start_button.pack()  # Mit 'anchor="ne"' wird der Button oben rechts platziert
+start_button.pack(side=tk.LEFT)  # Mit 'anchor="ne"' wird der Button oben rechts platziert
+
+
+# Erstelle einen Button zum Leeren des Textfelds
+clear_button_left = tk.Button(com_port_frame, text="Clear Left Window ", command=clear_text_left)
+clear_button_left.pack(side=tk.LEFT)
+
+# Erstelle einen Button zum Leeren des Textfelds
+clear_button_right = tk.Button(com_port_frame, text="Clear Right Window ", command=clear_text_right)
+clear_button_right.pack(side=tk.LEFT)
 
 
 # Label für COM-Port 1 erstellen und Serialnummer anzeigen
