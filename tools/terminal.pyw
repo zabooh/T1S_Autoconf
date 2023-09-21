@@ -1,8 +1,19 @@
 import serial
 import serial.tools.list_ports
 import threading
+import subprocess
 import tkinter as tk
 from tkinter import scrolledtext
+import os  # Importieren Sie das 'os'-Modul für das Ausführen des anderen Python-Programms
+
+
+
+#######################################################################################
+# 
+#   Init Variables
+#
+#######################################################################################
+
 
 # Standard-COM-Port-Einstellungen
 default_com_port_1 = 'COM3'
@@ -12,6 +23,19 @@ baud_rate = 115200
 ser1 = None  # Serial-Objekt für COM-Port 1
 ser2 = None  # Serial-Objekt für COM-Port 2
     
+# Festlegen des Arbeitsverzeichnisses auf das Verzeichnis, in dem sich das Hauptprogramm befindet
+working_directory = os.path.dirname(os.path.abspath(__file__))
+os.chdir(working_directory)
+
+
+#######################################################################################
+# 
+#   Functions
+#
+#######################################################################################
+
+    
+    
 # Funktion zum Senden von Benutzereingaben an den COM-Port mit CR+LF
 def send_to_com_port(ser, user_input):
     if user_input.strip().startswith(">"):
@@ -20,12 +44,15 @@ def send_to_com_port(ser, user_input):
     ser.write(user_input.encode())
     print(f"Gesendet an COM-Port: {user_input}")  # Debug-Ausgabe in der Konsole
 
+
 # Funktion zum Herstellen der COM-Port-Verbindung
 def connect_to_com_ports():
     global ser1, ser2
     com_port_1 = com_port_entry_1.get()
     com_port_2 = com_port_entry_2.get()
 
+    update_com_port_label_x()
+    
     print(f"Verbindung zu COM-Port {com_port_1} und {com_port_2} wird hergestellt...")
 
     try:
@@ -52,6 +79,8 @@ def connect_to_com_ports():
     except serial.SerialException as e:
         print(f"Fehler bei der seriellen Verbindung: {e}")
 
+
+
 # Funktion zum Trennen der COM-Port-Verbindung
 def disconnect_from_com_ports():
     global ser1, ser2
@@ -66,6 +95,7 @@ def disconnect_from_com_ports():
     connect_button.config(state=tk.NORMAL)
     disconnect_button.config(state=tk.DISABLED)
 
+
 # Funktion zum Lesen von Daten vom COM-Port und Aktualisieren des GUI-Textfelds
 def read_from_com_port(ser, text_widget):
     while True:
@@ -77,6 +107,7 @@ def read_from_com_port(ser, text_widget):
         except serial.SerialException as e:
             print(f"Fehler bei der seriellen Verbindung: {e}")
             break
+
 
 # Funktion zur Verarbeitung von VT100 Escape-Sequenzen
 def process_vt100_escape(text_widget, data):
@@ -101,7 +132,26 @@ def process_vt100_escape(text_widget, data):
         text_widget.insert(tk.END, data)  # Keine bekannte Escape-Sequenz, einfach einfügen
 
 
+def start_terminal_program():
+    # Hier den Pfad zum Python-Programm "terminal.pyw" angeben
+    terminal_program_path = ".\check_serial_tk.pyw"
 
+    # Über das 'subprocess' Modul das andere Python-Programm ausführen
+    subprocess.Popen(["pythonw", terminal_program_path])
+
+
+def update_com_port_label_x():
+   com_port_label_3.config(text=f"COM-Port A: {com_port_serial_dict.get(com_port_entry_1.get(), 'Nicht verfügbar')}")    
+   com_port_label_4.config(text=f"COM-Port B: {com_port_serial_dict.get(com_port_entry_2.get(), 'Nicht verfügbar')}")
+    
+
+#######################################################################################
+# 
+#   Main
+#
+#######################################################################################
+
+    
 # COM-Port-Informationen abrufen
 com_ports = list(serial.tools.list_ports.comports())
 
@@ -122,31 +172,47 @@ root.geometry("1400x400")  # Startgröße des Fensters
 com_port_frame = tk.Frame(root)
 com_port_frame.pack(pady=10, padx=10, fill=tk.X)
 
+com_port_status = tk.Frame(root)
+com_port_status.pack(pady=10, padx=10, fill=tk.X)
+
 # COM-Port 1 Eingabefeld und Button
-com_port_label_1 = tk.Label(com_port_frame, text="COM-Port 1:")
+com_port_label_1 = tk.Label(com_port_frame, text="COM-Port A:")
 com_port_label_1.pack(side=tk.LEFT)
 com_port_entry_1 = tk.Entry(com_port_frame)
 com_port_entry_1.insert(0, default_com_port_1)
 com_port_entry_1.pack(side=tk.LEFT)
+
 connect_button = tk.Button(com_port_frame, text="Connect", command=connect_to_com_ports)
 connect_button.pack(side=tk.LEFT)
+
 disconnect_button = tk.Button(com_port_frame, text="Disconnect", command=disconnect_from_com_ports, state=tk.DISABLED)
 disconnect_button.pack(side=tk.LEFT)
 
 # COM-Port 2 Eingabefeld und Button
-com_port_label_2 = tk.Label(com_port_frame, text="COM-Port 2:")
+com_port_label_2 = tk.Label(com_port_frame, text="COM-Port B:")
 com_port_label_2.pack(side=tk.LEFT)
 com_port_entry_2 = tk.Entry(com_port_frame)
 com_port_entry_2.insert(0, default_com_port_2)
 com_port_entry_2.pack(side=tk.LEFT)
 
+
+
+# Button zum Starten des Python-Programms "terminal.pyw" oben rechts hinzufügen
+start_button = tk.Button(com_port_frame, text="Show COM Ports", command=start_terminal_program)
+start_button.pack()  # Mit 'anchor="ne"' wird der Button oben rechts platziert
+
+
 # Label für COM-Port 1 erstellen und Serialnummer anzeigen
-com_port_label_3 = tk.Label(com_port_frame, text=f"COM-Port 1: {com_port_serial_dict.get('COM3', 'Nicht verfügbar')}")
+com_port_label_3 = tk.Label(com_port_status, text=f"COM-Port A: {'?'}")
 com_port_label_3.pack(side=tk.LEFT)
 
 # Weitere Labels für andere COM-Ports erstellen
-com_port_label_4 = tk.Label(com_port_frame, text=f"COM-Port 2: {com_port_serial_dict.get('COM4', 'Nicht verfügbar')}")
+com_port_label_4 = tk.Label(com_port_status, text=f"COM-Port B: {'?'}")
 com_port_label_4.pack()
+
+
+
+
 
 # Erstes Textfeld für COM3-Ausgabe
 text_widget_1 = scrolledtext.ScrolledText(root, width=40, height=15)
@@ -155,6 +221,8 @@ text_widget_1.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 # Zweites Textfeld für COM4-Ausgabe
 text_widget_2 = scrolledtext.ScrolledText(root, width=40, height=15)
 text_widget_2.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
+
+
 
 # Event-Bindung für das Texteingabefeld
 text_widget_1.bind("<Return>", lambda event, text_widget=text_widget_1: send_to_com_port(ser1, text_widget.get("insert linestart", "insert lineend")))
