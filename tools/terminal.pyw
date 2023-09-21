@@ -172,7 +172,7 @@ root = tk.Tk()
 root.title("COM Port GUI")
 
 # Das Fenster in der Größe veränderbar machen
-root.geometry("1400x400")  # Startgröße des Fensters
+root.geometry("1400x350")  # Startgröße des Fensters
 
 # Frame für COM-Port-Eingabefelder und Buttons
 com_port_frame = tk.Frame(root)

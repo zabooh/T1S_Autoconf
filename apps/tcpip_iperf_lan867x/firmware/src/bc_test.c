@@ -114,7 +114,7 @@ void BC_TEST_Print_State_Change(void);
  */
 
 void BC_TEST_Initialize(void) {
-    bc_test.state = BC_TEST_STATE_INIT;
+    bc_test.state = BC_TEST_STATE_INIT_START;
 }
 
 /******************************************************************************
@@ -135,24 +135,24 @@ void BC_TEST_Tasks(void) {
     switch (bc_test.state) {
 
 
-        case BC_TEST_STATE_INIT:
+        case BC_TEST_STATE_INIT_START:
             bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
             SYS_TIME_TimerStart(bc_test.timer_client_hdl);
-            bc_test.state = BC_TEST_STATE_TCPIP_WAIT_INIT;
+            bc_test.state = BC_TEST_STATE_INIT_TCPIP_WAIT_START;
             break;
 
-        case BC_TEST_STATE_TCPIP_WAIT_INIT:
+        case BC_TEST_STATE_INIT_TCPIP_WAIT_START:
             tcpipStat = TCPIP_STACK_Status(sysObj.tcpip);
             if (tcpipStat < 0) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: TCP/IP stack initialization failed!\r\n");
                 bc_test.state = BC_TEST_STATE_IDLE;
             } else if (tcpipStat == SYS_STATUS_READY) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: TCP/IP stack successful!\r\n");
-                bc_test.state = BC_TEST_STATE_TCPIP_WAIT_FOR_IP;
+                bc_test.state = BC_TEST_STATE_INIT_TCPIP_WAIT_FOR_IP;
             }
             break;
 
-        case BC_TEST_STATE_TCPIP_WAIT_FOR_IP:
+        case BC_TEST_STATE_INIT_TCPIP_WAIT_FOR_IP:
             netH = TCPIP_STACK_IndexToNet(0);
             if (!TCPIP_STACK_NetIsReady(netH)) {
                 break;
@@ -165,7 +165,7 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DEBUG_PRINT("MAC Address: %02x:%02x:%02x:%02x:%02x:%02x\r\n", bc_test.MyMacAddr->v[0], bc_test.MyMacAddr->v[1], bc_test.MyMacAddr->v[2], bc_test.MyMacAddr->v[3], bc_test.MyMacAddr->v[4], bc_test.MyMacAddr->v[5]);
                 BC_COM_Initialize_Runtime();
                 bc_test.countdown = 10;
-                bc_test.state = BC_TEST_STATE_START_REQUEST;
+                bc_test.state = BC_TEST_STATE_MEMBER_START_REQUEST;
             }
             break;
 
@@ -174,7 +174,7 @@ void BC_TEST_Tasks(void) {
 
 
 
-        case BC_TEST_STATE_START_REQUEST:
+        case BC_TEST_STATE_MEMBER_START_REQUEST:
             if (bc_test.countdown == 0) {
                 BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
 #ifdef MY_NODE_0
@@ -193,26 +193,26 @@ void BC_TEST_Tasks(void) {
                 while (BC_COM_is_idle() == false);
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.countdown = 50;
-                bc_test.state = BC_TEST_STATE_WAIT_FOR_REQUESTED_ANSWER;
+                bc_test.state = BC_TEST_STATE_MEMBER_WAIT_FOR_REQUESTED_ANSWER;
             }
             break;
 
 
-        case BC_TEST_STATE_WAIT_FOR_REQUESTED_ANSWER:
+        case BC_TEST_STATE_MEMBER_WAIT_FOR_REQUESTED_ANSWER:
             if (BC_COM_is_data_received() == true) {
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
                 BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Member\n\r");
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
-                bc_test.state = BC_TEST_STATE_PROCESS_REQUESTED_DATA;
+                bc_test.state = BC_TEST_STATE_MEMBER_PROCESS_REQUESTED_DATA;
                 break;
             }
             if (bc_test.countdown == 0) {
                 BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
-                bc_test.state = BC_TEST_STATE_DECIDE_TO_BE_CONTROL_NODE;
+                bc_test.state = BC_TEST_STATE_DECIDE_TO_BE_COORDINATOR_NODE;
             }
             break;
 
-        case BC_TEST_STATE_PROCESS_REQUESTED_DATA:
+        case BC_TEST_STATE_MEMBER_PROCESS_REQUESTED_DATA:
             BC_TEST_DEBUG_PRINT("BC_TEST: Requested data received. Nor further processing\n\r");
             bc_test.state = BC_TEST_STATE_IDLE;
             break;
@@ -220,23 +220,23 @@ void BC_TEST_Tasks(void) {
 
 
 
-        case BC_TEST_STATE_DECIDE_TO_BE_CONTROL_NODE:
+        case BC_TEST_STATE_DECIDE_TO_BE_COORDINATOR_NODE:
             if (BC_COM_is_idle() == true) {
                 BC_COM_listen(sizeof (AUTOCONFMSG));
-                bc_test.state = BC_TEST_STATE_CONTROL_NODE_WAIT_FOR_REQUEST;
+                bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
             }
             break;
 
-        case BC_TEST_STATE_CONTROL_NODE_WAIT_FOR_REQUEST:
+        case BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST:
             if (BC_COM_is_data_received() == true) {
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
                 BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Controller\n\r");
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
-                bc_test.state = BC_TEST_STATE_CONTROL_NODE_ANSWER_REQUEST;
+                bc_test.state = BC_TEST_STATE_COORDINATOR_ANSWER_REQUEST;
             }
             break;
 
-        case BC_TEST_STATE_CONTROL_NODE_ANSWER_REQUEST:
+        case BC_TEST_STATE_COORDINATOR_ANSWER_REQUEST:
             if (BC_COM_is_idle() == true) {
                 memcpy((void*) &auto_conf_msg_transmit, (void*) &auto_conf_msg_receive, sizeof (AUTOCONFMSG));
                 auto_conf_msg_transmit.ip4.Val = 0x87654321;
@@ -247,7 +247,7 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 while (BC_COM_is_idle() == false);
                 BC_COM_listen(sizeof (AUTOCONFMSG));
-                bc_test.state = BC_TEST_STATE_CONTROL_NODE_WAIT_FOR_REQUEST;
+                bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
             }
             break;
 
@@ -271,18 +271,15 @@ void BC_TEST_TimerCallback(uintptr_t context) {
 }
 
 char *app_states_str[] = {
-    "BC_TEST_STATE_INIT",
-    "BC_TEST_STATE_TCPIP_WAIT_INIT",
-    "BC_TEST_STATE_TCPIP_WAIT_FOR_IP",
-    "BC_TEST_STATE_START_REQUEST",
-    "BC_TEST_STATE_WAIT_FOR_REQUEST_TO_BE_SENT",
-    "BC_TEST_STATE_WAIT_FOR_IDLE_TO_START_LISTENING",
-    "BC_TEST_STATE_WAIT_FOR_REQUESTED_ANSWER",
-    "BC_TEST_STATE_PROCESS_REQUESTED_DATA",
-    "BC_TEST_STATE_DECIDE_TO_BE_CONTROL_NODE",
-    "BC_TEST_STATE_CONTROL_NODE_WAIT_FOR_REQUEST",
-    "BC_TEST_STATE_CONTROL_NODE_ANSWER_REQUEST",
-    "BC_TEST_STATE_CONTROL_NODE_RESTART_LISTENING",
+    "BC_TEST_STATE_INIT_START",
+    "BC_TEST_STATE_INIT_TCPIP_WAIT_START",
+    "BC_TEST_STATE_INIT_TCPIP_WAIT_FOR_IP",
+    "BC_TEST_STATE_MEMBER_START_REQUEST",
+    "BC_TEST_STATE_MEMBER_WAIT_FOR_REQUESTED_ANSWER",
+    "BC_TEST_STATE_MEMBER_PROCESS_REQUESTED_DATA",
+    "BC_TEST_STATE_DECIDE_TO_BE_COORDINATOR_NODE",
+    "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST",
+    "BC_TEST_STATE_COORDINATOR_ANSWER_REQUEST",
     "BC_TEST_STATE_IDLE",
     "BC_TEST_VOID"
 };

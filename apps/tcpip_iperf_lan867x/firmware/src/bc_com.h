@@ -66,27 +66,19 @@ extern "C" {
      */
 
     typedef enum {
-        /* Application's state machine's initial state. */
         BC_COM_STATE_INIT = 0,
-        /* Server States */
         BC_COM_STATE_SERVER_OPEN,
         BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION,
         BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY,
         BC_COM_STATE_SERVER_DATA_READ,
-        BC_COM_STATE_SERVER_HOLD,
         BC_COM_STATE_SERVER_CLOSE,
-        /* Client States */
         BC_COM_STATE_CLIENT_OPEN,
         BC_COM_STATE_CLIENT_WAIT_FOR_CONNECTION,
         BC_COM_STATE_CLIENT_WAIT_FOR_PUT_IS_READY,
         BC_COM_STATE_CLIENT_DATA_WRITE,
         BC_COM_STATE_CLIENT_HOLD,
         BC_COM_STATE_CLIENT_CLOSE,
-        /* Exceptions */
-        BC_COM_TIMEOUT,
-        BC_COM_STATE_SERVICE_TASKS,
         BC_COM_STATE_IDLE,
-        BC_COM_STATE_TEST_SEND,
         BC_COM_VOID
     } BC_COM_STATES;
 

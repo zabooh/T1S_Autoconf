@@ -37,7 +37,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define __BC_COM_DEBUG_PRINT 
+//#define __BC_COM_DEBUG_PRINT 
 #ifdef __BC_COM_DEBUG_PRINT
 #define BC_COM_DEBUG_PRINT(fmt, ...)  SYS_CONSOLE_PRINT(fmt, ##__VA_ARGS__)
 #else
@@ -269,7 +269,6 @@ void BC_COM_read_data(uint8_t *buffer) {
     bc_com.receive_data_has_been_received = false;
 }
 
-
 /*********** Transmit Interface *******************/
 bool BC_COM_send(uint8_t *buffer, int32_t count) {
     BC_COM_DEBUG_PRINT("BC_COM_send()\n\r");
@@ -297,17 +296,12 @@ bool BC_COM_is_idle(void) {
     }
 }
 
-void BC_COM_Start_Test(void) {
-    bc_com.state = BC_COM_STATE_TEST_SEND;
-}
-
 char *bc_com_states_str[] = {
     "BC_COM_STATE_INIT",
     "BC_COM_STATE_SERVER_OPEN",
     "BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION",
     "BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY",
     "BC_COM_STATE_SERVER_DATA_READ",
-    "BC_COM_STATE_SERVER_HOLD",
     "BC_COM_STATE_SERVER_CLOSE",
     "BC_COM_STATE_CLIENT_OPEN",
     "BC_COM_STATE_CLIENT_WAIT_FOR_CONNECTION",
@@ -315,10 +309,7 @@ char *bc_com_states_str[] = {
     "BC_COM_STATE_CLIENT_DATA_WRITE",
     "BC_COM_STATE_CLIENT_HOLD",
     "BC_COM_STATE_CLIENT_CLOSE",
-    "BC_COM_TIMEOUT",
-    "BC_COM_STATE_SERVICE_TASKS",
     "BC_COM_STATE_IDLE",
-    "BC_COM_STATE_TEST_SEND",
     "BC_COM_VOID"
 };
 
