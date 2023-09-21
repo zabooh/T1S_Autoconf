@@ -102,7 +102,8 @@ def read_from_com_port(ser, text_widget):
         try:
             data = ser.read(1)  # Ein Zeichen vom COM-Port lesen
             if data:
-                process_vt100_escape(text_widget, data.decode())  # Daten im Textfeld anzeigen und VT100 Escape-Sequenzen verarbeiten
+                #process_vt100_escape(text_widget, data.decode())  # Daten im Textfeld anzeigen und VT100 Escape-Sequenzen verarbeiten
+                text_widget.insert(tk.END, data,"green_on_black")
                 text_widget.see(tk.END)  # Zum Ende des Textfelds scrollen
         except serial.SerialException as e:
             print(f"Fehler bei der seriellen Verbindung: {e}")
@@ -230,11 +231,15 @@ com_port_label_4.pack()
 
 # Erstes Textfeld für COM3-Ausgabe
 text_widget_1 = scrolledtext.ScrolledText(root, width=40, height=15)
+text_widget_1.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_1.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
+
 
 # Zweites Textfeld für COM4-Ausgabe
 text_widget_2 = scrolledtext.ScrolledText(root, width=40, height=15)
+text_widget_2.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_2.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
+
 
 
 
