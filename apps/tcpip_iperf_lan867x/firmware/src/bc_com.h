@@ -108,7 +108,7 @@ extern "C" {
 
     typedef struct {
         /* The application's current state */
-        BC_COM_STATES state;
+        volatile BC_COM_STATES state;
 
         SYS_TIME_HANDLE timer_client_hdl;
         SYS_TIME_HANDLE timer_server_hdl;
@@ -209,6 +209,9 @@ extern "C" {
     void BC_COM_Tasks(void);
 
     /* Interface */
+    bool BC_COM_Initialize_Runtime(void);
+    bool BC_COM_DeInitialize_Runtime(void);
+
     bool BC_COM_listen(int32_t count);
     bool BC_COM_is_data_received(void);    
     void BC_COM_read_data(uint8_t *buffer);
@@ -221,6 +224,7 @@ extern "C" {
     bool BC_COM_is_idle(void);
     void BC_COM_Start_Test(void);
     
+   
     //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
