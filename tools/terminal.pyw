@@ -47,11 +47,19 @@ def send_to_com_port(ser, user_input):
 
 # Funktion zum Herstellen der COM-Port-Verbindung
 def connect_to_com_ports():
-    global ser1, ser2
-    com_port_1 = com_port_entry_1.get()
-    com_port_2 = com_port_entry_2.get()
+    global ser1, ser2, com_ports
 
+    # Erneut alle verfügbaren COM-Ports abrufen
+    com_ports = list(serial.tools.list_ports.comports())
+    
+    for port_info in com_ports:
+        if port_info.serial_number:
+            com_port_serial_dict[port_info.device] = port_info.serial_number
+    
     update_com_port_label_x()
+    
+    com_port_1 = com_port_entry_1.get()
+    com_port_2 = com_port_entry_2.get()    
     
     print(f"Verbindung zu COM-Port {com_port_1} und {com_port_2} wird hergestellt...")
 
@@ -151,6 +159,13 @@ def clear_text_left():
 def clear_text_right():
     text_widget_2.delete(1.0, tk.END)    
     
+    
+def send_left_command_func():
+    send_to_com_port(ser1,"iperf -u -s")
+
+def send_right_command_func():
+    send_to_com_port(ser2,"iperf -u -c 192.168.100.12")
+    
 #######################################################################################
 # 
 #   Main
@@ -215,6 +230,16 @@ clear_button_left.pack(side=tk.LEFT)
 # Erstelle einen Button zum Leeren des Textfelds
 clear_button_right = tk.Button(com_port_frame, text="Clear Right Window ", command=clear_text_right)
 clear_button_right.pack(side=tk.LEFT)
+
+
+# Erstelle einen Button iperf server
+send_left_command = tk.Button(com_port_frame, text="Iperf Server", command=send_left_command_func)
+send_left_command.pack(side=tk.LEFT)
+
+# Erstelle einen Button iperf client
+send_right_command = tk.Button(com_port_frame, text="Iperf Client", command=send_right_command_func)
+send_right_command.pack(side=tk.LEFT)
+
 
 
 # Label für COM-Port 1 erstellen und Serialnummer anzeigen
