@@ -160,9 +160,14 @@ extern "C" {
 #ifdef MY_NODE_0    
 #define DRV_ETHPHY_PLCA_LOCAL_NODE_ID             0
 #endif 
-
 #ifdef MY_NODE_1
 #define DRV_ETHPHY_PLCA_LOCAL_NODE_ID             1
+#endif     
+#ifdef MY_NODE_2
+#define DRV_ETHPHY_PLCA_LOCAL_NODE_ID             2
+#endif     
+#ifdef MY_NODE_3
+#define DRV_ETHPHY_PLCA_LOCAL_NODE_ID             3
 #endif     
     
 #define DRV_ETHPHY_PLCA_NODE_COUNT                8
@@ -283,12 +288,19 @@ extern "C" {
 #define TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0               "00:04:25:1C:A0:02"
 #define TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0         "192.168.100.11"
 #endif
-    
 #ifdef MY_NODE_1    
 #define TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0               "00:04:25:1C:A0:03"
 #define TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0         "192.168.100.12"
 #endif
-    
+#ifdef MY_NODE_2    
+#define TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0               "00:04:25:1C:A0:04"
+#define TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0         "192.168.100.13"
+#endif
+#ifdef MY_NODE_3    
+#define TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0               "00:04:25:1C:A0:05"
+#define TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0         "192.168.100.14"
+#endif
+
 #define TCPIP_NETWORK_DEFAULT_IP_MASK_IDX0            "255.255.255.0"
 #define TCPIP_NETWORK_DEFAULT_GATEWAY_IDX0            "192.168.0.1"
 #define TCPIP_NETWORK_DEFAULT_DNS_IDX0                "192.168.0.1"
@@ -309,7 +321,7 @@ extern "C" {
 #define TCPIP_IPERF_TX_QUEUE_LIMIT  	2
 #define TCPIP_IPERF_TIMING_ERROR_MARGIN 0
 #define TCPIP_IPERF_MAX_INSTANCES       1
-#define TCPIP_IPERF_TX_BW_LIMIT  		1
+#define TCPIP_IPERF_TX_BW_LIMIT  		0
 
 
 

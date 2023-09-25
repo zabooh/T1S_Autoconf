@@ -183,6 +183,12 @@ void BC_TEST_Tasks(void) {
 #ifdef MY_NODE_1
                 BC_TEST_DEBUG_PRINT("MY_NODE_1 %s %s\n\r", __DATE__, __TIME__);
 #endif
+#ifdef MY_NODE_2
+                BC_TEST_DEBUG_PRINT("MY_NODE_2 %s %s\n\r", __DATE__, __TIME__);
+#endif
+#ifdef MY_NODE_3
+                BC_TEST_DEBUG_PRINT("MY_NODE_3 %s %s\n\r", __DATE__, __TIME__);
+#endif                          
                 BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
                 auto_conf_msg_transmit.ip4.Val = 0x12345678;
                 auto_conf_msg_transmit.nodeid = 0xAA;
