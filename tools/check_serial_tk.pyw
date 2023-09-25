@@ -20,14 +20,14 @@ def show_ports():
     for port_info in sorted_ports:
         append_text(f"Port Info: {port_info}\n")
         append_text(f"Device: {port_info.device}\n")
-        append_text(f"Name: {port_info.name}\n")
+        # append_text(f"Name: {port_info.name}\n")
         append_text(f"Description: {port_info.description}\n")
-        append_text(f"Interface: {port_info.interface}\n")
+        # append_text(f"Interface: {port_info.interface}\n")
         append_text(f"Location: {port_info.location}\n")
         append_text(f"Manufacturer: {port_info.manufacturer}\n")
-        append_text(f"Product: {port_info.product}\n")
+        # append_text(f"Product: {port_info.product}\n")
         append_text(f"Serial Number: {port_info.serial_number}\n")
-        append_text(f"Vendor ID: {hex(port_info.vid)}\n") 
+        append_text(f"Vendor ID: {hex(port_info.vid)} ") 
         append_text(f"Product ID: {hex(port_info.pid)}\n")
         append_text("=" * 50 + "\n")
 
@@ -42,7 +42,7 @@ root = tk.Tk()
 root.title("COM Ports Info")
 
 # Erstelle ein Textfeld zum Anzeigen der Informationen
-info_text = scrolledtext.ScrolledText(root, width=50, height=40)
+info_text = scrolledtext.ScrolledText(root, width=40, height=31)
 info_text.grid(row=0, column=0, columnspan=2)
 
 # Erstelle einen Button zum Ausführen der Funktion
@@ -53,8 +53,14 @@ show_button.grid(row=1, column=0)
 clear_button = tk.Button(root, text="Clear Window", command=clear_text)
 clear_button.grid(row=1, column=1)
 
+# Erstelle ein Textfeld zum Anzeigen der Informationen
+info_text = scrolledtext.ScrolledText(root, width=50, height=31)
+info_text.grid(row=0, column=0, columnspan=2)
+info_text.configure(font=("Helvetica", 9, "bold"), bg="black", fg="light green")  # Hintergrund und Vordergrund setzen
+
 # Starte die Aktualisierungsfunktion
 update_ports()
+
 
 # Starte die GUI-Schleife
 root.mainloop()
