@@ -221,7 +221,8 @@ root = tk.Tk()
 root.title("COM Port GUI")
 
 # Das Fenster in der Größe veränderbar machen
-root.geometry("1500x400")  # Startgröße des Fensters
+root.geometry("1500x800")  # Startgröße des Fensters
+# root.attributes('-fullscreen', True)
 
 # Frame für COM-Port-Eingabefelder und Buttons
 com_port_frame = tk.Frame(root)
@@ -325,24 +326,32 @@ com_port_label_D.pack(side=tk.LEFT)
 
 
 ###################################################################################################
+# Erstelle einen Frame für die oberen beiden Text-Widgets (COM3 und COM4)
+top_text_widgets_frame = tk.Frame(root)
+top_text_widgets_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
 # Erstes Textfeld für COM3-Ausgabe
-text_widget_A = scrolledtext.ScrolledText(root, width=40, height=15)
-text_widget_A.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 7, "bold"))
+text_widget_A = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)
+text_widget_A.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_A.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
 # Zweites Textfeld für COM4-Ausgabe
-text_widget_B = scrolledtext.ScrolledText(root, width=40, height=15)
-text_widget_B.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 7, "bold"))
+text_widget_B = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)
+text_widget_B.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_B.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
+# Erstelle einen Frame für die unteren beiden Text-Widgets (COM5 und COM6)
+bottom_text_widgets_frame = tk.Frame(root)
+bottom_text_widgets_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
 # Text-Widget für weitere Ausgabe (z.B., COM5)
-text_widget_C = scrolledtext.ScrolledText(root, width=40, height=15)
-text_widget_C.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 7, "bold"))
+text_widget_C = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)
+text_widget_C.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_C.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
 # Text-Widget für weitere Ausgabe (z.B., COM6)
-text_widget_D = scrolledtext.ScrolledText(root, width=40, height=15)
-text_widget_D.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 7, "bold"))
+text_widget_D = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)
+text_widget_D.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_D.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 ###################################################################################################
 
