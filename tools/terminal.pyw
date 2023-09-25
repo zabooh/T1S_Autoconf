@@ -165,6 +165,10 @@ def send_left_command_func():
 
 def send_right_command_func():
     send_to_com_port(ser2,"iperf -u -c 192.168.100.12")
+
+def send_netinfo_func():
+    send_to_com_port(ser1,"netinfo")
+    send_to_com_port(ser2,"netinfo")
     
 #######################################################################################
 # 
@@ -240,6 +244,8 @@ send_left_command.pack(side=tk.LEFT)
 send_right_command = tk.Button(com_port_frame, text="Iperf Client", command=send_right_command_func)
 send_right_command.pack(side=tk.LEFT)
 
+send_netinfo = tk.Button(com_port_frame, text="netinfo", command=send_netinfo_func)
+send_netinfo.pack(side=tk.LEFT)
 
 
 # Label für COM-Port 1 erstellen und Serialnummer anzeigen
@@ -271,5 +277,11 @@ text_widget_2.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 # Event-Bindung für das Texteingabefeld
 text_widget_1.bind("<Return>", lambda event, text_widget=text_widget_1: send_to_com_port(ser1, text_widget.get("insert linestart", "insert lineend")))
 text_widget_2.bind("<Return>", lambda event, text_widget=text_widget_2: send_to_com_port(ser2, text_widget.get("insert linestart", "insert lineend")))
+
+# Erstelle ein Textfeld zum Anzeigen der Informationen
+info_text = scrolledtext.ScrolledText(root, width=50, height=60)
+# info_text.grid(row=0, column=0, columnspan=2)
+info_text.configure(font=("Helvetica", 12, "bold"), bg="black", fg="light green")  # Hintergrund und Vordergrund setzen
+
 
 root.mainloop()
