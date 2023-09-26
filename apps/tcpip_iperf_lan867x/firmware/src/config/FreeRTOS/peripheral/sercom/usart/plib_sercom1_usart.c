@@ -806,3 +806,14 @@ void SERCOM1_USART_InterruptHandler( void )
         }
     }
 }
+
+void SERCOM1_USART_Virtual_Receive(char *str) {
+    while (*str != 0) {
+        if (SERCOM1_USART_RxPushByte(*str) == true) {
+            SERCOM1_USART_ReadNotificationSend();
+        }
+        str++;
+    }
+}
+
+

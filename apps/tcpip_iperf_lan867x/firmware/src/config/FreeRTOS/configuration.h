@@ -130,7 +130,7 @@ extern "C" {
 #define DRV_MIIM_INSTANCE_OPERATIONS        4
 #define DRV_MIIM_INSTANCE_CLIENTS           2
 #define DRV_MIIM_CLIENT_OP_PROTECTION   false
-#define DRV_MIIM_COMMANDS   false
+#define DRV_MIIM_COMMANDS   true
 #define DRV_MIIM_DRIVER_OBJECT              DRV_MIIM_OBJECT_BASE_Default            
 
 /* MIIM RTOS Configurations*/
@@ -321,7 +321,7 @@ extern "C" {
 #define TCPIP_IPERF_TX_QUEUE_LIMIT  	2
 #define TCPIP_IPERF_TIMING_ERROR_MARGIN 0
 #define TCPIP_IPERF_MAX_INSTANCES       1
-#define TCPIP_IPERF_TX_BW_LIMIT  		0
+#define TCPIP_IPERF_TX_BW_LIMIT  		10
 
 
 

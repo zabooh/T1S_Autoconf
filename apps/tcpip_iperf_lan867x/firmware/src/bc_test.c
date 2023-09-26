@@ -114,7 +114,8 @@ void BC_TEST_Print_State_Change(void);
  */
 
 void BC_TEST_Initialize(void) {
-    bc_test.state = BC_TEST_STATE_INIT_START;
+    BC_TEST_Command_Init();
+    bc_test.state = BC_TEST_STATE_IDLE; //BC_TEST_STATE_INIT_START;
 }
 
 /******************************************************************************
@@ -328,6 +329,154 @@ void BC_TEST_DumpMem(uint32_t addr, uint32_t count) {
     str[jx] = 0;
     BC_TEST_DEBUG_PRINT("   %s", str);
     BC_TEST_DEBUG_PRINT("\n\r");
+}
+
+static void my_dump(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
+    //const void* cmdIoParam = pCmdIO->cmdIoParam;
+    uint32_t addr;
+    uint32_t count;
+
+    addr = strtoul(argv[1], NULL, 16);
+    count = strtoul(argv[2], NULL, 16);
+    BC_TEST_DumpMem(addr, count);
+
+}
+
+void SYS_Task_Start_TCP(void);
+void SYS_Initialization_TCP_Stack(void);
+
+static void my_run(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
+
+    SYS_Initialization_TCP_Stack();
+    SYS_Task_Start_TCP();
+
+    bc_test.state = BC_TEST_STATE_INIT_START;
+
+    //    vTaskDelay(3000U / portTICK_PERIOD_MS);
+    //    SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
+
+}
+
+DRV_MIIM_RESULT BC_TEST_miim_init(void) {
+    DRV_MIIM_SETUP miimSetup;
+    DRV_MIIM_RESULT res;
+    static DRV_MIIM_OPERATION_HANDLE opHandle;
+    static SYS_MODULE_INDEX miimObjIx = 0; // MIIM object index
+
+    opHandle = 0;
+    bc_test.MiimObj.miimOpHandle = &opHandle;
+    bc_test.MiimObj.miimBase = &DRV_MIIM_OBJECT_BASE_Default;
+    miimObjIx = DRV_MIIM_DRIVER_INDEX_0;
+
+    /*  Open the MIIM driver and get an instance to it. */
+    bc_test.MiimObj.miimHandle = bc_test.MiimObj.miimBase->DRV_MIIM_Open(miimObjIx, DRV_IO_INTENT_SHARED);
+    if ((bc_test.MiimObj.miimHandle == DRV_HANDLE_INVALID) || (bc_test.MiimObj.miimHandle == 0)) {
+        SYS_CONSOLE_PRINT("> Local miim open: failed!\r\n");
+        bc_test.MiimObj.miimHandle = 0;
+        res = DRV_MIIM_RES_OP_INTERNAL_ERR;
+    } else {
+
+        miimSetup.hostClockFreq = (uint32_t) TCPIP_INTMAC_PERIPHERAL_CLK;
+        miimSetup.maxBusFreq = 2000000;
+        miimSetup.setupFlags = 0;
+
+        /*  Setup the miim driver instance. */
+        res = bc_test.MiimObj.miimBase->DRV_MIIM_Setup(bc_test.MiimObj.miimHandle, &miimSetup);
+        if (res < 0) {
+            SYS_CONSOLE_PRINT("> Local miim setup: failed!\r\n");
+        } else {
+            //SYS_CONSOLE_PRINT("> Miim Successfully opened. \r\n");
+        }
+    }
+
+    return res;
+}
+
+void BC_TEST_miim_close(void) {
+    bc_test.MiimObj.miimBase->DRV_MIIM_Close(bc_test.MiimObj.miimHandle);
+    bc_test.MiimObj.miimHandle = 0;
+    //SYS_CONSOLE_PRINT("> Miim closed. \r\n");
+}
+
+
+DRV_MIIM_RESULT Write_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t wData);
+DRV_MIIM_RESULT Write_Bit_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData);
+DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData);
+
+static void my_plca_write_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
+    uint16_t node_id;
+    uint16_t node_count;
+    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
+    uint16_t data;
+
+    if (argc != 3) {
+        BC_TEST_DEBUG_PRINT("Usage: ndw <node_id> <node_count>\n\r");
+        return;
+    }
+
+    BC_TEST_miim_init();
+
+    node_id = strtoul(argv[1], NULL, 16);
+    node_count = strtoul(argv[2], NULL, 16);
+
+    /* Set the Node id as 0 and Node count as 5*/
+    data = F2R_(node_id, PHY_PLCA_CTRL1_ID) | F2R_(node_count, PHY_PLCA_CTRL1_NCNT);
+
+    do {
+        opRes = Write_Phy_Register(&bc_test.MiimObj, 0, PHY_PLCA_CTRL1, data);
+        vTaskDelay(10U / portTICK_PERIOD_MS);
+    } while (opRes == DRV_MIIM_RES_PENDING);
+
+    if (opRes < 0) {
+        /* In case of an error, report and close miim instance. */
+        BC_TEST_DEBUG_PRINT("Register Write Error occurred:%d\r\n", opRes);
+    } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
+        BC_TEST_DEBUG_PRINT(" Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
+    } else {
+        BC_TEST_DEBUG_PRINT("Register Write opRes: %d\n\r", opRes);
+    }
+
+    BC_TEST_miim_close();
+
+}
+
+static void my_plca_read_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
+    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
+    uint16_t data;
+
+    BC_TEST_miim_init();
+
+    do {
+        opRes = Read_Phy_Register(&bc_test.MiimObj, 0, PHY_PLCA_CTRL1, &data);
+        vTaskDelay(10U / portTICK_PERIOD_MS);
+    } while (opRes == DRV_MIIM_RES_PENDING);
+
+    if (opRes < 0) {
+        /* In case of an error, report and close miim instance. */
+        BC_TEST_DEBUG_PRINT("Register Read Error occurred:%d\r\n", opRes);
+    } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
+        BC_TEST_DEBUG_PRINT(" Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
+    } else {
+        BC_TEST_DEBUG_PRINT("Register Read opRes: %d\n\r", opRes);
+    }
+
+    BC_TEST_miim_close();
+}
+
+const SYS_CMD_DESCRIPTOR msd_cmd_tbl[] = {
+    {"dump", (SYS_CMD_FNC) my_dump, ": dump memory"},
+    {"run", (SYS_CMD_FNC) my_run, ": start application"},
+    {"ndw", (SYS_CMD_FNC) my_plca_write_config, ": Node Config Write"},
+    {"ndr", (SYS_CMD_FNC) my_plca_read_config, ": Node Config Read: ndr"}
+};
+
+bool BC_TEST_Command_Init(void) {
+    bool ret = false;
+
+    if (!SYS_CMD_ADDGRP(msd_cmd_tbl, sizeof (msd_cmd_tbl) / sizeof (*msd_cmd_tbl), "test", ": Test Commands")) {
+        ret = true;
+    }
+    return ret;
 }
 
 

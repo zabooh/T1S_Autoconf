@@ -492,8 +492,8 @@ void SYS_Initialize ( void* data )
 
 
    /* TCPIP Stack Initialization */
-   sysObj.tcpip = TCPIP_STACK_Init();
-   SYS_ASSERT(sysObj.tcpip != SYS_MODULE_OBJ_INVALID, "TCPIP_STACK_Init Failed" );
+//   sysObj.tcpip = TCPIP_STACK_Init();
+//   SYS_ASSERT(sysObj.tcpip != SYS_MODULE_OBJ_INVALID, "TCPIP_STACK_Init Failed" );
 
 
     CRYPT_WCCB_Initialize();
@@ -505,6 +505,11 @@ void SYS_Initialize ( void* data )
 
     NVIC_Initialize();
 
+}
+
+void SYS_Initialization_TCP_Stack(void) {
+    sysObj.tcpip = TCPIP_STACK_Init();
+    SYS_ASSERT(sysObj.tcpip != SYS_MODULE_OBJ_INVALID, "TCPIP_STACK_Init Failed");
 }
 
 /*******************************************************************************

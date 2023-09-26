@@ -56,19 +56,19 @@
 
 static APP_DATA appData;
 
-static LAN867X_REG_OBJ clientObj = {0};
+LAN867X_REG_OBJ clientObj = {0};
 
 
 /******************************************************************************
  *  Private function declaration
  ******************************************************************************/
-static DRV_MIIM_RESULT local_miim_init(void);
-static void local_miim_close(void);
-#if 0
-static DRV_MIIM_RESULT Write_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t wData);
-static DRV_MIIM_RESULT Write_Bit_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData);
+DRV_MIIM_RESULT local_miim_init(void);
+void local_miim_close(void);
+#if 1
+DRV_MIIM_RESULT Write_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t wData);
+DRV_MIIM_RESULT Write_Bit_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData);
 #endif
-static DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData);
+DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData);
 
 /******************************************************************************
  *  Function Definitions
@@ -146,20 +146,20 @@ void APP_Tasks(void) {
             break;
         }
 
-#if 0
+#if 1
             /* Write register example: Set the PLCA configuration, node ID and node count. */
         case APP_WRITE_PLCA_CONFIGURATION:
         {
             /* Set the Node id as 0 and Node count as 5*/
-            data = F2R_(0, PHY_PLCA_CTRL1_ID0) | F2R_(5, PHY_PLCA_CTRL1_NCNT);
-            opRes = Write_Phy_Register(&clientObj, 0, PHY_PLCA_CONTROL_1, data);
+            data = F2R_(5, PHY_PLCA_CTRL1_ID) | F2R_(8, PHY_PLCA_CTRL1_NCNT);
+            opRes = Write_Phy_Register(&clientObj, 0, PHY_PLCA_CTRL1, data);
 
             if (opRes < 0) {
                 /* In case of an error, report and close miim instance. */
                 SYS_CONSOLE_PRINT("Error occurred:%d\r\n", opRes);
                 appData.state = APP_MIIM_CLOSE;
             } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
-                SYS_CONSOLE_PRINT(" Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID0), R2F(data, PHY_PLCA_CTRL1_NCNT));
+                SYS_CONSOLE_PRINT(" Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
                 appData.state = APP_READ_PLCA_CONFIGURATION;
             }
             break;
@@ -175,7 +175,7 @@ void APP_Tasks(void) {
                 SYS_CONSOLE_PRINT("Error occurred:%d\r\n", opRes);
                 appData.state = APP_MIIM_CLOSE;
             } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
-                SYS_CONSOLE_PRINT(" Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
+                SYS_CONSOLE_PRINT(" Register get, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
                 appData.state = APP_MIIM_CLOSE;
             } else {
 
@@ -188,7 +188,7 @@ void APP_Tasks(void) {
         case APP_MIIM_CLOSE:
         {
             /* Close and release the handle(instance) to miim, as I do not need access to miim register anymore. */
-            local_miim_close();
+            local_miim_close(); // don't close because miim will be needed later
 
             appData.state = APP_STATE_SERVICE_TASKS;
             break;
@@ -214,7 +214,7 @@ void APP_Tasks(void) {
 // Section: Application Initialization
 // *****************************************************************************
 
-static DRV_MIIM_RESULT local_miim_init(void) {
+DRV_MIIM_RESULT local_miim_init(void) {
     DRV_MIIM_SETUP miimSetup;
     DRV_MIIM_RESULT res;
     static DRV_MIIM_OPERATION_HANDLE opHandle;
@@ -249,26 +249,26 @@ static DRV_MIIM_RESULT local_miim_init(void) {
     return res;
 }
 
-static void local_miim_close(void) {
+void local_miim_close(void) {
     clientObj.miimBase->DRV_MIIM_Close(clientObj.miimHandle);
     clientObj.miimHandle = 0;
     SYS_CONSOLE_PRINT("> Miim closed. \r\n");
 }
 
-#if 0
+#if 1
 
-static DRV_MIIM_RESULT Write_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t wData) {
+DRV_MIIM_RESULT Write_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t wData) {
     clientObj->phyAddress = phyAddress;
     return Lan867x_Write_Register(clientObj, regAddr, wData);
 }
 
-static DRV_MIIM_RESULT Write_Bit_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData) {
+DRV_MIIM_RESULT Write_Bit_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData) {
     clientObj->phyAddress = phyAddress;
     return Lan867x_Write_Bit_Register(clientObj, regAddr, mask, wData);
 }
 #endif
 
-static DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData) {
+DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData) {
     clientObj->phyAddress = phyAddress;
     return Lan867x_Read_Register(clientObj, regAddr, rData);
 }

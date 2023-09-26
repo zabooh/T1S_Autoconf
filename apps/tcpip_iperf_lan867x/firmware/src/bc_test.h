@@ -33,6 +33,7 @@
 #include <stdlib.h>
 #include "configuration.h"
 #include "config/default/system/time/sys_time.h"
+#include "driver/ethphy/src/dynamic/drv_extphy_lan867x.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -96,6 +97,7 @@ extern "C" {
         uint32_t countdown;
         IPV4_ADDR MyIpAddr;
         TCPIP_MAC_ADDR *MyMacAddr;
+        LAN867X_REG_OBJ MiimObj;
     } BC_TEST_DATA;
 
     // *****************************************************************************
@@ -179,6 +181,7 @@ extern "C" {
     void BC_TEST_Tasks(void);
 
     void BC_TEST_DumpMem(uint32_t addr, uint32_t count);
+    bool BC_TEST_Command_Init(void);
 
     //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

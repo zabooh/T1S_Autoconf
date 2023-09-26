@@ -177,13 +177,13 @@ void SYS_Tasks ( void )
 
     /* Maintain Middleware & Other Libraries */
     
-    xTaskCreate( _TCPIP_STACK_Task,
-        "TCPIP_STACK_Tasks",
-        TCPIP_RTOS_STACK_SIZE,
-        (void*)NULL,
-        TCPIP_RTOS_PRIORITY,
-        (TaskHandle_t*)NULL
-    );
+//    xTaskCreate( _TCPIP_STACK_Task,
+//        "TCPIP_STACK_Tasks",
+//        TCPIP_RTOS_STACK_SIZE,
+//        (void*)NULL,
+//        TCPIP_RTOS_PRIORITY,
+//        (TaskHandle_t*)NULL
+//    );
 
 
 
@@ -224,6 +224,17 @@ void SYS_Tasks ( void )
     vTaskStartScheduler(); /* This function never returns. */
 
 }
+
+void SYS_Task_Start_TCP(void) {
+    xTaskCreate(_TCPIP_STACK_Task,
+            "TCPIP_STACK_Tasks",
+            TCPIP_RTOS_STACK_SIZE,
+            (void*) NULL,
+            TCPIP_RTOS_PRIORITY,
+            (TaskHandle_t*) NULL
+            );
+}
+
 
 /*******************************************************************************
  End of File
