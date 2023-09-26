@@ -190,6 +190,18 @@ def clear_text():
 def send_left_command_func():
     send_to_com_port(serA,"iperf -u -s")
 
+def send_run_A_func():
+    send_to_com_port(serA,"run")
+
+def send_run_B_func():
+    send_to_com_port(serB,"run")
+
+def send_run_C_func():
+    send_to_com_port(serC,"run")
+
+def send_run_D_func():
+    send_to_com_port(serD,"run")
+
 def send_right_command_func():
     send_to_com_port(serB,"iperf -u -c 192.168.100.11")
 
@@ -293,6 +305,18 @@ send_right_command.pack(side=tk.LEFT)
 
 send_netinfo = tk.Button(com_port_frame, text="netinfo", command=send_netinfo_func)
 send_netinfo.pack(side=tk.LEFT)
+
+send_rA = tk.Button(com_port_frame, text="RA", command=send_run_A_func)
+send_rA.pack(side=tk.LEFT)
+
+send_rB = tk.Button(com_port_frame, text="RB", command=send_run_B_func)
+send_rB.pack(side=tk.LEFT)
+
+send_rC = tk.Button(com_port_frame, text="RC", command=send_run_C_func)
+send_rC.pack(side=tk.LEFT)
+
+send_rD = tk.Button(com_port_frame, text="RD", command=send_run_D_func)
+send_rD.pack(side=tk.LEFT)
 ###################################################################################################
 
 ###################################################################################################
