@@ -95,9 +95,12 @@ extern SYSTEM_OBJECTS sysObj;
 void BC_TEST_TimerCallback(uintptr_t context);
 void BC_TEST_Print_State_Change(void);
 
-/* TODO:  Add any necessary local functions.
- */
+void SYS_Task_Start_TCP(void);
+void SYS_Initialization_TCP_Stack(void);
 
+DRV_MIIM_RESULT Write_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t wData);
+DRV_MIIM_RESULT Write_Bit_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData);
+DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData);
 
 // *****************************************************************************
 // *****************************************************************************
@@ -115,6 +118,8 @@ void BC_TEST_Print_State_Change(void);
 
 void BC_TEST_Initialize(void) {
     BC_TEST_Command_Init();
+    SYS_Initialization_TCP_Stack();
+    SYS_Task_Start_TCP();    
     bc_test.state = BC_TEST_STATE_IDLE; //BC_TEST_STATE_INIT_START;
 }
 
@@ -342,13 +347,12 @@ static void my_dump(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 
 }
 
-void SYS_Task_Start_TCP(void);
-void SYS_Initialization_TCP_Stack(void);
+
 
 static void my_run(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 
-    SYS_Initialization_TCP_Stack();
-    SYS_Task_Start_TCP();
+//    SYS_Initialization_TCP_Stack();
+//    SYS_Task_Start_TCP();
 
     bc_test.state = BC_TEST_STATE_INIT_START;
 
@@ -397,11 +401,6 @@ void BC_TEST_miim_close(void) {
     bc_test.MiimObj.miimHandle = 0;
     //SYS_CONSOLE_PRINT("> Miim closed. \r\n");
 }
-
-
-DRV_MIIM_RESULT Write_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t wData);
-DRV_MIIM_RESULT Write_Bit_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData);
-DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData);
 
 static void my_plca_write_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
     uint16_t node_id;
