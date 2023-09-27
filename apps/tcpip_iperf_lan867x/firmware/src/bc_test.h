@@ -98,6 +98,8 @@ extern "C" {
         IPV4_ADDR MyIpAddr;
         TCPIP_MAC_ADDR *MyMacAddr;
         LAN867X_REG_OBJ MiimObj;
+        int32_t counter_100ms;
+        volatile bool counter_flag_100ms;
     } BC_TEST_DATA;
 
     // *****************************************************************************

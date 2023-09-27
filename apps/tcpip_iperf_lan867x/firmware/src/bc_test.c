@@ -52,10 +52,13 @@ typedef struct {
     uint8_t nodeid;
     uint8_t maxnodeid;
     uint8_t randommssg[20];
+    int32_t counter_100ms;
 } AUTOCONFMSG;
 
 AUTOCONFMSG auto_conf_msg_transmit;
 AUTOCONFMSG auto_conf_msg_receive;
+
+AUTOCONFMSG member[8];
 
 // *****************************************************************************
 /* Application Data
@@ -119,7 +122,7 @@ DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, co
 void BC_TEST_Initialize(void) {
     BC_TEST_Command_Init();
     SYS_Initialization_TCP_Stack();
-    SYS_Task_Start_TCP();    
+    SYS_Task_Start_TCP();
     bc_test.state = BC_TEST_STATE_IDLE; //BC_TEST_STATE_INIT_START;
 }
 
@@ -143,6 +146,7 @@ void BC_TEST_Tasks(void) {
 
         case BC_TEST_STATE_INIT_START:
             bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
+            bc_test.counter_100ms = 0;
             SYS_TIME_TimerStart(bc_test.timer_client_hdl);
             bc_test.state = BC_TEST_STATE_INIT_TCPIP_WAIT_START;
             break;
@@ -213,6 +217,9 @@ void BC_TEST_Tasks(void) {
         case BC_TEST_STATE_MEMBER_WAIT_FOR_REQUESTED_ANSWER:
             if (BC_COM_is_data_received() == true) {
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
+                SYS_TIME_TimerStop(bc_test.timer_client_hdl);
+                bc_test.counter_100ms = auto_conf_msg_receive.counter_100ms;
+                SYS_TIME_TimerStart(bc_test.timer_client_hdl);
                 BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Member\n\r");
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
                 bc_test.state = BC_TEST_STATE_MEMBER_PROCESS_REQUESTED_DATA;
@@ -254,6 +261,9 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.ip4.Val = 0x87654321;
                 auto_conf_msg_transmit.nodeid = 0x55;
                 auto_conf_msg_transmit.randommssg[19] = 0xAA;
+                bc_test.counter_flag_100ms = false;
+                while (bc_test.counter_flag_100ms == false);                
+                auto_conf_msg_transmit.counter_100ms = bc_test.counter_100ms;
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Controller\n\r");
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
@@ -277,9 +287,17 @@ void BC_TEST_Tasks(void) {
 }
 
 void BC_TEST_TimerCallback(uintptr_t context) {
+
     if (bc_test.countdown) {
         bc_test.countdown--;
     }
+    bc_test.counter_100ms++;
+    bc_test.counter_flag_100ms = true;
+
+    if ( (bc_test.counter_100ms % 50) == 0) {
+        BC_TEST_DEBUG_PRINT("Counter: %d\n\r", bc_test.counter_100ms);
+    }
+
 }
 
 char *app_states_str[] = {
@@ -347,12 +365,10 @@ static void my_dump(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 
 }
 
-
-
 static void my_run(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 
-//    SYS_Initialization_TCP_Stack();
-//    SYS_Task_Start_TCP();
+    //    SYS_Initialization_TCP_Stack();
+    //    SYS_Task_Start_TCP();
 
     bc_test.state = BC_TEST_STATE_INIT_START;
 

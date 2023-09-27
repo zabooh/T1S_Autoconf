@@ -202,19 +202,11 @@ extern "C" {
 
     /* Interface */
     bool BC_COM_Initialize_Runtime(void);
-    bool BC_COM_DeInitialize_Runtime(void);
-
     bool BC_COM_listen(int32_t count);
     bool BC_COM_is_data_received(void);    
     void BC_COM_read_data(uint8_t *buffer);
-    void BC_COM_stop_listen(void);
-
     bool BC_COM_send(uint8_t *buffer, int32_t count);
-    bool BC_COM_is_data_send(void);
-    void BC_COM_stop_send(void);
-
     bool BC_COM_is_idle(void);
-    void BC_COM_Start_Test(void);
     
    
     //DOM-IGNORE-BEGIN
