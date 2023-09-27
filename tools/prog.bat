@@ -1,3 +1,5 @@
+@echo off
+
 set MPLABX_TOOL_CHAIN=v6.15
 
 set HEX_FILE_01="..\apps\tcpip_iperf_lan867x\firmware\tcpip_iperf_lan867x_freertos.X\dist\FreeRTOS\production\tcpip_iperf_lan867x_freertos.X.production.hex"
