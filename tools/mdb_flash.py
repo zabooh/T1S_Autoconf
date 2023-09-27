@@ -161,8 +161,10 @@ def get_index_by_serial(data, serial):
 ###########################################################################
 # Main Code
 ###########################################################################
+print("Start MDB");
+
 if not os.path.isfile(myargs.mdb_path):
-  print('Given mdb-path "' + myargs.mdb_path + '" is invalid. Typical location on Linux is: "/opt/microchip/mplabx/vX.XX/mplab_ide/bin/mdb.sh"')
+  print('Given mdb-path "' + myargs.mdb_path + '" is invalid. "')
   sys.exit(1)
 
 if not os.path.isfile(myargs.hex):
