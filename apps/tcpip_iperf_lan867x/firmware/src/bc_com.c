@@ -37,7 +37,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define __BC_COM_DEBUG_PRINT 
+//#define __BC_COM_DEBUG_PRINT 
 #ifdef __BC_COM_DEBUG_PRINT
 #define BC_COM_DEBUG_PRINT(fmt, ...)  SYS_CONSOLE_PRINT(fmt, ##__VA_ARGS__)
 #else
