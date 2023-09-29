@@ -129,7 +129,7 @@ void BC_TEST_Initialize(void) {
     SYS_Initialization_TCP_Stack();
     SYS_Task_Start_TCP();
     bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
-    bc_test.counter_100ms = 0;
+    bc_test.tick_100ms = 0;
     bc_test.led_state = false;    
     LED_1_Set();
     LED_2_Set();
@@ -262,7 +262,7 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: Correct Random, process packet\n\r");
                 
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
-                bc_test.counter_100ms = auto_conf_msg_receive.counter_100ms;
+                bc_test.tick_100ms = auto_conf_msg_receive.counter_100ms;
                 bc_test.led_state = auto_conf_msg_receive.led_state;
                 SYS_TIME_TimerStart(bc_test.timer_client_hdl);
 
@@ -317,10 +317,10 @@ void BC_TEST_Tasks(void) {
 
                 auto_conf_msg_transmit.random = auto_conf_msg_receive.random;
 
-                bc_test.counter_flag_100ms = false;
-                while (bc_test.counter_flag_100ms == false);
+                bc_test.tick_flag_100ms = false;
+                while (bc_test.tick_flag_100ms == false);
 
-                auto_conf_msg_transmit.counter_100ms = bc_test.counter_100ms;
+                auto_conf_msg_transmit.counter_100ms = bc_test.tick_100ms;
                 auto_conf_msg_transmit.led_state = bc_test.led_state;
 
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
@@ -352,10 +352,10 @@ void BC_TEST_TimerCallback(uintptr_t context) {
         bc_test.countdown--;
     }
 
-    bc_test.counter_100ms++;
-    bc_test.counter_flag_100ms = true;
+    bc_test.tick_100ms++;
+    bc_test.tick_flag_100ms = true;
 
-    if ((bc_test.counter_100ms % 20) == 0) {
+    if ((bc_test.tick_100ms % 20) == 0) {
         if (bc_test.led_state == false) {
             bc_test.led_state = true;
             LED_1_Set();
@@ -434,23 +434,23 @@ static void my_dump(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 
 static void my_run(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 
-    //    SYS_Initialization_TCP_Stack();
-    //    SYS_Task_Start_TCP();
-
     if (bc_test.init_done == false) {
+        BC_TEST_DEBUG_PRINT("BC_TEST: state -> BC_TEST_STATE_INIT_START\r\n");
         bc_test.state = BC_TEST_STATE_INIT_START;
     } else {
+        BC_TEST_DEBUG_PRINT("BC_TEST: state -> BC_TEST_STATE_MEMBER_START_REQUEST\r\n");
         bc_test.state = BC_TEST_STATE_MEMBER_START_REQUEST;
     }
+}
 
-
-
-    //    vTaskDelay(3000U / portTICK_PERIOD_MS);
-    //    SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
-
+static void my_reinit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
+    BC_COM_DeInitialize_Runtime();
+    BC_COM_Initialize_Runtime();
+    bc_test.state = BC_TEST_STATE_IDLE;
 }
 
 DRV_MIIM_RESULT BC_TEST_miim_init(void) {
+    
     DRV_MIIM_SETUP miimSetup;
     DRV_MIIM_RESULT res;
     static DRV_MIIM_OPERATION_HANDLE opHandle;
@@ -464,7 +464,7 @@ DRV_MIIM_RESULT BC_TEST_miim_init(void) {
     /*  Open the MIIM driver and get an instance to it. */
     bc_test.MiimObj.miimHandle = bc_test.MiimObj.miimBase->DRV_MIIM_Open(miimObjIx, DRV_IO_INTENT_SHARED);
     if ((bc_test.MiimObj.miimHandle == DRV_HANDLE_INVALID) || (bc_test.MiimObj.miimHandle == 0)) {
-        SYS_CONSOLE_PRINT("BC_TEST: Local miim open: failed!\r\n");
+        BC_TEST_DEBUG_PRINT("BC_TEST: Local miim open: failed!\r\n");
         bc_test.MiimObj.miimHandle = 0;
         res = DRV_MIIM_RES_OP_INTERNAL_ERR;
     } else {
@@ -476,7 +476,7 @@ DRV_MIIM_RESULT BC_TEST_miim_init(void) {
         /*  Setup the miim driver instance. */
         res = bc_test.MiimObj.miimBase->DRV_MIIM_Setup(bc_test.MiimObj.miimHandle, &miimSetup);
         if (res < 0) {
-            SYS_CONSOLE_PRINT("BC_TEST: Local miim setup: failed!\r\n");
+            BC_TEST_DEBUG_PRINT("BC_TEST: Local miim setup: failed!\r\n");
         } else {
             //SYS_CONSOLE_PRINT("> Miim Successfully opened. \r\n");
         }
@@ -555,7 +555,8 @@ const SYS_CMD_DESCRIPTOR msd_cmd_tbl[] = {
     {"dump", (SYS_CMD_FNC) my_dump, ": dump memory"},
     {"run", (SYS_CMD_FNC) my_run, ": start application"},
     {"ndw", (SYS_CMD_FNC) my_plca_write_config, ": Node Config Write"},
-    {"ndr", (SYS_CMD_FNC) my_plca_read_config, ": Node Config Read: ndr"}
+    {"ndr", (SYS_CMD_FNC) my_plca_read_config, ": Node Config Read: ndr"},
+    {"reinit", (SYS_CMD_FNC) my_reinit, ": Re-Initialze Server and Client"}
 };
 
 bool BC_TEST_Command_Init(void) {

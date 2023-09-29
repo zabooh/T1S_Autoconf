@@ -37,7 +37,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-//#define __BC_COM_DEBUG_PRINT 
+#define __BC_COM_DEBUG_PRINT 
 #ifdef __BC_COM_DEBUG_PRINT
 #define BC_COM_DEBUG_PRINT(fmt, ...)  SYS_CONSOLE_PRINT(fmt, ##__VA_ARGS__)
 #else
@@ -60,6 +60,24 @@
  */
 
 BC_COM_DATA bc_com;
+
+char *bc_com_states_str[] = {
+    "BC_COM_STATE_INIT",
+    "BC_COM_STATE_SERVER_OPEN",
+    "BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION",
+    "BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY",
+    "BC_COM_STATE_SERVER_DATA_READ",
+    "BC_COM_STATE_SERVER_STOP_WAIT",
+    "BC_COM_STATE_SERVER_CLOSE",
+    "BC_COM_STATE_CLIENT_OPEN",
+    "BC_COM_STATE_CLIENT_WAIT_FOR_CONNECTION",
+    "BC_COM_STATE_CLIENT_WAIT_FOR_PUT_IS_READY",
+    "BC_COM_STATE_CLIENT_DATA_WRITE",
+    "BC_COM_STATE_CLIENT_HOLD",
+    "BC_COM_STATE_CLIENT_CLOSE",
+    "BC_COM_STATE_IDLE",
+    "BC_COM_VOID"
+};
 
 // *****************************************************************************
 // *****************************************************************************
@@ -130,7 +148,7 @@ void BC_COM_Tasks(void) {
             /************ Server States ************/
         case BC_COM_STATE_SERVER_OPEN:
             bc_com.udp_server_socket = TCPIP_UDP_ServerOpen(IP_ADDRESS_TYPE_IPV4, BC_COM_UDP_SERVER_PORT, 0);
-            BC_COM_DEBUG_PRINT("BC_COM: udp_server_socket: %d\n\r", bc_com.udp_server_socket);
+            BC_COM_DEBUG_PRINT("BC_COM: Server Open: %d\n\r", bc_com.udp_server_socket);
             bc_com.state = BC_COM_STATE_IDLE;
             break;
 
@@ -170,7 +188,7 @@ void BC_COM_Tasks(void) {
             break;
 
         case BC_COM_STATE_SERVER_CLOSE:
-            BC_COM_DEBUG_PRINT("BC_COM: Server close\n\r");
+            BC_COM_DEBUG_PRINT("BC_COM: Server Close\n\r");
             TCPIP_UDP_Close(bc_com.udp_server_socket);
             bc_com.state = BC_COM_STATE_IDLE;
             break;
@@ -181,7 +199,7 @@ void BC_COM_Tasks(void) {
         case BC_COM_STATE_CLIENT_OPEN:
             bc_com.ipAddr.Val = 0xFFFFFFFF;
             bc_com.udp_client_socket = TCPIP_UDP_ClientOpen(IP_ADDRESS_TYPE_IPV4, BC_COM_UDP_SERVER_PORT, (IP_MULTI_ADDRESS*) & bc_com.ipAddr);
-            BC_COM_DEBUG_PRINT("BC_COM: udp_client_socket open: %d\n\r", bc_com.udp_client_socket);
+            BC_COM_DEBUG_PRINT("BC_COM: Client Open: %d\n\r", bc_com.udp_client_socket);
             bc_com.state = BC_COM_STATE_CLIENT_WAIT_FOR_CONNECTION;
             break;
 
@@ -208,8 +226,13 @@ void BC_COM_Tasks(void) {
             break;
 
         case BC_COM_STATE_CLIENT_CLOSE:
+            if(bc_com.receive_buffer != 0){
+                free(bc_com.receive_buffer);
+                bc_com.receive_buffer = 0;
+                BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free\n\r");
+            }            
             TCPIP_UDP_Close(bc_com.udp_client_socket);
-            BC_COM_DEBUG_PRINT("BC_COM: Client socket closed\n\r");
+            BC_COM_DEBUG_PRINT("BC_COM: Client Close\n\r");
             bc_com.state = BC_COM_STATE_IDLE;
             break;
 
@@ -230,23 +253,19 @@ void BC_COM_Tasks(void) {
 
 /*********** Initialize and De-Initialize Interface *******************/
 
-bool BC_COM_Initialize_Runtime(void) {
+void BC_COM_Initialize_Runtime(void) {
     BC_COM_DEBUG_PRINT("BC_COM_Initialize_Runtime()\n\r");
-    BC_COM_DEBUG_PRINT("BC_COM: Server Open\n\r"); 
     bc_com.state = BC_COM_STATE_SERVER_OPEN;
     while (bc_com.state != BC_COM_STATE_IDLE);
-    BC_COM_DEBUG_PRINT("BC_COM: Client Open\n\r");
     bc_com.state = BC_COM_STATE_CLIENT_OPEN;
     while (bc_com.state != BC_COM_STATE_IDLE);
     BC_COM_DEBUG_PRINT("BC_COM_Initialize_Runtime() - Ready\n\r");
 }
 
-bool BC_COM_DeInitialize_Runtime(void) {
+void BC_COM_DeInitialize_Runtime(void) {
     BC_COM_DEBUG_PRINT("BC_COM_DeInitialize_Runtime()\n\r");
-    BC_COM_DEBUG_PRINT("BC_COM: Server Close\n\r");
     bc_com.state = BC_COM_STATE_SERVER_CLOSE;
-    while (bc_com.state != BC_COM_STATE_IDLE);
-    BC_COM_DEBUG_PRINT("BC_COM: Client Client\n\r");
+    while (bc_com.state != BC_COM_STATE_IDLE);    
     bc_com.state = BC_COM_STATE_CLIENT_CLOSE;
     while (bc_com.state != BC_COM_STATE_IDLE);
     BC_COM_DEBUG_PRINT("BC_COM_DeInitialize_Runtime() - Ready\n\r");
@@ -286,7 +305,8 @@ void BC_COM_read_data(uint8_t *buffer) {
 bool BC_COM_send(uint8_t *buffer, int32_t count) {
     BC_COM_DEBUG_PRINT("BC_COM_send()\n\r");
     if (bc_com.state != BC_COM_STATE_IDLE ) {
-        BC_COM_DEBUG_PRINT("BC COM send not in idle or hold: %s %d\n\r", __FILE__, __LINE__);
+        BC_COM_DEBUG_PRINT("BC COM: send not in idle: %s %d\n\r", __FILE__, __LINE__);
+        BC_COM_DEBUG_PRINT("BC COM: State: %s\n\r", bc_com_states_str[bc_com.state]);
         return true;
     }
     bc_com.transmit_buffer = buffer;
@@ -309,23 +329,6 @@ bool BC_COM_is_idle(void) {
     }
 }
 
-char *bc_com_states_str[] = {
-    "BC_COM_STATE_INIT",
-    "BC_COM_STATE_SERVER_OPEN",
-    "BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION",
-    "BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY",
-    "BC_COM_STATE_SERVER_DATA_READ",
-    "BC_COM_STATE_SERVER_STOP_WAIT",
-    "BC_COM_STATE_SERVER_CLOSE",
-    "BC_COM_STATE_CLIENT_OPEN",
-    "BC_COM_STATE_CLIENT_WAIT_FOR_CONNECTION",
-    "BC_COM_STATE_CLIENT_WAIT_FOR_PUT_IS_READY",
-    "BC_COM_STATE_CLIENT_DATA_WRITE",
-    "BC_COM_STATE_CLIENT_HOLD",
-    "BC_COM_STATE_CLIENT_CLOSE",
-    "BC_COM_STATE_IDLE",
-    "BC_COM_VOID"
-};
 
 void BC_COM_Print_State_Change(void) {
     static BC_COM_STATES states = BC_COM_VOID;

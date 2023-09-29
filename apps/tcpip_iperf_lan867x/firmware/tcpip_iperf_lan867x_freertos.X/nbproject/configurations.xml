@@ -3655,7 +3655,7 @@
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_2/tcpip_iperf_lan867x_freertos_ptg"/>
+                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_1/tcpip_iperf_lan867x_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
@@ -4904,7 +4904,7 @@
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_3/tcpip_iperf_lan867x_freertos_ptg"/>
+                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_1/tcpip_iperf_lan867x_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

@@ -202,8 +202,8 @@ extern "C" {
     void BC_COM_Tasks(void);
 
     /* Interface */
-    bool BC_COM_Initialize_Runtime(void);
-    bool BC_COM_DeInitialize_Runtime(void);
+    void BC_COM_Initialize_Runtime(void);
+    void BC_COM_DeInitialize_Runtime(void);
     bool BC_COM_listen(int32_t count);
     void BC_COM_listen_stop(void);
     bool BC_COM_is_data_received(void);    
