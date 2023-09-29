@@ -214,6 +214,9 @@
               <itemPath>../src/config/FreeRTOS/peripheral/tc/plib_tc_common.h</itemPath>
               <itemPath>../src/config/FreeRTOS/peripheral/tc/plib_tc0.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="trng" displayName="trng" projectFiles="true">
+              <itemPath>../src/config/FreeRTOS/peripheral/trng/plib_trng.h</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
             <logicalFolder name="f3" displayName="cache" projectFiles="true">
@@ -668,6 +671,9 @@
             <logicalFolder name="f2" displayName="tc" projectFiles="true">
               <itemPath>../src/config/FreeRTOS/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
+            <logicalFolder name="trng" displayName="trng" projectFiles="true">
+              <itemPath>../src/config/FreeRTOS/peripheral/trng/plib_trng.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f6" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/FreeRTOS/stdio/xc32_monitor.c</itemPath>
@@ -923,8 +929,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME54_DFP" vendor="Microchip" version="3.8.234"/>
         <pack name="CMSIS" vendor="ARM" version="5.8.0"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="3.8.234"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -980,7 +986,6 @@
       <C32>
         <property key="additional-warnings" value="false"/>
         <property key="addresss-attribute-use" value="false"/>
-        <property key="appendMe" value=""/>
         <property key="enable-app-io" value="false"/>
         <property key="enable-omit-frame-pointer" value="false"/>
         <property key="enable-symbols" value="true"/>
@@ -1038,7 +1043,6 @@
         <property key="additional-options-use-response-files" value="false"/>
         <property key="additional-options-write-sla" value="false"/>
         <property key="allocate-dinit" value="false"/>
-        <property key="appendMe" value=""/>
         <property key="code-dinit" value="false"/>
         <property key="ebase-addr" value=""/>
         <property key="enable-check-sections" value="false"/>
@@ -1078,7 +1082,6 @@
       <C32CPP>
         <property key="additional-warnings" value="false"/>
         <property key="addresss-attribute-use" value="false"/>
-        <property key="appendMe" value=""/>
         <property key="check-new" value="false"/>
         <property key="eh-specs" value="true"/>
         <property key="enable-app-io" value="false"/>
@@ -1107,7 +1110,6 @@
         <property key="use-indirect-calls" value="false"/>
       </C32CPP>
       <C32Global>
-        <property key="appendMe" value=""/>
         <property key="common-include-directories" value=""/>
         <property key="gp-relative-option" value=""/>
         <property key="legacy-libc" value="false"/>
@@ -2176,8 +2178,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.8.0"/>
         <pack name="SAME54_DFP" vendor="Microchip" version="3.8.234"/>
+        <pack name="CMSIS" vendor="ARM" version="5.8.0"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -3653,7 +3655,7 @@
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_1/tcpip_iperf_lan867x_freertos_ptg"/>
+                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_2/tcpip_iperf_lan867x_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
@@ -4902,7 +4904,7 @@
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_1/tcpip_iperf_lan867x_freertos_ptg"/>
+                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_3/tcpip_iperf_lan867x_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

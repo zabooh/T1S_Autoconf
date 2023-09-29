@@ -71,6 +71,7 @@ extern "C" {
         BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION,
         BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY,
         BC_COM_STATE_SERVER_DATA_READ,
+        BC_COM_STATE_SERVER_STOP_WAIT,
         BC_COM_STATE_SERVER_CLOSE,
         BC_COM_STATE_CLIENT_OPEN,
         BC_COM_STATE_CLIENT_WAIT_FOR_CONNECTION,
@@ -202,7 +203,9 @@ extern "C" {
 
     /* Interface */
     bool BC_COM_Initialize_Runtime(void);
+    bool BC_COM_DeInitialize_Runtime(void);
     bool BC_COM_listen(int32_t count);
+    void BC_COM_listen_stop(void);
     bool BC_COM_is_data_received(void);    
     void BC_COM_read_data(uint8_t *buffer);
     bool BC_COM_send(uint8_t *buffer, int32_t count);

@@ -98,7 +98,7 @@ void BC_COM_Print_State_Change(void);
 
 void BC_COM_Initialize(void) {
     /* Place the App state machine in its initial state. */
-    bc_com.state = BC_COM_STATE_IDLE;
+    bc_com.state = BC_COM_STATE_INIT;
 
     memset((void*) &bc_com, 0, sizeof (BC_COM_DATA));
 
@@ -122,7 +122,7 @@ void BC_COM_Tasks(void) {
     switch (bc_com.state) {
 
         case BC_COM_STATE_INIT:
-        {
+        {             
             bc_com.state = BC_COM_STATE_IDLE;
             break;
         }
@@ -136,7 +136,9 @@ void BC_COM_Tasks(void) {
 
         case BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION:
             if (TCPIP_UDP_IsConnected(bc_com.udp_server_socket) == true) {
-                BC_COM_DEBUG_PRINT("BC_COM: is Connected\n\r");
+                BC_COM_DEBUG_PRINT("BC_COM: Server is Connected\n\r");
+                bc_com.receive_buffer = malloc( bc_com.receive_number_of_data_to_read);
+                BC_COM_DEBUG_PRINT("BC_COM: Server Buffer malloc\n\r");
                 bc_com.state = BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY;
             }
             break;
@@ -146,21 +148,29 @@ void BC_COM_Tasks(void) {
                 BC_COM_DEBUG_PRINT("BC_COM: Get is Ready %d\n\r", bc_com.receive_data_count);
                 if (bc_com.receive_data_count >= bc_com.receive_number_of_data_to_read) {
                     bc_com.state = BC_COM_STATE_SERVER_DATA_READ;
-                    break;
                 }
-                bc_com.state = BC_COM_STATE_IDLE;
             }
             break;
 
         case BC_COM_STATE_SERVER_DATA_READ:
             TCPIP_UDP_ArrayGet(bc_com.udp_server_socket, (uint8_t*) bc_com.receive_buffer, (uint16_t) bc_com.receive_number_of_data_to_read);
             bc_com.receive_data_has_been_received = true;
+            BC_COM_DEBUG_PRINT("BC_COM: Server read data\n\r");
             bc_com.state = BC_COM_STATE_IDLE;
             break;
 
+        case BC_COM_STATE_SERVER_STOP_WAIT:
+            BC_COM_DEBUG_PRINT("BC_COM: Server Stop Wait\n\r");
+            if(bc_com.receive_buffer != 0){
+                free(bc_com.receive_buffer);
+                bc_com.receive_buffer = 0;
+                BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free\n\r");
+            }
+            bc_com.state = BC_COM_STATE_IDLE;
+            break;
 
         case BC_COM_STATE_SERVER_CLOSE:
-            vTaskDelay(100 / portTICK_PERIOD_MS);
+            BC_COM_DEBUG_PRINT("BC_COM: Server close\n\r");
             TCPIP_UDP_Close(bc_com.udp_server_socket);
             bc_com.state = BC_COM_STATE_IDLE;
             break;
@@ -198,8 +208,8 @@ void BC_COM_Tasks(void) {
             break;
 
         case BC_COM_STATE_CLIENT_CLOSE:
-            vTaskDelay(100 / portTICK_PERIOD_MS);
             TCPIP_UDP_Close(bc_com.udp_client_socket);
+            BC_COM_DEBUG_PRINT("BC_COM: Client socket closed\n\r");
             bc_com.state = BC_COM_STATE_IDLE;
             break;
 
@@ -222,39 +232,38 @@ void BC_COM_Tasks(void) {
 
 bool BC_COM_Initialize_Runtime(void) {
     BC_COM_DEBUG_PRINT("BC_COM_Initialize_Runtime()\n\r");
-    BC_COM_DEBUG_PRINT("BC_COM: Open Server\n\r");
+    BC_COM_DEBUG_PRINT("BC_COM: Server Open\n\r"); 
     bc_com.state = BC_COM_STATE_SERVER_OPEN;
     while (bc_com.state != BC_COM_STATE_IDLE);
-    BC_COM_DEBUG_PRINT("BC_COM: Open Client\n\r");
+    BC_COM_DEBUG_PRINT("BC_COM: Client Open\n\r");
     bc_com.state = BC_COM_STATE_CLIENT_OPEN;
     while (bc_com.state != BC_COM_STATE_IDLE);
     BC_COM_DEBUG_PRINT("BC_COM_Initialize_Runtime() - Ready\n\r");
 }
 
 bool BC_COM_DeInitialize_Runtime(void) {
+    BC_COM_DEBUG_PRINT("BC_COM_DeInitialize_Runtime()\n\r");
+    BC_COM_DEBUG_PRINT("BC_COM: Server Close\n\r");
     bc_com.state = BC_COM_STATE_SERVER_CLOSE;
     while (bc_com.state != BC_COM_STATE_IDLE);
+    BC_COM_DEBUG_PRINT("BC_COM: Client Client\n\r");
     bc_com.state = BC_COM_STATE_CLIENT_CLOSE;
     while (bc_com.state != BC_COM_STATE_IDLE);
+    BC_COM_DEBUG_PRINT("BC_COM_DeInitialize_Runtime() - Ready\n\r");
 }
 
 /*********** Receive Interface *******************/
 bool BC_COM_listen(int32_t count) {
     BC_COM_DEBUG_PRINT("BC_COM_listen()\n\r");
-    if (bc_com.receive_buffer != 0) {
-        BC_COM_DEBUG_PRINT("BC_COM: Receive Buffer already allocated: %s %d\n\r", __FILE__, __LINE__);
-        return false;
-    }
-    bc_com.receive_buffer = malloc(count);
-    if (bc_com.receive_buffer == 0) {
-        BC_COM_DEBUG_PRINT("BC_COM: Malloc Error: %s %d\n\r", __FILE__, __LINE__);
-        bc_com.state = BC_COM_STATE_SERVER_CLOSE;
-        return false;
-    }
     bc_com.receive_number_of_data_to_read = count;
     bc_com.receive_data_count = 0;
-    bc_com.state = BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY;
+    bc_com.state = BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION;
     return true;
+}
+
+void BC_COM_listen_stop(void) {
+    BC_COM_DEBUG_PRINT("BC_COM_listen_stop()\n\r");
+    bc_com.state = BC_COM_STATE_IDLE;
 }
 
 bool BC_COM_is_data_received(void) {
@@ -263,16 +272,20 @@ bool BC_COM_is_data_received(void) {
 
 void BC_COM_read_data(uint8_t *buffer) {
     BC_COM_DEBUG_PRINT("BC_COM_read_data()\n\r");
-    memcpy(buffer, bc_com.receive_buffer, bc_com.receive_number_of_data_to_read);
-    free(bc_com.receive_buffer);
-    bc_com.receive_buffer = 0;
-    bc_com.receive_data_has_been_received = false;
+    if (bc_com.receive_buffer != 0) {
+        memcpy(buffer, bc_com.receive_buffer, bc_com.receive_number_of_data_to_read);
+        BC_COM_DEBUG_PRINT("BC_COM: Close Server\n\r");
+        bc_com.receive_data_has_been_received = false;
+        bc_com.state = BC_COM_STATE_SERVER_STOP_WAIT;
+    } else {
+        BC_COM_DEBUG_PRINT("BC_COM: bc_com.receive_buffer is 0()\n\r");
+    }
 }
 
 /*********** Transmit Interface *******************/
 bool BC_COM_send(uint8_t *buffer, int32_t count) {
     BC_COM_DEBUG_PRINT("BC_COM_send()\n\r");
-    if ((bc_com.state != BC_COM_STATE_IDLE) && (bc_com.state != BC_COM_STATE_CLIENT_HOLD)) {
+    if (bc_com.state != BC_COM_STATE_IDLE ) {
         BC_COM_DEBUG_PRINT("BC COM send not in idle or hold: %s %d\n\r", __FILE__, __LINE__);
         return true;
     }
@@ -283,10 +296,10 @@ bool BC_COM_send(uint8_t *buffer, int32_t count) {
     return false;
 }
 
-void BC_COM_stop_send(void) {
-    BC_COM_DEBUG_PRINT("BC_COM_stop_send()\n\r");
-    bc_com.state = BC_COM_STATE_CLIENT_CLOSE;
-}
+//void BC_COM_stop_send(void) {
+//    BC_COM_DEBUG_PRINT("BC_COM_stop_send()\n\r");
+//    bc_com.state = BC_COM_STATE_CLIENT_CLOSE;
+//}
 
 bool BC_COM_is_idle(void) {
     if (bc_com.state == BC_COM_STATE_IDLE) {
@@ -302,6 +315,7 @@ char *bc_com_states_str[] = {
     "BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION",
     "BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY",
     "BC_COM_STATE_SERVER_DATA_READ",
+    "BC_COM_STATE_SERVER_STOP_WAIT",
     "BC_COM_STATE_SERVER_CLOSE",
     "BC_COM_STATE_CLIENT_OPEN",
     "BC_COM_STATE_CLIENT_WAIT_FOR_CONNECTION",

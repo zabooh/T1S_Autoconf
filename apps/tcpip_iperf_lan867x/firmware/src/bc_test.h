@@ -100,6 +100,9 @@ extern "C" {
         LAN867X_REG_OBJ MiimObj;
         int32_t counter_100ms;
         volatile bool counter_flag_100ms;
+        bool led_state;
+        bool init_done;
+        uint32_t random;
     } BC_TEST_DATA;
 
     // *****************************************************************************

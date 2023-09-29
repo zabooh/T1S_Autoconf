@@ -105,7 +105,7 @@ void APP_Tasks(void) {
         case APP_WAIT_STACK_INIT:
         {
             if (TCPIP_STACK_Status(sysObj.tcpip) == SYS_STATUS_READY) {
-                appData.state = APP_MIIM_INIT;
+                appData.state = APP_STATE_SERVICE_TASKS;
             }
             break;
         }

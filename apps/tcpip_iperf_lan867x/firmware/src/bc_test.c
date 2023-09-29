@@ -46,13 +46,15 @@
 // *****************************************************************************
 
 typedef struct {
+    TCPIP_MAC_ADDR mac;
     IPV6_ADDR ip6;
     IPV4_ADDR ip4;
-    TCPIP_MAC_ADDR mac;
     uint8_t nodeid;
     uint8_t maxnodeid;
     uint8_t randommssg[20];
     int32_t counter_100ms;
+    bool led_state;
+    uint32_t random;
 } AUTOCONFMSG;
 
 AUTOCONFMSG auto_conf_msg_transmit;
@@ -105,6 +107,9 @@ DRV_MIIM_RESULT Write_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, c
 DRV_MIIM_RESULT Write_Bit_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t mask, uint16_t wData);
 DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, const uint32_t regAddr, uint16_t *rData);
 
+DRV_MIIM_RESULT BC_TEST_miim_init(void);
+void BC_TEST_miim_close(void);
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -123,7 +128,14 @@ void BC_TEST_Initialize(void) {
     BC_TEST_Command_Init();
     SYS_Initialization_TCP_Stack();
     SYS_Task_Start_TCP();
-    bc_test.state = BC_TEST_STATE_IDLE; //BC_TEST_STATE_INIT_START;
+    bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
+    bc_test.counter_100ms = 0;
+    bc_test.led_state = false;    
+    LED_1_Set();
+    LED_2_Set();
+    SYS_TIME_TimerStart(bc_test.timer_client_hdl);
+    bc_test.init_done = false;
+    bc_test.state = BC_TEST_STATE_IDLE;
 }
 
 /******************************************************************************
@@ -145,9 +157,6 @@ void BC_TEST_Tasks(void) {
 
 
         case BC_TEST_STATE_INIT_START:
-            bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
-            bc_test.counter_100ms = 0;
-            SYS_TIME_TimerStart(bc_test.timer_client_hdl);
             bc_test.state = BC_TEST_STATE_INIT_TCPIP_WAIT_START;
             break;
 
@@ -170,11 +179,17 @@ void BC_TEST_Tasks(void) {
             bc_test.MyIpAddr.Val = TCPIP_STACK_NetAddress(netH);
             bc_test.MyMacAddr = (TCPIP_MAC_ADDR*) TCPIP_STACK_NetAddressMac(netH);
             if (dwLastIP.Val != bc_test.MyIpAddr.Val) {
+
                 dwLastIP.Val = bc_test.MyIpAddr.Val;
-                BC_TEST_DEBUG_PRINT("IP Address : %d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
-                BC_TEST_DEBUG_PRINT("MAC Address: %02x:%02x:%02x:%02x:%02x:%02x\r\n", bc_test.MyMacAddr->v[0], bc_test.MyMacAddr->v[1], bc_test.MyMacAddr->v[2], bc_test.MyMacAddr->v[3], bc_test.MyMacAddr->v[4], bc_test.MyMacAddr->v[5]);
-                BC_COM_Initialize_Runtime();
+                BC_TEST_DEBUG_PRINT("BC_TEST: IP Address : %d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
+                BC_TEST_DEBUG_PRINT("BC_TEST: MAC Address: %02x:%02x:%02x:%02x:%02x:%02x\r\n", bc_test.MyMacAddr->v[0], bc_test.MyMacAddr->v[1], bc_test.MyMacAddr->v[2], bc_test.MyMacAddr->v[3], bc_test.MyMacAddr->v[4], bc_test.MyMacAddr->v[5]);
+                
                 bc_test.countdown = 10;
+                bc_test.init_done = true;
+                bc_test.MyMacAddr = (TCPIP_MAC_ADDR*) TCPIP_STACK_NetAddressMac(netH);
+              
+                BC_COM_Initialize_Runtime();
+                
                 bc_test.state = BC_TEST_STATE_MEMBER_START_REQUEST;
             }
             break;
@@ -186,25 +201,40 @@ void BC_TEST_Tasks(void) {
 
         case BC_TEST_STATE_MEMBER_START_REQUEST:
             if (bc_test.countdown == 0) {
-                BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
+                BC_TEST_DEBUG_PRINT("BC_TEST: =============================================\n\r");
+                BC_TEST_DEBUG_PRINT("BC_TEST: Timeout %s %d\n\r", __FILE__, __LINE__);
+                
+                bc_test.random = TRNG_ReadData();               
+                
 #ifdef MY_NODE_0
-                BC_TEST_DEBUG_PRINT("MY_NODE_0 %s %s\n\r", __DATE__, __TIME__);
+                BC_TEST_DEBUG_PRINT("BC_TEST: MY_NODE_0 %s %s\n\r", __DATE__, __TIME__);
 #endif
 #ifdef MY_NODE_1
-                BC_TEST_DEBUG_PRINT("MY_NODE_1 %s %s\n\r", __DATE__, __TIME__);
+                BC_TEST_DEBUG_PRINT("BC_TEST: MY_NODE_1 %s %s\n\r", __DATE__, __TIME__);
 #endif
 #ifdef MY_NODE_2
-                BC_TEST_DEBUG_PRINT("MY_NODE_2 %s %s\n\r", __DATE__, __TIME__);
+                BC_TEST_DEBUG_PRINT("BC_TEST: MY_NODE_2 %s %s\n\r", __DATE__, __TIME__);
 #endif
 #ifdef MY_NODE_3
-                BC_TEST_DEBUG_PRINT("MY_NODE_3 %s %s\n\r", __DATE__, __TIME__);
-#endif                          
-                BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
-                auto_conf_msg_transmit.ip4.Val = 0x12345678;
-                auto_conf_msg_transmit.nodeid = 0xAA;
-                auto_conf_msg_transmit.randommssg[19] = 0x55;
+                BC_TEST_DEBUG_PRINT("BC_TEST: MY_NODE_3 %s %s\n\r", __DATE__, __TIME__);
+#endif   
+                
+                memset((void*) &auto_conf_msg_transmit, 0xEE, sizeof (AUTOCONFMSG));
+
+                auto_conf_msg_transmit.mac.v[0] = bc_test.MyMacAddr->v[0];
+                auto_conf_msg_transmit.mac.v[1] = bc_test.MyMacAddr->v[1];
+                auto_conf_msg_transmit.mac.v[2] = bc_test.MyMacAddr->v[2];
+                auto_conf_msg_transmit.mac.v[3] = bc_test.MyMacAddr->v[3];
+                auto_conf_msg_transmit.mac.v[4] = bc_test.MyMacAddr->v[4];
+                auto_conf_msg_transmit.mac.v[5] = bc_test.MyMacAddr->v[5];
+
+                auto_conf_msg_transmit.random = bc_test.random;
+
+                BC_TEST_DEBUG_PRINT("BC_TEST: Radom - Member: %08x\n\r", bc_test.random);
+
                 BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Member\n\r");
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
+
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 while (BC_COM_is_idle() == false);
                 BC_COM_listen(sizeof (AUTOCONFMSG));
@@ -216,17 +246,35 @@ void BC_TEST_Tasks(void) {
 
         case BC_TEST_STATE_MEMBER_WAIT_FOR_REQUESTED_ANSWER:
             if (BC_COM_is_data_received() == true) {
+
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
+
+                if (auto_conf_msg_receive.random != auto_conf_msg_transmit.random) {
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Member\n\r");
+                    BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Wrong Random, skip packet\n\r");
+                    bc_test.countdown = 50;
+                    while (BC_COM_is_idle() == false);
+                    BC_COM_listen(sizeof (AUTOCONFMSG));                    
+                    bc_test.state = BC_TEST_STATE_MEMBER_WAIT_FOR_REQUESTED_ANSWER;
+                    break;
+                }
+                BC_TEST_DEBUG_PRINT("BC_TEST: Correct Random, process packet\n\r");
+                
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
                 bc_test.counter_100ms = auto_conf_msg_receive.counter_100ms;
+                bc_test.led_state = auto_conf_msg_receive.led_state;
                 SYS_TIME_TimerStart(bc_test.timer_client_hdl);
+
                 BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Member\n\r");
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+
                 bc_test.state = BC_TEST_STATE_MEMBER_PROCESS_REQUESTED_DATA;
                 break;
             }
             if (bc_test.countdown == 0) {
-                BC_TEST_DEBUG_PRINT("Timeout %s %d\n\r", __FILE__, __LINE__);
+                BC_TEST_DEBUG_PRINT("BC_TEST: Timeout %s %d\n\r", __FILE__, __LINE__);
+                BC_COM_listen_stop();
                 bc_test.state = BC_TEST_STATE_DECIDE_TO_BE_COORDINATOR_NODE;
             }
             break;
@@ -257,16 +305,28 @@ void BC_TEST_Tasks(void) {
 
         case BC_TEST_STATE_COORDINATOR_ANSWER_REQUEST:
             if (BC_COM_is_idle() == true) {
-                memcpy((void*) &auto_conf_msg_transmit, (void*) &auto_conf_msg_receive, sizeof (AUTOCONFMSG));
-                auto_conf_msg_transmit.ip4.Val = 0x87654321;
-                auto_conf_msg_transmit.nodeid = 0x55;
-                auto_conf_msg_transmit.randommssg[19] = 0xAA;
+
+                memset((void*) &auto_conf_msg_transmit, 0xCC, sizeof (AUTOCONFMSG));
+
+                auto_conf_msg_transmit.mac.v[0] = bc_test.MyMacAddr->v[0];
+                auto_conf_msg_transmit.mac.v[1] = bc_test.MyMacAddr->v[1];
+                auto_conf_msg_transmit.mac.v[2] = bc_test.MyMacAddr->v[2];
+                auto_conf_msg_transmit.mac.v[3] = bc_test.MyMacAddr->v[3];
+                auto_conf_msg_transmit.mac.v[4] = bc_test.MyMacAddr->v[4];
+                auto_conf_msg_transmit.mac.v[5] = bc_test.MyMacAddr->v[5];
+
+                auto_conf_msg_transmit.random = auto_conf_msg_receive.random;
+
                 bc_test.counter_flag_100ms = false;
-                while (bc_test.counter_flag_100ms == false);                
+                while (bc_test.counter_flag_100ms == false);
+
                 auto_conf_msg_transmit.counter_100ms = bc_test.counter_100ms;
+                auto_conf_msg_transmit.led_state = bc_test.led_state;
+
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Controller\n\r");
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
+
                 while (BC_COM_is_idle() == false);
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
@@ -279,7 +339,7 @@ void BC_TEST_Tasks(void) {
 
         default:
         {
-            BC_TEST_DEBUG_PRINT("APP: I should be never here: %s %d\n\r", __FILE__, __LINE__);
+            BC_TEST_DEBUG_PRINT("BC_TEST:  I should be never here: %s %d\n\r", __FILE__, __LINE__);
             while (1);
             break;
         }
@@ -291,11 +351,18 @@ void BC_TEST_TimerCallback(uintptr_t context) {
     if (bc_test.countdown) {
         bc_test.countdown--;
     }
+
     bc_test.counter_100ms++;
     bc_test.counter_flag_100ms = true;
 
-    if ( (bc_test.counter_100ms % 50) == 0) {
-        BC_TEST_DEBUG_PRINT("Counter: %d\n\r", bc_test.counter_100ms);
+    if ((bc_test.counter_100ms % 20) == 0) {
+        if (bc_test.led_state == false) {
+            bc_test.led_state = true;
+            LED_1_Set();
+        } else {
+            LED_1_Clear();
+            bc_test.led_state = false;
+        }
     }
 
 }
@@ -370,7 +437,13 @@ static void my_run(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
     //    SYS_Initialization_TCP_Stack();
     //    SYS_Task_Start_TCP();
 
-    bc_test.state = BC_TEST_STATE_INIT_START;
+    if (bc_test.init_done == false) {
+        bc_test.state = BC_TEST_STATE_INIT_START;
+    } else {
+        bc_test.state = BC_TEST_STATE_MEMBER_START_REQUEST;
+    }
+
+
 
     //    vTaskDelay(3000U / portTICK_PERIOD_MS);
     //    SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
@@ -391,7 +464,7 @@ DRV_MIIM_RESULT BC_TEST_miim_init(void) {
     /*  Open the MIIM driver and get an instance to it. */
     bc_test.MiimObj.miimHandle = bc_test.MiimObj.miimBase->DRV_MIIM_Open(miimObjIx, DRV_IO_INTENT_SHARED);
     if ((bc_test.MiimObj.miimHandle == DRV_HANDLE_INVALID) || (bc_test.MiimObj.miimHandle == 0)) {
-        SYS_CONSOLE_PRINT("> Local miim open: failed!\r\n");
+        SYS_CONSOLE_PRINT("BC_TEST: Local miim open: failed!\r\n");
         bc_test.MiimObj.miimHandle = 0;
         res = DRV_MIIM_RES_OP_INTERNAL_ERR;
     } else {
@@ -403,7 +476,7 @@ DRV_MIIM_RESULT BC_TEST_miim_init(void) {
         /*  Setup the miim driver instance. */
         res = bc_test.MiimObj.miimBase->DRV_MIIM_Setup(bc_test.MiimObj.miimHandle, &miimSetup);
         if (res < 0) {
-            SYS_CONSOLE_PRINT("> Local miim setup: failed!\r\n");
+            SYS_CONSOLE_PRINT("BC_TEST: Local miim setup: failed!\r\n");
         } else {
             //SYS_CONSOLE_PRINT("> Miim Successfully opened. \r\n");
         }
@@ -444,11 +517,11 @@ static void my_plca_write_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** a
 
     if (opRes < 0) {
         /* In case of an error, report and close miim instance. */
-        BC_TEST_DEBUG_PRINT("Register Write Error occurred:%d\r\n", opRes);
+        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write Error occurred:%d\r\n", opRes);
     } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
-        BC_TEST_DEBUG_PRINT(" Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
+        BC_TEST_DEBUG_PRINT("BC_TEST:  Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
     } else {
-        BC_TEST_DEBUG_PRINT("Register Write opRes: %d\n\r", opRes);
+        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write opRes: %d\n\r", opRes);
     }
 
     BC_TEST_miim_close();
@@ -468,11 +541,11 @@ static void my_plca_read_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** ar
 
     if (opRes < 0) {
         /* In case of an error, report and close miim instance. */
-        BC_TEST_DEBUG_PRINT("Register Read Error occurred:%d\r\n", opRes);
+        BC_TEST_DEBUG_PRINT("BC_TEST: Register Read Error occurred:%d\r\n", opRes);
     } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
-        BC_TEST_DEBUG_PRINT(" Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
+        BC_TEST_DEBUG_PRINT("BC_TEST:  Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
     } else {
-        BC_TEST_DEBUG_PRINT("Register Read opRes: %d\n\r", opRes);
+        BC_TEST_DEBUG_PRINT("BC_TEST: Register Read opRes: %d\n\r", opRes);
     }
 
     BC_TEST_miim_close();
