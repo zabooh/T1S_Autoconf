@@ -11,15 +11,15 @@ import os.path
 import argparse
 import time
 
-mdb_A = None
-mdb_B = None
-mdb_C = None
-mdb_D = None
+hw_A = 0
+hw_B = 1
+hw_C = 2
+hw_D = 3
 
-hw_A = None
-hw_B = None
-hw_C = None
-hw_D = None
+tool_entry_A = None
+tool_entry_B = None
+tool_entry_C = None
+tool_entry_D = None
 
 proc_A = None
 proc_B = None
@@ -38,6 +38,11 @@ input_queue_D = None
 
 block_output = True
 
+output_text_A = None
+output_text_B = None
+output_text_C = None
+output_text_D = None
+
 HEX_FILE_01="..\\apps\\tcpip_iperf_lan867x\\firmware\\tcpip_iperf_lan867x_freertos.X\\dist\\FreeRTOS\\production\\tcpip_iperf_lan867x_freertos.X.production.hex"
 HEX_FILE_02="..\\apps\\tcpip_iperf_lan867x\\firmware\\tcpip_iperf_lan867x_freertos.X\\dist\\FreeRTOS_node_1\\production\\tcpip_iperf_lan867x_freertos.X.production.hex"
 HEX_FILE_03="..\\apps\\tcpip_iperf_lan867x\\firmware\\tcpip_iperf_lan867x_freertos.X\\dist\\FreeRTOS_node_2\\production\\tcpip_iperf_lan867x_freertos.X.production.hex"
@@ -47,8 +52,8 @@ HW_TOOL="EDBG"
 TG_MCU="ATSAME54P20A"
 HW_SERIAL_01="ATML3264031800001044"
 
-
-
+gui_thread = None
+start_gui_flag = False
 
 def mdb_communicator_thread_A():
     global proc_A
@@ -98,6 +103,14 @@ def mdb_communicator_thread_A():
                 pass
 
     print("Thread A stopped")
+    if block_output == False:
+        output_text_A.insert(tk.END, "Thread A stopped")
+        output_text_A.see(tk.END)
+        output_text_A.update_idletasks()
+    proc_A.terminate()
+    proc_B.terminate()
+    proc_C.terminate()
+    proc_D.terminate()  
 
 def mdb_communicator_thread_B():
     global proc_B
@@ -146,6 +159,14 @@ def mdb_communicator_thread_B():
                 pass
 
     print("Thread B stopped")
+    if block_output == False:
+        output_text_B.insert(tk.END, "Thread B stopped")
+        output_text_B.see(tk.END)
+        output_text_B.update_idletasks()
+    proc_A.terminate()
+    proc_B.terminate()
+    proc_C.terminate()
+    proc_D.terminate()  
 
 def mdb_communicator_thread_C():
     global proc_C
@@ -194,7 +215,14 @@ def mdb_communicator_thread_C():
                 pass
 
     print("Thread C stopped")
-
+    if block_output == False:
+        output_text_C.insert(tk.END, "Thread C stopped")
+        output_text_C.see(tk.END)
+        output_text_C.update_idletasks()
+    proc_A.terminate()
+    proc_B.terminate()
+    proc_C.terminate()
+    proc_D.terminate()  
 
 def mdb_communicator_thread_D():
     global proc_D
@@ -242,13 +270,46 @@ def mdb_communicator_thread_D():
             except:
                 pass
 
-    print("Thread B stopped")
+    print("Thread D stopped")
+    if block_output == False:
+        output_text_D.insert(tk.END, "Thread D stopped")
+        output_text_D.see(tk.END)
+        output_text_D.update_idletasks()
+    proc_A.terminate()
+    proc_B.terminate()
+    proc_C.terminate()
+    proc_D.terminate()  
 
+    
+
+
+def Stop_All():
+    stop_mdb_All()
+    sys.exit()
 
 
 def run_mdb_All():
     global block_output
     block_output = False
+    global hw_A
+    global hw_B
+    global hw_C
+    global hw_D
+    global tool_entry_A
+    global tool_entry_B
+    global tool_entry_C
+    global tool_entry_D
+
+    hw_A = tool_entry_A.get()
+    hw_B = tool_entry_B.get()
+    hw_C = tool_entry_C.get()
+    hw_D = tool_entry_D.get()
+
+    #hex_file = hex_file_entry.get()
+    #mdb_path = mdb_path_entry.get()
+    #hw_tool = hw_tool_entry.get()
+    #tg_mcu = tg_mcu_entry.get()
+    #hw_serial = hw_serial_entry.get()
 
     thread_run_A = threading.Thread(target=run_mdb_A)
     thread_run_A.start()
@@ -266,7 +327,6 @@ def run_mdb_All():
     thread_run_D.start()
     while not thread_run_D.is_alive(): pass    
 
-
 def run_mdb_A():
     global proc_A
     global input_queue_A
@@ -280,8 +340,6 @@ def run_mdb_A():
     send_cmd_A("set communication.interface swd\n")
     send_cmd_A("set communication.speed 6.000\n")
     send_cmd_A("hwtool " + HW_TOOL + " -p " + str(hw_A) + "\n")
-    #input_queue_A.put("quit\n")    
-
 
 
 def run_mdb_B():
@@ -297,8 +355,6 @@ def run_mdb_B():
     send_cmd_B("set communication.interface swd\n")
     send_cmd_B("set communication.speed 6.000\n")
     send_cmd_B("hwtool " + HW_TOOL + " -p " + str(hw_B) + "\n")
-    #input_queue_B.put("quit\n")    
-
 
 def run_mdb_C():
     global proc_C
@@ -313,8 +369,6 @@ def run_mdb_C():
     send_cmd_C("set communication.interface swd\n")
     send_cmd_C("set communication.speed 6.000\n")
     send_cmd_C("hwtool " + HW_TOOL + " -p " + str(hw_C) + "\n")
-    #input_queue_B.put("quit\n")    
-
 
 def run_mdb_D():
     global proc_D
@@ -329,9 +383,19 @@ def run_mdb_D():
     send_cmd_D("set communication.interface swd\n")
     send_cmd_D("set communication.speed 6.000\n")
     send_cmd_D("hwtool " + HW_TOOL + " -p " + str(hw_D) + "\n")
-    #input_queue_B.put("quit\n")    
+
+def run_hwtool_A():
+    global block_output
+    block_output = False
+
+    thread_hwtool_A = threading.Thread(target=thread_run_hwtool_A)
+    thread_hwtool_A.start()
+    while not thread_hwtool_A.is_alive(): pass
 
 
+
+def thread_run_hwtool_A():
+    send_cmd_A("hwtool\n")
 
 def send_cmd_A(cmd):
     global input_queue_A
@@ -341,10 +405,11 @@ def send_cmd_A(cmd):
     output_text_A.insert(tk.END, cmd)
     output_text_A.see(tk.END)
     output_text_A.update_idletasks()
+    print("wait for process A")
     out = output_queue_A.get()
+    print("process A answered")
     return out
     
-
 def send_cmd_B(cmd):
     global input_queue_B
     global output_queue_B
@@ -356,7 +421,6 @@ def send_cmd_B(cmd):
     out = output_queue_B.get();    
     return out
     
-
 def send_cmd_C(cmd):
     global input_queue_C
     global output_queue_C
@@ -368,7 +432,6 @@ def send_cmd_C(cmd):
     out = output_queue_C.get();    
     return out
     
-
 def send_cmd_D(cmd):
     global input_queue_D
     global output_queue_D
@@ -382,6 +445,7 @@ def send_cmd_D(cmd):
     
 
 
+
 def run_prog_All():
     thread_A = threading.Thread(target=run_prog_A)
     thread_A.start()    
@@ -391,7 +455,6 @@ def run_prog_All():
     thread_C.start()
     thread_D = threading.Thread(target=run_prog_D)
     thread_D.start()
-
 
 def run_prog_A():
     global HEX_FILE_01    
@@ -410,250 +473,261 @@ def run_prog_D():
     send_cmd_D('program ' + HEX_FILE_04 + '\n')
 
 
-
-
-def stop_A_mdb():
-    global mdb_A
-    global mdb_B
-    global mdb_C
-    global mdb_D
+def stop_mdb_All():
+    global gui_thread
+    global block_output
+    print("All stopped....")
+    block_output = True
+    input_queue_A.put("quit\n")
+    input_queue_B.put("quit\n")
+    input_queue_C.put("quit\n")
+    input_queue_D.put("quit\n")
+    proc_A.terminate()
+    proc_B.terminate()
+    proc_C.terminate()
+    proc_D.terminate()    
+    time.sleep(0.5)
+    root.quit()
+    root.destroy()
+    sys.exit()
     
-    if mdb_A is not None:
-        try:
-            out = mdb_A.send('quit\n')
-        except StopIteration:
-            pass  # Ignore StopIteration when sending 'quit'
-
-    if mdb_B is not None:
-        try:
-            out = mdb_B.send('quit\n')
-        except StopIteration:
-            pass  # Ignore StopIteration when sending 'quit'
-
-    if mdb_C is not None:
-        try:
-            out = mdb_C.send('quit\n')
-        except StopIteration:
-            pass  # Ignore StopIteration when sending 'quit'
-
-    if mdb_D is not None:
-        try:
-            out = mdb_D.send('quit\n')
-        except StopIteration:
-            pass  # Ignore StopIteration when sending 'quit'                
 
 
+def exit_program():
+    root.quit()  # Beendet die Tkinter-Hauptschleife (main loop)
 
 
+def start_gui():
+    global root
+    global mdb_path_entry
+    global start_gui_flag
+    global output_text_A
+    global output_text_B
+    global output_text_C
+    global output_text_D
+    global tool_entry_A
+    global tool_entry_B
+    global tool_entry_C
+    global tool_entry_D
 
 
-# Tkinter-GUI erstellen
-root = tk.Tk()
-root.title("MDB Output GUI")
-root.geometry("1000x600") 
+    # Tkinter-GUI erstellen
+    root = tk.Tk()
+    root.title("MDB Output GUI")
+    root.geometry("1400x600") 
 
-# Label und Eingabefelder für die Parameter
-hex_file_label = tk.Label(root, text="Hex-Datei:")
-hex_file_label.pack()
-hex_file_entry = tk.Entry(root, width=160)
-hex_file_entry.insert(0, HEX_FILE_01)  # Verwende den Standardwert
-hex_file_entry.pack()
-
-mdb_path_label = tk.Label(root, text="Pfad zu mdb:")
-mdb_path_label.pack()
-mdb_path_entry = tk.Entry(root, width=80)
-mdb_path_entry.insert(0, MDB_PATH)  # Verwende den Standardwert
-mdb_path_entry.pack()
-
-hw_tool_label = tk.Label(root, text="Hardware-Tool:")
-hw_tool_label.pack()
-hw_tool_entry = tk.Entry(root, width=80)
-hw_tool_entry.insert(0, HW_TOOL)  # Verwende den Standardwert
-hw_tool_entry.pack()
-
-tg_mcu_label = tk.Label(root, text="Ziel-MCU:")
-tg_mcu_label.pack()
-tg_mcu_entry = tk.Entry(root, width=80)
-tg_mcu_entry.insert(0, TG_MCU)  # Verwende den Standardwert
-tg_mcu_entry.pack()
-
-hw_serial_label = tk.Label(root, text="Hardware-Tool-Seriennummer:")
-hw_serial_label.pack()
-hw_serial_entry = tk.Entry(root, width=80)
-hw_serial_entry.insert(0, HW_SERIAL_01)  # Verwende den Standardwert
-hw_serial_entry.pack()
-
-# Button zum Starten des mdb-Prozesses und Anzeigen der Ausgabe
-
-button_frame_1 = tk.Frame(root)
-button_frame_1.pack()
-
-hw_A = 0
-hw_B = 1
-hw_C = 2
-hw_D = 3
+    # Container-Frame für die Labels und Eingabefelder erstellen
+    hex_file_frame_A = tk.Frame(root)
+    hex_file_frame_A.pack(pady=1, padx=1)
+    # Label für Hex-Datei A erstellen und im Container platzieren
+    hex_file_label_A = tk.Label(hex_file_frame_A, text="Hex-Datei A:")
+    hex_file_label_A.pack(side=tk.LEFT, padx=5)
+    # Eingabefeld für Hex-Datei A erstellen und im Container platzieren
+    hex_file_entry_A = tk.Entry(hex_file_frame_A, width=150)
+    hex_file_entry_A.insert(0, HEX_FILE_01)  # Verwende den Standardwert
+    hex_file_entry_A.pack(side=tk.LEFT, padx=5)
+    # Tool Index
+    tool_label_A = tk.Label(hex_file_frame_A, text="Tool Index")
+    tool_label_A.pack(side=tk.LEFT, padx=5)    
+    tool_entry_A = tk.Entry(hex_file_frame_A, width=5)
+    tool_entry_A.insert(0, hw_A)  # Verwende den Standardwert
+    tool_entry_A.pack(side=tk.LEFT, padx=5)
 
 
-start_button_All = tk.Button(button_frame_1, text="Start MDB All", command=run_mdb_All)
-start_button_All.pack(side=tk.LEFT, padx=10) 
-
-start_button_A = tk.Button(button_frame_1, text="Start MDB A", command=lambda: run_mdb_x(mdb_A, output_text_A,hw_A))
-start_button_A.pack(side=tk.LEFT, padx=10) 
-
-start_button_B = tk.Button(button_frame_1, text="Start MDB B", command=lambda: run_mdb_x(mdb_B, output_text_B,hw_B))
-start_button_B.pack(side=tk.LEFT, padx=10)
-
-start_button_C = tk.Button(button_frame_1, text="Start MDB C", command=lambda: run_mdb_x(mdb_C, output_text_C,hw_C))
-start_button_C.pack(side=tk.LEFT, padx=10)
-
-start_button_D = tk.Button(button_frame_1, text="Start MDB D", command=lambda: run_mdb_x(mdb_D, output_text_D,hw_D))
-start_button_D.pack(side=tk.LEFT, padx=10)
-
-prog_button_A = tk.Button(button_frame_1, text="Prog All", command=run_prog_All)
-prog_button_A.pack(side=tk.LEFT, padx=10)
-
-prog_button_B = tk.Button(button_frame_1, text="Prog B", command=run_prog_B)
-prog_button_B.pack(side=tk.LEFT, padx=10)
-
-prog_button_C = tk.Button(button_frame_1, text="Prog C", command=run_prog_C)
-prog_button_C.pack(side=tk.LEFT, padx=10)
-
-prog_button_D = tk.Button(button_frame_1, text="Prog D", command=run_prog_D)
-prog_button_D.pack(side=tk.LEFT, padx=10)
-
-stop_A_button_D = tk.Button(button_frame_1, text="Stop A", command=stop_A_mdb)
-stop_A_button_D.pack(side=tk.LEFT, padx=10)
+    # Container-Frame für die Labels und Eingabefelder erstellen
+    hex_file_frame_B = tk.Frame(root)
+    hex_file_frame_B.pack(pady=1, padx=1)
+    # Label für Hex-Datei A erstellen und im Container platzieren
+    hex_file_label_B = tk.Label(hex_file_frame_B, text="Hex-Datei B:")
+    hex_file_label_B.pack(side=tk.LEFT, padx=5)
+    # Eingabefeld für Hex-Datei A erstellen und im Container platzieren
+    hex_file_entry_B = tk.Entry(hex_file_frame_B, width=150)
+    hex_file_entry_B.insert(0, HEX_FILE_02)  # Verwende den Standardwert
+    hex_file_entry_B.pack(side=tk.LEFT, padx=5)
+    # Tool Index
+    tool_label_B = tk.Label(hex_file_frame_B, text="Tool Index")
+    tool_label_B.pack(side=tk.LEFT, padx=5)    
+    tool_entry_B = tk.Entry(hex_file_frame_B, width=5)
+    tool_entry_B.insert(0, hw_B)  # Verwende den Standardwert
+    tool_entry_B.pack(side=tk.LEFT, padx=5)
 
 
+    # Container-Frame für die Labels und Eingabefelder erstellen
+    hex_file_frame_C = tk.Frame(root)
+    hex_file_frame_C.pack(pady=1, padx=1)
+    # Label für Hex-Datei A erstellen und im Container platzieren
+    hex_file_label_C = tk.Label(hex_file_frame_C, text="Hex-Datei C:")
+    hex_file_label_C.pack(side=tk.LEFT, padx=5)
+    # Eingabefeld für Hex-Datei A erstellen und im Container platzieren
+    hex_file_entry_C = tk.Entry(hex_file_frame_C, width=150)
+    hex_file_entry_C.insert(0, HEX_FILE_03)  # Verwende den Standardwert
+    hex_file_entry_C.pack(side=tk.LEFT, padx=5)
+    # Tool Index
+    tool_label_C = tk.Label(hex_file_frame_C, text="Tool Index")
+    tool_label_C.pack(side=tk.LEFT, padx=5)    
+    tool_entry_C = tk.Entry(hex_file_frame_C, width=5)
+    tool_entry_C.insert(0, hw_C)  # Verwende den Standardwert
+    tool_entry_C.pack(side=tk.LEFT, padx=5)
 
-top_text_widgets_frame = tk.Frame(root)
-top_text_widgets_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+    # Container-Frame für die Labels und Eingabefelder erstellen
+    hex_file_frame_D = tk.Frame(root)
+    hex_file_frame_D.pack(pady=1, padx=1)
+    # Label für Hex-Datei A erstellen und im Container platzieren
+    hex_file_label_D = tk.Label(hex_file_frame_D, text="Hex-Datei D:")
+    hex_file_label_D.pack(side=tk.LEFT, padx=5)
+    # Eingabefeld für Hex-Datei A erstellen und im Container platzieren
+    hex_file_entry_D = tk.Entry(hex_file_frame_D, width=150)
+    hex_file_entry_D.insert(0, HEX_FILE_03)  # Verwende den Standardwert
+    hex_file_entry_D.pack(side=tk.LEFT, padx=5)
+    # Tool Index
+    tool_label_D = tk.Label(hex_file_frame_D, text="Tool Index")
+    tool_label_D.pack(side=tk.LEFT, padx=5)    
+    tool_entry_D = tk.Entry(hex_file_frame_D, width=5)
+    tool_entry_D.insert(0, hw_D)  # Verwende den Standardwert
+    tool_entry_D.pack(side=tk.LEFT, padx=5)
 
-output_text_A = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)  #.ScrolledText(root, width=100, height=20, wrap=tk.WORD)
-output_text_A.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
-output_text_A.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
-
-output_text_B = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)  #.ScrolledText(root, width=100, height=20, wrap=tk.WORD)
-output_text_B.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
-output_text_B.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
-
-bottom_text_widgets_frame = tk.Frame(root)
-bottom_text_widgets_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-
-output_text_C = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)  #.ScrolledText(root, width=100, height=20, wrap=tk.WORD)
-output_text_C.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
-output_text_C.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
-
-output_text_D = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)  #.ScrolledText(root, width=100, height=20, wrap=tk.WORD)
-output_text_D.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
-output_text_D.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
-
-
-#hex_file = hex_file_entry.get()
-mdb_path = mdb_path_entry.get()
-#hw_tool = hw_tool_entry.get()
-#tg_mcu = tg_mcu_entry.get()
-#hw_serial = hw_serial_entry.get()
+    # Container-Frame für die Labels und Eingabefelder erstellen
+    mdb_path_frame_D = tk.Frame(root)
+    mdb_path_frame_D.pack(pady=1, padx=1)
+    mdb_path_label = tk.Label(mdb_path_frame_D, text="Pfad zu mdb:")
+    mdb_path_label.pack(side=tk.LEFT, padx=5)
+    mdb_path_entry = tk.Entry(mdb_path_frame_D, width=80)
+    mdb_path_entry.insert(0, MDB_PATH)  # Verwende den Standardwert
+    mdb_path_entry.pack(side=tk.LEFT, padx=5)
 
 
-proc_A = subprocess.Popen(
-    [mdb_path],
-    stdin=subprocess.PIPE,
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE        
-)
-print("Process A start")
-output_text_A.insert(tk.END, "MDB started...\n") 
-output_text_A.see(tk.END)
-root.update_idletasks()
-output_queue_A = queue.Queue()
-input_queue_A = queue.Queue()
-thread_A = threading.Thread(target=mdb_communicator_thread_A)
-thread_A.start()
-while not thread_A.is_alive(): pass
+    button_frame_1 = tk.Frame(root)
+    button_frame_1.pack()
+
+    start_button_All = tk.Button(button_frame_1, text="Connect MDB", command=run_mdb_All)
+    start_button_All.pack(side=tk.LEFT, padx=1) 
+
+    prog_button_A = tk.Button(button_frame_1, text="Prog Boards", command=run_prog_All)
+    prog_button_A.pack(side=tk.LEFT, padx=1)
+
+    prog_button_A = tk.Button(button_frame_1, text="hwtool A", command=run_hwtool_A)
+    prog_button_A.pack(side=tk.LEFT, padx=1)
+
+    top_text_widgets_frame = tk.Frame(root)
+    top_text_widgets_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+    output_text_A = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)  #.ScrolledText(root, width=100, height=20, wrap=tk.WORD)
+    output_text_A.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
+    output_text_A.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
+
+    output_text_B = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)  #.ScrolledText(root, width=100, height=20, wrap=tk.WORD)
+    output_text_B.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
+    output_text_B.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
+
+    bottom_text_widgets_frame = tk.Frame(root)
+    bottom_text_widgets_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+    output_text_C = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)  #.ScrolledText(root, width=100, height=20, wrap=tk.WORD)
+    output_text_C.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
+    output_text_C.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
+
+    output_text_D = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)  #.ScrolledText(root, width=100, height=20, wrap=tk.WORD)
+    output_text_D.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
+    output_text_D.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
+
+    root.protocol("WM_DELETE_WINDOW", stop_mdb_All)
+    
+    start_gui_flag = True 
+    root.mainloop()
 
 
 
+if __name__ == "__main__":
 
-proc_B = subprocess.Popen(
-    [mdb_path],
-    stdin=subprocess.PIPE,
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE        
-)
-print("Process B start")
-output_text_B.insert(tk.END, "MDB started...\n") 
-output_text_B.see(tk.END)
-output_text_B.update_idletasks()
-output_queue_B = queue.Queue()
-input_queue_B = queue.Queue()
-thread_B = threading.Thread(target=mdb_communicator_thread_B)
-thread_B.start()
-while not thread_B.is_alive(): pass
+    gui_thread = threading.Thread(target=start_gui)
+    gui_thread.start()
+    while not gui_thread.is_alive(): pass
+    while start_gui_flag == False: pass
+    block_output = False
+
+    #hex_file = hex_file_entry.get()
+    mdb_path = mdb_path_entry.get()
+    #hw_tool = hw_tool_entry.get()
+    #tg_mcu = tg_mcu_entry.get()
+    #hw_serial = hw_serial_entry.get()
 
 
-
-proc_C = subprocess.Popen(
-    [mdb_path],
-    stdin=subprocess.PIPE,
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE        
-)
-print("Process C start")
-output_text_C.insert(tk.END, "MDB started...\n") 
-output_text_C.see(tk.END)
-output_text_C.update_idletasks()
-output_queue_C = queue.Queue()
-input_queue_C = queue.Queue()
-thread_C = threading.Thread(target=mdb_communicator_thread_C)
-thread_C.start()
-while not thread_C.is_alive(): pass
+    proc_A = subprocess.Popen(
+        [mdb_path],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE        
+    )
+    print("Process A start")
+    output_text_A.insert(tk.END, "MDB started...\n") 
+    output_text_A.see(tk.END)
+    root.update_idletasks()
+    output_queue_A = queue.Queue()
+    input_queue_A = queue.Queue()
+    thread_A = threading.Thread(target=mdb_communicator_thread_A)
+    time.sleep(0.5)
+    thread_A.start()
+    while not thread_A.is_alive(): pass
 
 
 
 
-proc_D = subprocess.Popen(
-    [mdb_path],
-    stdin=subprocess.PIPE,
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE        
-)
-print("Process D start")
-output_text_D.insert(tk.END, "MDB started...\n") 
-output_text_D.see(tk.END)
-output_text_D.update_idletasks()
-output_queue_D = queue.Queue()
-input_queue_D = queue.Queue()
-thread_D = threading.Thread(target=mdb_communicator_thread_D)
-thread_D.start()
-while not thread_D.is_alive(): pass
+    proc_B = subprocess.Popen(
+        [mdb_path],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE        
+    )
+    print("Process B start")
+    output_text_B.insert(tk.END, "MDB started...\n") 
+    output_text_B.see(tk.END)
+    output_text_B.update_idletasks()
+    output_queue_B = queue.Queue()
+    input_queue_B = queue.Queue()
+    thread_B = threading.Thread(target=mdb_communicator_thread_B)
+    time.sleep(0.5)
+    thread_B.start()
+    while not thread_B.is_alive(): pass
 
 
 
-# wait for Prombt
-out = output_queue_A.get()
-output_text_A.insert(tk.END, out)
-output_text_A.see(tk.END)
-output_text_A.update_idletasks()
-# wait for Prombt
-out = output_queue_B.get()
-output_text_B.insert(tk.END, out)
-output_text_B.see(tk.END)
-output_text_B.update_idletasks()
-# wait for Prombt
-out = output_queue_C.get()
-output_text_C.insert(tk.END, out)
-output_text_C.see(tk.END)
-output_text_C.update_idletasks()
-# wait for Prombt
-out = output_queue_D.get()
-output_text_D.insert(tk.END, out)
-output_text_D.see(tk.END)
-output_text_D.update_idletasks()
+    proc_C = subprocess.Popen(
+        [mdb_path],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE        
+    )
+    print("Process C start")
+    output_text_C.insert(tk.END, "MDB started...\n") 
+    output_text_C.see(tk.END)
+    output_text_C.update_idletasks()
+    output_queue_C = queue.Queue()
+    input_queue_C = queue.Queue()
+    thread_C = threading.Thread(target=mdb_communicator_thread_C)
+    time.sleep(0.5)
+    thread_C.start()
+    while not thread_C.is_alive(): pass
 
 
 
 
-# Starte die GUI-Schleife
-root.mainloop()
+    proc_D = subprocess.Popen(
+        [mdb_path],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE        
+    )
+    print("Process D start")
+    output_text_D.insert(tk.END, "MDB started...\n") 
+    output_text_D.see(tk.END)
+    output_text_D.update_idletasks()
+    output_queue_D = queue.Queue()
+    input_queue_D = queue.Queue()
+    thread_D = threading.Thread(target=mdb_communicator_thread_D)
+    time.sleep(0.5)
+    thread_D.start()
+    while not thread_D.is_alive(): pass
+
+
+
 
