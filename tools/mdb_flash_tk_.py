@@ -2,6 +2,7 @@ from distutils.sysconfig import project_base
 import subprocess
 import tkinter as tk
 from tkinter import scrolledtext
+from tkinter import filedialog
 import threading
 import queue
 
@@ -54,6 +55,8 @@ HW_SERIAL_01="ATML3264031800001044"
 
 gui_thread = None
 start_gui_flag = False
+
+selected_file_label = None
 
 def mdb_communicator_thread_A():
     global proc_A
@@ -305,12 +308,6 @@ def run_mdb_All():
     hw_C = tool_entry_C.get()
     hw_D = tool_entry_D.get()
 
-    #hex_file = hex_file_entry.get()
-    #mdb_path = mdb_path_entry.get()
-    #hw_tool = hw_tool_entry.get()
-    #tg_mcu = tg_mcu_entry.get()
-    #hw_serial = hw_serial_entry.get()
-
     thread_run_A = threading.Thread(target=run_mdb_A)
     thread_run_A.start()
     while not thread_run_A.is_alive(): pass
@@ -405,9 +402,7 @@ def send_cmd_A(cmd):
     output_text_A.insert(tk.END, cmd)
     output_text_A.see(tk.END)
     output_text_A.update_idletasks()
-    print("wait for process A")
     out = output_queue_A.get()
-    print("process A answered")
     return out
     
 def send_cmd_B(cmd):
@@ -497,6 +492,16 @@ def exit_program():
     root.quit()  # Beendet die Tkinter-Hauptschleife (main loop)
 
 
+def open_file_dialog():
+    global selected_file_label
+
+    file_path = filedialog.askopenfilename()
+    if file_path:
+        selected_file_label.config(text="Ausgewählte Datei: " + file_path)
+    else:
+        selected_file_label.config(text="Keine Datei ausgewählt")
+
+
 def start_gui():
     global root
     global mdb_path_entry
@@ -509,6 +514,7 @@ def start_gui():
     global tool_entry_B
     global tool_entry_C
     global tool_entry_D
+    global selected_file_label
 
 
     # Tkinter-GUI erstellen
@@ -632,6 +638,14 @@ def start_gui():
 
     root.protocol("WM_DELETE_WINDOW", stop_mdb_All)
     
+    # Erstellen Sie einen Button, der den Datei-Browser öffnet
+    #open_file_button = tk.Button(hex_file_frame_A, text="File", command=open_file_dialog)
+    #open_file_button.pack(side=tk.LEFT, padx=5)
+
+    # Erstellen Sie ein Label, um den ausgewählten Dateipfad anzuzeigen
+    #selected_file_label = tk.Label(root, text="Keine Datei ausgewählt")
+    #selected_file_label.pack()
+
     start_gui_flag = True 
     root.mainloop()
 
@@ -651,12 +665,15 @@ if __name__ == "__main__":
     #tg_mcu = tg_mcu_entry.get()
     #hw_serial = hw_serial_entry.get()
 
+    # Definieren Sie die Flags, um das Konsolenfenster zu verhindern
+    CREATE_NO_WINDOW = 0x08000000
 
     proc_A = subprocess.Popen(
         [mdb_path],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE        
+        stderr=subprocess.PIPE,
+        creationflags=CREATE_NO_WINDOW
     )
     print("Process A start")
     output_text_A.insert(tk.END, "MDB started...\n") 
@@ -676,7 +693,8 @@ if __name__ == "__main__":
         [mdb_path],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE        
+        stderr=subprocess.PIPE,
+        creationflags=CREATE_NO_WINDOW
     )
     print("Process B start")
     output_text_B.insert(tk.END, "MDB started...\n") 
@@ -695,7 +713,8 @@ if __name__ == "__main__":
         [mdb_path],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE        
+        stderr=subprocess.PIPE,
+        creationflags=CREATE_NO_WINDOW
     )
     print("Process C start")
     output_text_C.insert(tk.END, "MDB started...\n") 
@@ -715,7 +734,8 @@ if __name__ == "__main__":
         [mdb_path],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE        
+        stderr=subprocess.PIPE,
+        creationflags=CREATE_NO_WINDOW
     )
     print("Process D start")
     output_text_D.insert(tk.END, "MDB started...\n") 
