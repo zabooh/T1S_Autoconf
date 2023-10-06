@@ -4,35 +4,34 @@ import threading
 import subprocess
 import tkinter as tk
 from tkinter import scrolledtext
-import os  # Importieren Sie das 'os'-Modul für das Ausführen des anderen Python-Programms
-
-
+import os  # Import the 'os' module for running the other Python program
 
 #######################################################################################
 # 
-#   Init Variables
+#   Initialize Variables
 #
 #######################################################################################
 
-
-# Standard-COM-Port-Einstellungen
+# Default COM Port Settings
 default_com_port_A = 'COM3'
 default_com_port_B = 'COM4'
 default_com_port_C = 'COM14'
 default_com_port_D = 'COM21'
 baud_rate = 115200
 
+com_port_A = None
+com_port_B = None
+com_port_C = None 
+com_port_D = None
 
-serial_A = None  # Serial-Objekt für COM-Port 1
-serial_B = None  # Serial-Objekt für COM-Port 2
-serial_C = None  # Serial-Objekt für COM-Port 3
-serial_D = None  # Serial-Objekt für COM-Port 4
-    
+serial_A = None  # Serial object for COM Port 1
+serial_B = None  # Serial object for COM Port 2
+serial_C = None  # Serial object for COM Port 3
+serial_D = None  # Serial object for COM Port 4
 
-# Festlegen des Arbeitsverzeichnisses auf das Verzeichnis, in dem sich das Hauptprogramm befindet
+# Set the working directory to the directory where the main program is located
 working_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(working_directory)
-
 
 #######################################################################################
 # 
@@ -40,22 +39,20 @@ os.chdir(working_directory)
 #
 #######################################################################################
 
-    
-    
-# Funktion zum Senden von Benutzereingaben an den COM-Port mit CR+LF
+# Function to send user input to the COM Port with CR+LF
 def send_to_com_port(ser, user_input):
     if user_input.strip().startswith(">"):
-        user_input = user_input.strip()[1:]  # Entferne das ">" am Anfang
-    user_input = user_input + "\r\n"  # CR+LF hinzufügen
+        user_input = user_input.strip()[1:]  # Remove ">" at the beginning
+    user_input = user_input + "\r\n"  # Add CR+LF
     ser.write(user_input.encode())
-    print(f"Gesendet an COM-Port: {user_input}")  # Debug-Ausgabe in der Konsole
+    print(f"Sent to COM Port: {user_input}")  # Debug output in the console
 
-
-# Funktion zum Herstellen der COM-Port-Verbindung
+# Function to establish the COM Port connection
 def connect_to_com_ports():
     global serial_A, serial_B, serial_C, serial_D, com_ports
+    global com_port_A, com_port_B, com_port_C, com_port_D
 
-    # Erneut alle verfügbaren COM-Ports abrufen
+    # Retrieve all available COM Ports again
     com_ports = list(serial.tools.list_ports.comports())
     
     for port_info in com_ports:
@@ -69,49 +66,49 @@ def connect_to_com_ports():
     com_port_C = com_port_entry_C.get()
     com_port_D = com_port_entry_D.get()    
     
-    print(f"Verbindung zu COM-Port's wird hergestellt...")
+    print(f"Connecting to COM Ports...")
 
     try:
-        serial_A = serial.Serial(com_port_A, baud_rate, timeout=0)
-        serial_B = serial.Serial(com_port_B, baud_rate, timeout=0)
-        serial_C = serial.Serial(com_port_C, baud_rate, timeout=0)
-        serial_D = serial.Serial(com_port_D, baud_rate, timeout=0)
+        if com_port_A != '': serial_A = serial.Serial(com_port_A, baud_rate, timeout=0)
+        if com_port_B != '': serial_B = serial.Serial(com_port_B, baud_rate, timeout=0)
+        if com_port_C != '': serial_C = serial.Serial(com_port_C, baud_rate, timeout=0)
+        if com_port_D != '': serial_D = serial.Serial(com_port_D, baud_rate, timeout=0)
 
-        print(f"Verbindung zu COM-Port {com_port_A}, {com_port_B}, {com_port_C} und {com_port_D} hergestellt.")
+        print(f"Connected to COM Ports {com_port_A}, {com_port_B}, {com_port_C}, and {com_port_D}.")
 
-        # Threads zum Lesen von Daten von den COM-Ports erstellen und starten
-        com_reader_thread_A = threading.Thread(target=read_from_com_port, args=(serial_A, text_widget_A))
-        com_reader_thread_A.daemon = True
-        com_reader_thread_A.start()
+        # Create and start threads to read data from the COM Ports
+        if com_port_A != '': com_reader_thread_A = threading.Thread(target=read_from_com_port, args=(serial_A, text_widget_A))
+        if com_port_A != '': com_reader_thread_A.daemon = True
+        if com_port_A != '': com_reader_thread_A.start()
 
-        com_reader_thread_B = threading.Thread(target=read_from_com_port, args=(serial_B, text_widget_B))
-        com_reader_thread_B.daemon = True
-        com_reader_thread_B.start()
+        if com_port_B != '': com_reader_thread_B = threading.Thread(target=read_from_com_port, args=(serial_B, text_widget_B))
+        if com_port_B != '': com_reader_thread_B.daemon = True
+        if com_port_B != '': com_reader_thread_B.start()
 
-        com_reader_thread_C = threading.Thread(target=read_from_com_port, args=(serial_C, text_widget_C))
-        com_reader_thread_C.daemon = True
-        com_reader_thread_C.start()
+        if com_port_C != '': com_reader_thread_C = threading.Thread(target=read_from_com_port, args=(serial_C, text_widget_C))
+        if com_port_C != '': com_reader_thread_C.daemon = True
+        if com_port_C != '': com_reader_thread_C.start()
 
-        com_reader_thread_D = threading.Thread(target=read_from_com_port, args=(serial_D, text_widget_D))
-        com_reader_thread_D.daemon = True
-        com_reader_thread_D.start()
+        if com_port_D != '': com_reader_thread_D = threading.Thread(target=read_from_com_port, args=(serial_D, text_widget_D))
+        if com_port_D != '': com_reader_thread_D.daemon = True
+        if com_port_D != '': com_reader_thread_D.start()
 
-        # Deaktiviere die COM-Port-Eingabefelder und den Connect-Button nach der Verbindung
-        com_port_entry_A.config(state=tk.DISABLED)
-        com_port_entry_B.config(state=tk.DISABLED)
-        com_port_entry_C.config(state=tk.DISABLED)
-        com_port_entry_D.config(state=tk.DISABLED)
+        # Disable the COM Port input fields and Connect button after connection
+        if com_port_A != '': com_port_entry_A.config(state=tk.DISABLED)
+        if com_port_B != '': com_port_entry_B.config(state=tk.DISABLED)
+        if com_port_C != '': com_port_entry_C.config(state=tk.DISABLED)
+        if com_port_D != '': com_port_entry_D.config(state=tk.DISABLED)
         connect_button.config(state=tk.DISABLED)
         disconnect_button.config(state=tk.NORMAL)
 
     except serial.SerialException as e:
-        print(f"Fehler bei der seriellen Verbindung: {e}")
+        print(f"Serial connection error: {e}")
 
-
-
-# Funktion zum Trennen der COM-Port-Verbindung
+# Function to disconnect from the COM Ports
 def disconnect_from_com_ports():
     global serial_A, serial_B
+    global com_port_A, com_port_B, com_port_C, com_port_D
+
     if serial_A is not None:
         serial_A.close()
     if serial_B is not None:
@@ -121,125 +118,133 @@ def disconnect_from_com_ports():
     if serial_D is not None:
         serial_D.close()
 
-    # Aktiviere die COM-Port-Eingabefelder und den Connect-Button nach der Trennung
-    com_port_entry_A.config(state=tk.NORMAL)
-    com_port_entry_B.config(state=tk.NORMAL)
-    com_port_entry_C.config(state=tk.NORMAL)
-    com_port_entry_D.config(state=tk.NORMAL)
+    # Enable the COM Port input fields and Connect button after disconnect
+    if com_port_A != '': com_port_entry_A.config(state=tk.NORMAL)
+    if com_port_B != '': com_port_entry_B.config(state=tk.NORMAL)
+    if com_port_C != '': com_port_entry_C.config(state=tk.NORMAL)
+    if com_port_D != '': com_port_entry_D.config(state=tk.NORMAL)
     connect_button.config(state=tk.NORMAL)
     disconnect_button.config(state=tk.DISABLED)
 
-
-# Funktion zum Lesen von Daten vom COM-Port und Aktualisieren des GUI-Textfelds
+# Function to read data from the COM Port and update the GUI text field
 def read_from_com_port(ser, text_widget):
     while True:
         try:
-            data = ser.read(1)  # Ein Zeichen vom COM-Port lesen
+            data = ser.read(1)  # Read one character from the COM Port
             if data:
-                #process_vt100_escape(text_widget, data.decode())  # Daten im Textfeld anzeigen und VT100 Escape-Sequenzen verarbeiten
+                # process_vt100_escape(text_widget, data.decode())  # Display data in the text field and process VT100 escape sequences
                 text_widget.insert(tk.END, data,"green_on_black")
-                text_widget.see(tk.END)  # Zum Ende des Textfelds scrollen
+                text_widget.see(tk.END)  # Scroll to the end of the text field
         except serial.SerialException as e:
-            print(f"Fehler bei der seriellen Verbindung: {e}")
+            print(f"Serial connection error: {e}")
             break
 
-
-# Funktion zur Verarbeitung von VT100 Escape-Sequenzen
+# Function for processing VT100 escape sequences
 def process_vt100_escape(text_widget, data):
-    # VT100 Escape-Sequenzen können hier verarbeitet werden
-    # Beispiel: Ändern der Textfarbe
-    if data.startswith("\x1b[31m"):  # Rot
+    # VT100 escape sequences can be processed here
+    # Example: Change text color
+    if data.startswith("\x1b[31m"):  # Red
         text_widget.tag_configure("red", foreground="red")
         text_widget.insert(tk.END, data[5:], "red")
-    elif data.startswith("\x1b[32m"):  # Grün
+    elif data.startswith("\x1b[32m"):  # Green
         text_widget.tag_configure("green", foreground="green")
         text_widget.insert(tk.END, data[5:], "green")
-    elif data.startswith("\x1b[0m"):  # Zurücksetzen auf Standardtext
+    elif data.startswith("\x1b[0m"):  # Reset to default text
         text_widget.tag_configure("reset", foreground="black")
         text_widget.insert(tk.END, data[4:], "reset")
-    elif data.startswith("\x1b[1m"):  # Fett
+    elif data.startswith("\x1b[1m"):  # Bold
         text_widget.tag_configure("bold", font=("Helvetica", 12, "bold"))
         text_widget.insert(tk.END, data[4:], "bold")
-    elif data.startswith("\x1b[4m"):  # Unterstrichen
+    elif data.startswith("\x1b[4m"):  # Underlined
         text_widget.tag_configure("underline", underline=True)
         text_widget.insert(tk.END, data[4:], "underline")
     else:
-        text_widget.insert(tk.END, data)  # Keine bekannte Escape-Sequenz, einfach einfügen
-
+        text_widget.insert(tk.END, data)  # If no known escape sequence, simply insert
 
 def start_terminal_program():
-    # Hier den Pfad zum Python-Programm "terminal.pyw" angeben
+    # Specify the path to the Python program "terminal.pyw" here
     terminal_program_path = ".\check_serial_tk.pyw"
 
-    # Über das 'subprocess' Modul das andere Python-Programm ausführen
+    # Use the 'subprocess' module to run the other Python program
     subprocess.Popen(["pythonw", terminal_program_path])
 
-
 def update_com_port_label_x():
-   com_port_label_A.config(text=f"COM-Port A: {com_port_serial_dict.get(com_port_entry_A.get(), 'Nicht verfügbar')}")    
-   com_port_label_B.config(text=f"COM-Port B: {com_port_serial_dict.get(com_port_entry_B.get(), 'Nicht verfügbar')}")
-   com_port_label_C.config(text=f"COM-Port C: {com_port_serial_dict.get(com_port_entry_C.get(), 'Nicht verfügbar')}")    
-   com_port_label_D.config(text=f"COM-Port D: {com_port_serial_dict.get(com_port_entry_D.get(), 'Nicht verfügbar')}")
+   com_port_label_A.config(text=f"COM Port A: {com_port_serial_dict.get(com_port_entry_A.get(), 'Not available')}")    
+   com_port_label_B.config(text=f"COM Port B: {com_port_serial_dict.get(com_port_entry_B.get(), 'Not available')}")
+   com_port_label_C.config(text=f"COM Port C: {com_port_serial_dict.get(com_port_entry_C.get(), 'Not available')}")    
+   com_port_label_D.config(text=f"COM Port D: {com_port_serial_dict.get(com_port_entry_D.get(), 'Not available')}")
 
 def clear_text():
     text_widget_A.delete(1.0, tk.END)
     text_widget_B.delete(1.0, tk.END)    
     text_widget_C.delete(1.0, tk.END)    
     text_widget_D.delete(1.0, tk.END)    
-        
+
+# Function to send iperf server command to COM Port A
 def send_iperf_server_A_func():
-    send_to_com_port(serial_A,"iperf -u -s")
+    send_to_com_port(serial_A, "iperf -u -s")
 
-
+# Function to send iperf client command to COM Port B
 def send_iperf_client_B_func():
-    send_to_com_port(serial_B,"iperf -u -c 192.168.100.11")
-    
+    send_to_com_port(serial_B, "iperf -u -c 192.168.100.11")
+
+# Function to send iperf client command to COM Port C
 def send_iperf_client_C_func():
-    send_to_com_port(serial_C,"iperf -u -c 192.168.100.11")
+    send_to_com_port(serial_C, "iperf -u -c 192.168.100.11")
 
+# Function to send iperf client command to COM Port D
 def send_iperf_client_D_func():
-    send_to_com_port(serial_D,"iperf -u -c 192.168.100.11")
+    send_to_com_port(serial_D, "iperf -u -c 192.168.100.11")
 
+# Function to send run command to COM Port A
 def send_run_A_func():
-    send_to_com_port(serial_A,"run")
-    
+    send_to_com_port(serial_A, "run")
+
+# Function to send run command to COM Port B
 def send_run_B_func():
-    send_to_com_port(serial_B,"run")
+    send_to_com_port(serial_B, "run")
 
+# Function to send run command to COM Port C
 def send_run_C_func():
-    send_to_com_port(serial_C,"run")
+    send_to_com_port(serial_C, "run")
 
+# Function to send run command to COM Port D
 def send_run_D_func():
-    send_to_com_port(serial_D,"run")
+    send_to_com_port(serial_D, "run")
 
+# Function to send reset command to all boards
 def send_reset_all_boards():
-    send_to_com_port(serial_A,"reset")
-    send_to_com_port(serial_B,"reset")
-    send_to_com_port(serial_C,"reset")
-    send_to_com_port(serial_D,"reset")
+    send_to_com_port(serial_A, "reset")
+    send_to_com_port(serial_B, "reset")
+    send_to_com_port(serial_C, "reset")
+    send_to_com_port(serial_D, "reset")
 
+# Function to send netinfo command to all boards
 def send_netinfo_func():
-    send_to_com_port(serial_A,"netinfo")
-    send_to_com_port(serial_B,"netinfo")
-    send_to_com_port(serial_C,"netinfo")
-    send_to_com_port(serial_D,"netinfo")    
+    send_to_com_port(serial_A, "netinfo")
+    send_to_com_port(serial_B, "netinfo")
+    send_to_com_port(serial_C, "netinfo")
+    send_to_com_port(serial_D, "netinfo")
 
+# Function to send PHY reset command to COM Port A
 def send_reset_phy_A_func():
-    send_to_com_port(serial_A,"miim wdata 32768")
-    send_to_com_port(serial_A,"miim write 0")
+    send_to_com_port(serial_A, "miim wdata 32768")
+    send_to_com_port(serial_A, "miim write 0")
 
+# Function to send PHY reset command to COM Port B
 def send_reset_phy_B_func():
-    send_to_com_port(serial_B,"miim wdata 32768")
-    send_to_com_port(serial_B,"miim write 0")
+    send_to_com_port(serial_B, "miim wdata 32768")
+    send_to_com_port(serial_B, "miim write 0")
 
+# Function to send PHY reset command to COM Port C
 def send_reset_phy_C_func():
-    send_to_com_port(serial_C,"miim wdata 32768")
-    send_to_com_port(serial_C,"miim write 0")
+    send_to_com_port(serial_C, "miim wdata 32768")
+    send_to_com_port(serial_C, "miim write 0")
 
+# Function to send PHY reset command to COM Port D
 def send_reset_phy_D_func():
-    send_to_com_port(serial_D,"miim wdata 32768")
-    send_to_com_port(serial_D,"miim write 0")        
-
+    send_to_com_port(serial_D, "miim wdata 32768")
+    send_to_com_port(serial_D, "miim write 0")
 
 #######################################################################################
 # 
@@ -247,28 +252,25 @@ def send_reset_phy_D_func():
 #
 #######################################################################################
 
-    
-# COM-Port-Informationen abrufen
+# Get COM Port information
 com_ports = list(serial.tools.list_ports.comports())
 
-# Dictionary zum Zuordnen von Serialnummern zu COM-Ports erstellen
+# Create a dictionary for mapping serial numbers to COM Ports
 com_port_serial_dict = {}
 for port_info in com_ports:
     if port_info.serial_number:
         com_port_serial_dict[port_info.device] = port_info.serial_number
-        
-
 
 #############################################################################################        
-# GUI erstellen
+# Create the GUI
 root = tk.Tk()
 root.title("COM Port GUI")
 
-# Das Fenster in der Größe veränderbar machen
-root.geometry("1500x800")  # Startgröße des Fensters
+# Make the window resizable
+root.geometry("1500x800")  # Starting window size
 # root.attributes('-fullscreen', True)
 
-# Frame für COM-Port-Eingabefelder und Buttons
+# Frame for COM Port input fields and buttons
 com_port_frame = tk.Frame(root)
 com_port_frame.pack(pady=1, padx=1, fill=tk.X)
 
@@ -282,64 +284,56 @@ top_text_widgets_frame = tk.Frame(root)
 top_text_widgets_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 #############################################################################################
 
-
-
 #############################################################################################
-# Connect Disconnet
+# Connect Disconnect
 connect_button = tk.Button(com_port_frame, text="Connect", command=connect_to_com_ports)
 connect_button.pack(side=tk.LEFT)
 disconnect_button = tk.Button(com_port_frame, text="Disconnect", command=disconnect_from_com_ports, state=tk.DISABLED)
 disconnect_button.pack(side=tk.LEFT)
 #############################################################################################
 
-
-
-
 #############################################################################################
-# COM-Port A Eingabefeld und Button
-com_port_label_A = tk.Label(com_port_frame, text="COM-Port A:")
+# COM Port A input field and button
+com_port_label_A = tk.Label(com_port_frame, text="COM Port A:")
 com_port_label_A.pack(side=tk.LEFT)
 com_port_entry_A = tk.Entry(com_port_frame, width=8)
 com_port_entry_A.insert(0, default_com_port_A)
 com_port_entry_A.pack(side=tk.LEFT)
 
-# COM-Port B Eingabefeld und Button
-com_port_label_B = tk.Label(com_port_frame, text="COM-Port B:")
+# COM Port B input field and button
+com_port_label_B = tk.Label(com_port_frame, text="COM Port B:")
 com_port_label_B.pack(side=tk.LEFT)
 com_port_entry_B = tk.Entry(com_port_frame, width=8)
 com_port_entry_B.insert(0, default_com_port_B)
 com_port_entry_B.pack(side=tk.LEFT)
 
-# COM-Port C Eingabefeld und Button
-com_port_label_C = tk.Label(com_port_frame, text="COM-Port C:")
+# COM Port C input field and button
+com_port_label_C = tk.Label(com_port_frame, text="COM Port C:")
 com_port_label_C.pack(side=tk.LEFT)
 com_port_entry_C = tk.Entry(com_port_frame, width=8)
 com_port_entry_C.insert(0, default_com_port_C)
 com_port_entry_C.pack(side=tk.LEFT)
 
-# COM-Port D Eingabefeld und Button
-com_port_label_D = tk.Label(com_port_frame, text="COM-Port D:")
+# COM Port D input field and button
+com_port_label_D = tk.Label(com_port_frame, text="COM Port D:")
 com_port_label_D.pack(side=tk.LEFT)
 com_port_entry_D = tk.Entry(com_port_frame, width=8)
 com_port_entry_D.insert(0, default_com_port_D)
 com_port_entry_D.pack(side=tk.LEFT)
 #############################################################################################
 
-
-
-
 ###################################################################################################
-# Kommando Buttons
+# Command Buttons
 #
-# Erstelle einen Button zum Leeren des Textfelds
+# Create a button to clear the text windows
 clear_button_left = tk.Button(com_port_frame, text="Clear Windows", command=clear_text)
 clear_button_left.pack(side=tk.LEFT)
 
-# Erstelle einen Button iperf server
+# Create a button for iperf server
 send_left_command = tk.Button(com_port_frame, text="Iperf Server A", command=send_iperf_server_A_func)
 send_left_command.pack(side=tk.LEFT)
 
-# Erstelle einen Button iperf client
+# Create a button for iperf client
 send_right_command = tk.Button(com_port_frame, text="Iperf Client B", command=send_iperf_client_B_func)
 send_right_command.pack(side=tk.LEFT)
 
@@ -348,7 +342,6 @@ send_right_command.pack(side=tk.LEFT)
 
 send_right_command = tk.Button(com_port_frame, text="Iperf Client D", command=send_iperf_client_D_func)
 send_right_command.pack(side=tk.LEFT)
-
 
 send_netinfo = tk.Button(com_port_frame, text="netinfo", command=send_netinfo_func)
 send_netinfo.pack(side=tk.LEFT)
@@ -383,76 +376,59 @@ send_reset_phy_D_func_button.pack(side=tk.LEFT)
 ###################################################################################################
 
 ###################################################################################################
-# Button zum Starten des Python-Programms "terminal.pyw" oben rechts hinzufügen
+# Button to start the Python program "terminal.pyw" in the upper right corner
 start_button = tk.Button(com_port_frame, text="Show COM Ports", command=start_terminal_program)
-start_button.pack(side=tk.LEFT)  # Mit 'anchor="ne"' wird der Button oben rechts platziert
+start_button.pack(side=tk.LEFT)  # Use 'anchor="ne"' to place the button in the upper right corner
 ###################################################################################################
-
-
 
 ###################################################################################################
 #
-# Label für COM-Port 1 erstellen und Serialnummer anzeigen
-com_port_label_A = tk.Label(com_port_status, text=f"COM-Port A: {'?'}")
+# Label for COM Port 1 and display serial number
+com_port_label_A = tk.Label(com_port_status, text=f"COM Port A: {'?'}")
 com_port_label_A.pack(side=tk.LEFT)
 
-# Weitere Labels für andere COM-Ports erstellen
-com_port_label_B = tk.Label(com_port_status, text=f"COM-Port B: {'?'}")
+# Labels for other COM Ports
+com_port_label_B = tk.Label(com_port_status, text=f"COM Port B: {'?'}")
 com_port_label_B.pack(side=tk.LEFT)
 
-# Label für COM-Port 1 erstellen und Serialnummer anzeigen
-com_port_label_C = tk.Label(com_port_status, text=f"COM-Port C: {'?'}")
+com_port_label_C = tk.Label(com_port_status, text=f"COM Port C: {'?'}")
 com_port_label_C.pack(side=tk.LEFT)
 
-# Weitere Labels für andere COM-Ports erstellen
-com_port_label_D = tk.Label(com_port_status, text=f"COM-Port D: {'?'}")
+com_port_label_D = tk.Label(com_port_status, text=f"COM Port D: {'?'}")
 com_port_label_D.pack(side=tk.LEFT)
 ###################################################################################################
 
-
-
-
 ###################################################################################################
-# Erstes Textfeld für COM3-Ausgabe
+# First text widget for COM3 output
 text_widget_A = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)
 text_widget_A.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_A.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-# Zweites Textfeld für COM4-Ausgabe
+# Second text widget for COM4 output
 text_widget_B = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)
 text_widget_B.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_B.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-# Erstelle einen Frame für die unteren beiden Text-Widgets (COM5 und COM6)
+# Create a frame for the bottom two text widgets (COM5 and COM6)
 bottom_text_widgets_frame = tk.Frame(root)
 bottom_text_widgets_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-# Text-Widget für weitere Ausgabe (z.B., COM5)
+# Text widget for additional output (e.g., COM5)
 text_widget_C = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)
 text_widget_C.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_C.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-# Text-Widget für weitere Ausgabe (z.B., COM6)
+# Text widget for additional output (e.g., COM6)
 text_widget_D = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)
 text_widget_D.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
 text_widget_D.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 ###################################################################################################
 
-
-
-
-
-# Event-Bindung für das Texteingabefeld
+# Event binding for the text input field
 text_widget_A.bind("<Return>", lambda event, text_widget=text_widget_A: send_to_com_port(serial_A, text_widget.get("insert linestart", "insert lineend")))
 text_widget_B.bind("<Return>", lambda event, text_widget=text_widget_B: send_to_com_port(serial_B, text_widget.get("insert linestart", "insert lineend")))
 text_widget_C.bind("<Return>", lambda event, text_widget=text_widget_C: send_to_com_port(serial_C, text_widget.get("insert linestart", "insert lineend")))
 text_widget_D.bind("<Return>", lambda event, text_widget=text_widget_D: send_to_com_port(serial_D, text_widget.get("insert linestart", "insert lineend")))
 
-
-# Erstelle ein Textfeld zum Anzeigen der Informationen
-#info_text = scrolledtext.ScrolledText(root, width=50, height=60)
-# info_text.grid(row=0, column=0, columnspan=2)
-#info_text.configure(font=("Helvetica", 12, "bold"), bg="black", fg="light green")  # Hintergrund und Vordergrund setzen
-
-
+# Start the Tkinter main loop
 root.mainloop()
