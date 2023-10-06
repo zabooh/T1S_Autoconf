@@ -848,8 +848,5 @@ if __name__ == "__main__":
     directory = os.path.dirname(os.path.abspath(__file__))
     os.chdir(directory)                                
     current_directory = os.getcwd()
-    output_text_A.insert(tk.END, current_directory+"\n") 
-    output_text_A.see(tk.END)
-    output_text_A.update_idletasks()
 
 
