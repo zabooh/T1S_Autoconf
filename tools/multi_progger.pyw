@@ -67,6 +67,8 @@ start_gui_flag = False
 selected_file_label = None
 hwtool_out = None
 
+current_directory = None
+
 def mdb_communicator_thread_A():
     global proc_A
     global output_queue_A
@@ -496,20 +498,24 @@ def run_prog_All():
     thread_D.start()
 
 def run_prog_A():
+    global current_directory
     global HEX_FILE_01    
-    send_cmd_A("program " + HEX_FILE_01 + "\n")
+    send_cmd_A("program " + current_directory + "\\" + HEX_FILE_01 + "\n")
 
 def run_prog_B():
+    global current_directory
     global HEX_FILE_02
-    send_cmd_B('program ' + HEX_FILE_02 + '\n')
+    send_cmd_B('program ' + current_directory + "\\" + HEX_FILE_02 + '\n')
 
 def run_prog_C():
+    global current_directory
     global HEX_FILE_03
-    send_cmd_C('program ' + HEX_FILE_03 + '\n')
+    send_cmd_C('program ' + current_directory + "\\" + HEX_FILE_03 + '\n')
 
 def run_prog_D():
+    global current_directory
     global HEX_FILE_03
-    send_cmd_D('program ' + HEX_FILE_04 + '\n')
+    send_cmd_D('program ' + current_directory + "\\" + HEX_FILE_04 + '\n')
 
 
 def stop_mdb_All():
@@ -748,6 +754,9 @@ if __name__ == "__main__":
     #tg_mcu = tg_mcu_entry.get()
     #hw_serial = hw_serial_entry.get()
 
+
+    current_directory = os.getcwd()
+
     # Definieren Sie die Flags, um das Konsolenfenster zu verhindern
     CREATE_NO_WINDOW = 0x08000000
 
@@ -756,7 +765,8 @@ if __name__ == "__main__":
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        creationflags=CREATE_NO_WINDOW
+        creationflags=CREATE_NO_WINDOW,
+        cwd=current_directory
     )
     print("Process A start")
     output_text_A.insert(tk.END, "MDB started...\n") 
@@ -778,7 +788,8 @@ if __name__ == "__main__":
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        creationflags=CREATE_NO_WINDOW
+        creationflags=CREATE_NO_WINDOW,
+        cwd=current_directory
     )
     print("Process B start")
     output_text_B.insert(tk.END, "MDB started...\n") 
@@ -798,7 +809,8 @@ if __name__ == "__main__":
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        creationflags=CREATE_NO_WINDOW
+        creationflags=CREATE_NO_WINDOW,
+        cwd=current_directory
     )
     print("Process C start")
     output_text_C.insert(tk.END, "MDB started...\n") 
@@ -819,7 +831,8 @@ if __name__ == "__main__":
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        creationflags=CREATE_NO_WINDOW
+        creationflags=CREATE_NO_WINDOW,
+        cwd=current_directory
     )
     print("Process D start")
     output_text_D.insert(tk.END, "MDB started...\n") 
@@ -835,7 +848,8 @@ if __name__ == "__main__":
     directory = os.path.dirname(os.path.abspath(__file__))
     os.chdir(directory)                                
     current_directory = os.getcwd()
-    
-    
+    output_text_A.insert(tk.END, current_directory+"\n") 
+    output_text_A.see(tk.END)
+    output_text_A.update_idletasks()
 
 
