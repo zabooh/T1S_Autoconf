@@ -5,6 +5,7 @@ from tkinter import scrolledtext
 from tkinter import filedialog
 import threading
 import queue
+import re
 
 import sys
 import re
@@ -12,10 +13,10 @@ import os.path
 import argparse
 import time
 
-hw_A = 0
-hw_B = 1
+hw_A = 1
+hw_B = 3
 hw_C = 2
-hw_D = 3
+hw_D = 0
 
 tool_entry_A = None
 tool_entry_B = None
@@ -44,6 +45,14 @@ output_text_B = None
 output_text_C = None
 output_text_D = None
 
+index_numbers = None
+serial_numbers = None
+
+serial_label_A = None
+serial_label_B = None
+serial_label_C =  None
+serial_label_D = None
+
 HEX_FILE_01="..\\apps\\tcpip_iperf_lan867x\\firmware\\tcpip_iperf_lan867x_freertos.X\\dist\\FreeRTOS\\production\\tcpip_iperf_lan867x_freertos.X.production.hex"
 HEX_FILE_02="..\\apps\\tcpip_iperf_lan867x\\firmware\\tcpip_iperf_lan867x_freertos.X\\dist\\FreeRTOS_node_1\\production\\tcpip_iperf_lan867x_freertos.X.production.hex"
 HEX_FILE_03="..\\apps\\tcpip_iperf_lan867x\\firmware\\tcpip_iperf_lan867x_freertos.X\\dist\\FreeRTOS_node_2\\production\\tcpip_iperf_lan867x_freertos.X.production.hex"
@@ -55,8 +64,8 @@ HW_SERIAL_01="ATML3264031800001044"
 
 gui_thread = None
 start_gui_flag = False
-
 selected_file_label = None
+hwtool_out = None
 
 def mdb_communicator_thread_A():
     global proc_A
@@ -303,10 +312,10 @@ def run_mdb_All():
     global tool_entry_C
     global tool_entry_D
 
-    hw_A = tool_entry_A.get()
-    hw_B = tool_entry_B.get()
-    hw_C = tool_entry_C.get()
-    hw_D = tool_entry_D.get()
+    hw_A = int(tool_entry_A.get())
+    hw_B = int(tool_entry_B.get())
+    hw_C = int(tool_entry_C.get())
+    hw_D = int(tool_entry_D.get())
 
     thread_run_A = threading.Thread(target=run_mdb_A)
     thread_run_A.start()
@@ -392,12 +401,44 @@ def run_hwtool_A():
 
 
 def thread_run_hwtool_A():
-    send_cmd_A("hwtool\n")
+    global hwtool_out
+    global index_numbers
+    global serial_numbers
+    global serial_label_A
+    global serial_label_B
+    global serial_label_C
+    global serial_label_D
+    global hw_A
+    global hw_B
+    global hw_C
+    global hw_D    
+    global tool_entry_A
+    global tool_entry_B
+    global tool_entry_C
+    global tool_entry_D
+
+    hwtool_out = send_cmd_A("hwtool\n")
+    print(":"+hwtool_out+":")
+    index_numbers, serial_numbers = extract_serial_and_index(hwtool_out)
+
+    print("Index Numbers:", index_numbers)
+    print("Serial Numbers:", serial_numbers)
+
+    hw_A = int(tool_entry_A.get())
+    hw_B = int(tool_entry_B.get())
+    hw_C = int(tool_entry_C.get())
+    hw_D = int(tool_entry_D.get())
+
+    serial_label_A.config(text=f"{serial_numbers[hw_A]}")    
+    serial_label_B.config(text=f"{serial_numbers[hw_B]}")    
+    serial_label_C.config(text=f"{serial_numbers[hw_C]}")    
+    serial_label_D.config(text=f"{serial_numbers[hw_D]}")    
 
 def send_cmd_A(cmd):
     global input_queue_A
     global output_queue_A
     global output_text_A
+    while not output_queue_A.empty(): output_queue_A.get()
     input_queue_A.put(cmd)
     output_text_A.insert(tk.END, cmd)
     output_text_A.see(tk.END)
@@ -409,6 +450,7 @@ def send_cmd_B(cmd):
     global input_queue_B
     global output_queue_B
     global output_text_B
+    while not output_queue_B.empty(): output_queue_B.get()
     input_queue_B.put(cmd)
     output_text_B.insert(tk.END, cmd)
     output_text_B.see(tk.END)
@@ -420,6 +462,7 @@ def send_cmd_C(cmd):
     global input_queue_C
     global output_queue_C
     global output_text_C
+    while not output_queue_C.empty(): output_queue_C.get()
     input_queue_C.put(cmd)
     output_text_C.insert(tk.END, cmd)
     output_text_C.see(tk.END)
@@ -431,6 +474,7 @@ def send_cmd_D(cmd):
     global input_queue_D
     global output_queue_D
     global output_text_D
+    while not output_queue_D.empty(): output_queue_D.get()
     input_queue_D.put(cmd)
     output_text_D.insert(tk.END, cmd)
     output_text_D.see(tk.END)
@@ -513,7 +557,11 @@ def start_gui():
     global tool_entry_A
     global tool_entry_B
     global tool_entry_C
-    global tool_entry_D
+    global tool_entry_D    
+    global serial_label_A
+    global serial_label_B
+    global serial_label_C
+    global serial_label_D
     global selected_file_label
 
 
@@ -538,6 +586,9 @@ def start_gui():
     tool_entry_A = tk.Entry(hex_file_frame_A, width=5)
     tool_entry_A.insert(0, hw_A)  # Verwende den Standardwert
     tool_entry_A.pack(side=tk.LEFT, padx=5)
+    # Serial Number
+    serial_label_A = tk.Label(hex_file_frame_A, text=f"Serial: {'?'}")
+    serial_label_A.pack(side=tk.LEFT)
 
 
     # Container-Frame für die Labels und Eingabefelder erstellen
@@ -556,6 +607,9 @@ def start_gui():
     tool_entry_B = tk.Entry(hex_file_frame_B, width=5)
     tool_entry_B.insert(0, hw_B)  # Verwende den Standardwert
     tool_entry_B.pack(side=tk.LEFT, padx=5)
+    # Serial Number
+    serial_label_B = tk.Label(hex_file_frame_B, text=f"Serial: {'?'}")
+    serial_label_B.pack(side=tk.LEFT)
 
 
     # Container-Frame für die Labels und Eingabefelder erstellen
@@ -574,6 +628,10 @@ def start_gui():
     tool_entry_C = tk.Entry(hex_file_frame_C, width=5)
     tool_entry_C.insert(0, hw_C)  # Verwende den Standardwert
     tool_entry_C.pack(side=tk.LEFT, padx=5)
+    # Serial Number
+    serial_label_C = tk.Label(hex_file_frame_C, text=f"Serial: {'?'}")
+    serial_label_C.pack(side=tk.LEFT)
+
 
     # Container-Frame für die Labels und Eingabefelder erstellen
     hex_file_frame_D = tk.Frame(root)
@@ -591,6 +649,9 @@ def start_gui():
     tool_entry_D = tk.Entry(hex_file_frame_D, width=5)
     tool_entry_D.insert(0, hw_D)  # Verwende den Standardwert
     tool_entry_D.pack(side=tk.LEFT, padx=5)
+    # Serial Number
+    serial_label_D = tk.Label(hex_file_frame_D, text=f"Serial: {'?'}")
+    serial_label_D.pack(side=tk.LEFT)
 
     # Container-Frame für die Labels und Eingabefelder erstellen
     mdb_path_frame_D = tk.Frame(root)
@@ -651,6 +712,28 @@ def start_gui():
 
 
 
+def extract_serial_and_index(text):
+    # Verwenden Sie einen regulären Ausdruck, um die Zeilen zu analysieren und die Seriennummern und Indexnummern zu extrahieren
+    pattern = r'\s*(\d+)\s+\w+\s+(\w+)\s+.*'
+
+    # Finden Sie alle Übereinstimmungen im Text
+    matches = re.findall(pattern, text)
+
+    # Initialisieren Sie leere Arrays für Seriennummern und Indexnummern
+    index_numbers = []
+    serial_numbers = []
+
+    # Iterieren Sie über die Übereinstimmungen
+    for match in matches:
+        index, serial_number = match
+        index_numbers.append(index)
+        serial_numbers.append(serial_number)
+
+    return index_numbers, serial_numbers
+
+
+
+
 if __name__ == "__main__":
 
     gui_thread = threading.Thread(target=start_gui)
@@ -684,7 +767,8 @@ if __name__ == "__main__":
     thread_A = threading.Thread(target=mdb_communicator_thread_A)
     time.sleep(0.5)
     thread_A.start()
-    while not thread_A.is_alive(): pass
+    while not thread_A.is_alive(): pass    
+
 
 
 
@@ -748,6 +832,10 @@ if __name__ == "__main__":
     thread_D.start()
     while not thread_D.is_alive(): pass
 
-
+    directory = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(directory)                                
+    current_directory = os.getcwd()
+    
+    
 
 
