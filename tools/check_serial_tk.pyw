@@ -54,9 +54,9 @@ clear_button = tk.Button(root, text="Clear Window", command=clear_text)
 clear_button.grid(row=1, column=1)
 
 # Erstelle ein Textfeld zum Anzeigen der Informationen
-info_text = scrolledtext.ScrolledText(root, width=50, height=31)
+info_text = scrolledtext.ScrolledText(root, width=50, height=33)
 info_text.grid(row=0, column=0, columnspan=2)
-info_text.configure(font=("Helvetica", 9, "bold"), bg="black", fg="light green")  # Hintergrund und Vordergrund setzen
+info_text.configure(font=("Helvetica", 12, "bold"), bg="black", fg="light green")  # Hintergrund und Vordergrund setzen
 
 # Starte die Aktualisierungsfunktion
 update_ports()
