@@ -68,6 +68,8 @@ selected_file_label = None
 hwtool_out = None
 
 current_directory = None
+stop_immediately = False
+
 
 def mdb_communicator_thread_A():
     global proc_A
@@ -521,17 +523,19 @@ def run_prog_D():
 def stop_mdb_All():
     global gui_thread
     global block_output
-    print("All stopped....")
-    block_output = True
-    input_queue_A.put("quit\n")
-    input_queue_B.put("quit\n")
-    input_queue_C.put("quit\n")
-    input_queue_D.put("quit\n")
-    proc_A.terminate()
-    proc_B.terminate()
-    proc_C.terminate()
-    proc_D.terminate()    
-    time.sleep(0.5)
+    global stop_immediately
+    if stop_immediately == False:
+        print("All stopped....")
+        block_output = True
+        input_queue_A.put("quit\n")
+        input_queue_B.put("quit\n")
+        input_queue_C.put("quit\n")
+        input_queue_D.put("quit\n")
+        proc_A.terminate()
+        proc_B.terminate()
+        proc_C.terminate()
+        proc_D.terminate()    
+        time.sleep(0.5)
     root.quit()
     root.destroy()
     sys.exit()
@@ -754,99 +758,96 @@ if __name__ == "__main__":
     #tg_mcu = tg_mcu_entry.get()
     #hw_serial = hw_serial_entry.get()
 
+    if os.path.exists(mdb_path):
+        # Der Pfad existiert, starte den Prozess
+        current_directory = os.getcwd()
 
-    current_directory = os.getcwd()
+        # Definieren Sie die Flags, um das Konsolenfenster zu verhindern
+        CREATE_NO_WINDOW = 0x08000000
 
-    # Definieren Sie die Flags, um das Konsolenfenster zu verhindern
-    CREATE_NO_WINDOW = 0x08000000
+        proc_A = subprocess.Popen(
+            [mdb_path],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            creationflags=CREATE_NO_WINDOW,
+            cwd=current_directory
+        )
+        print("Process A start")
+        output_text_A.insert(tk.END, "MDB started...\n") 
+        output_text_A.see(tk.END)
+        root.update_idletasks()
+        output_queue_A = queue.Queue()
+        input_queue_A = queue.Queue()
+        thread_A = threading.Thread(target=mdb_communicator_thread_A)
+        time.sleep(0.5)
+        thread_A.start()
+        while not thread_A.is_alive(): pass    
 
-    proc_A = subprocess.Popen(
-        [mdb_path],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        creationflags=CREATE_NO_WINDOW,
-        cwd=current_directory
-    )
-    print("Process A start")
-    output_text_A.insert(tk.END, "MDB started...\n") 
-    output_text_A.see(tk.END)
-    root.update_idletasks()
-    output_queue_A = queue.Queue()
-    input_queue_A = queue.Queue()
-    thread_A = threading.Thread(target=mdb_communicator_thread_A)
-    time.sleep(0.5)
-    thread_A.start()
-    while not thread_A.is_alive(): pass    
+        proc_B = subprocess.Popen(
+            [mdb_path],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            creationflags=CREATE_NO_WINDOW,
+            cwd=current_directory
+        )
+        print("Process B start")
+        output_text_B.insert(tk.END, "MDB started...\n") 
+        output_text_B.see(tk.END)
+        output_text_B.update_idletasks()
+        output_queue_B = queue.Queue()
+        input_queue_B = queue.Queue()
+        thread_B = threading.Thread(target=mdb_communicator_thread_B)
+        time.sleep(0.5)
+        thread_B.start()
+        while not thread_B.is_alive(): pass
 
+        proc_C = subprocess.Popen(
+            [mdb_path],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            creationflags=CREATE_NO_WINDOW,
+            cwd=current_directory
+        )
+        print("Process C start")
+        output_text_C.insert(tk.END, "MDB started...\n") 
+        output_text_C.see(tk.END)
+        output_text_C.update_idletasks()
+        output_queue_C = queue.Queue()
+        input_queue_C = queue.Queue()
+        thread_C = threading.Thread(target=mdb_communicator_thread_C)
+        time.sleep(0.5)
+        thread_C.start()
+        while not thread_C.is_alive(): pass
 
+        proc_D = subprocess.Popen(
+            [mdb_path],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            creationflags=CREATE_NO_WINDOW,
+            cwd=current_directory
+        )
+        print("Process D start")
+        output_text_D.insert(tk.END, "MDB started...\n") 
+        output_text_D.see(tk.END)
+        output_text_D.update_idletasks()
+        output_queue_D = queue.Queue()
+        input_queue_D = queue.Queue()
+        thread_D = threading.Thread(target=mdb_communicator_thread_D)
+        time.sleep(0.5)
+        thread_D.start()
+        while not thread_D.is_alive(): pass
 
+        directory = os.path.dirname(os.path.abspath(__file__))
+        os.chdir(directory)                                
+        current_directory = os.getcwd()
 
-
-    proc_B = subprocess.Popen(
-        [mdb_path],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        creationflags=CREATE_NO_WINDOW,
-        cwd=current_directory
-    )
-    print("Process B start")
-    output_text_B.insert(tk.END, "MDB started...\n") 
-    output_text_B.see(tk.END)
-    output_text_B.update_idletasks()
-    output_queue_B = queue.Queue()
-    input_queue_B = queue.Queue()
-    thread_B = threading.Thread(target=mdb_communicator_thread_B)
-    time.sleep(0.5)
-    thread_B.start()
-    while not thread_B.is_alive(): pass
-
-
-
-    proc_C = subprocess.Popen(
-        [mdb_path],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        creationflags=CREATE_NO_WINDOW,
-        cwd=current_directory
-    )
-    print("Process C start")
-    output_text_C.insert(tk.END, "MDB started...\n") 
-    output_text_C.see(tk.END)
-    output_text_C.update_idletasks()
-    output_queue_C = queue.Queue()
-    input_queue_C = queue.Queue()
-    thread_C = threading.Thread(target=mdb_communicator_thread_C)
-    time.sleep(0.5)
-    thread_C.start()
-    while not thread_C.is_alive(): pass
-
-
-
-
-    proc_D = subprocess.Popen(
-        [mdb_path],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        creationflags=CREATE_NO_WINDOW,
-        cwd=current_directory
-    )
-    print("Process D start")
-    output_text_D.insert(tk.END, "MDB started...\n") 
-    output_text_D.see(tk.END)
-    output_text_D.update_idletasks()
-    output_queue_D = queue.Queue()
-    input_queue_D = queue.Queue()
-    thread_D = threading.Thread(target=mdb_communicator_thread_D)
-    time.sleep(0.5)
-    thread_D.start()
-    while not thread_D.is_alive(): pass
-
-    directory = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(directory)                                
-    current_directory = os.getcwd()
-
+    else:
+        # Der Pfad existiert nicht, zeige eine Benachrichtigung an
+        output_text_A.insert(tk.END, "The MDB Path does not exist. Please close the Program and change in the Source Code the following Line:\n")
+        output_text_A.insert(tk.END, "\"MDB_PATH=\"c:\\Program Files\\Microchip\\MPLABX\\v6.10\\mplab_platform\\bin\\mdb.bat\"");
+        stop_immediately = True
 
