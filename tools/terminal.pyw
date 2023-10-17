@@ -4,7 +4,10 @@ import threading
 import subprocess
 import tkinter as tk
 from tkinter import scrolledtext
+from tkinter import ttk
 import os  # Import the 'os' module for running the other Python program
+import time
+import datetime
 
 #######################################################################################
 # 
@@ -29,6 +32,14 @@ serial_B = None  # Serial object for COM Port 2
 serial_C = None  # Serial object for COM Port 3
 serial_D = None  # Serial object for COM Port 4
 
+timer_duration = None
+timer_expired = None
+timer = None
+
+com_port_to_variable = {}
+
+Message_Items = {}
+
 # Set the working directory to the directory where the main program is located
 working_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(working_directory)
@@ -51,6 +62,7 @@ def send_to_com_port(ser, user_input):
 def connect_to_com_ports():
     global serial_A, serial_B, serial_C, serial_D, com_ports
     global com_port_A, com_port_B, com_port_C, com_port_D
+    global com_port_to_variable
 
     # Retrieve all available COM Ports again
     com_ports = list(serial.tools.list_ports.comports())
@@ -75,6 +87,11 @@ def connect_to_com_ports():
         if com_port_D != '': serial_D = serial.Serial(com_port_D, baud_rate, timeout=0)
 
         print(f"Connected to COM Ports {com_port_A}, {com_port_B}, {com_port_C}, and {com_port_D}.")
+
+        com_port_to_variable[com_port_A] = False
+        com_port_to_variable[com_port_B] = False
+        com_port_to_variable[com_port_C] = False
+        com_port_to_variable[com_port_D] = False
 
         # Create and start threads to read data from the COM Ports
         if com_port_A != '': com_reader_thread_A = threading.Thread(target=read_from_com_port, args=(serial_A, text_widget_A))
@@ -139,27 +156,55 @@ def read_from_com_port(ser, text_widget):
             print(f"Serial connection error: {e}")
             break
 
-# Function for processing VT100 escape sequences
-def process_vt100_escape(text_widget, data):
-    # VT100 escape sequences can be processed here
-    # Example: Change text color
-    if data.startswith("\x1b[31m"):  # Red
-        text_widget.tag_configure("red", foreground="red")
-        text_widget.insert(tk.END, data[5:], "red")
-    elif data.startswith("\x1b[32m"):  # Green
-        text_widget.tag_configure("green", foreground="green")
-        text_widget.insert(tk.END, data[5:], "green")
-    elif data.startswith("\x1b[0m"):  # Reset to default text
-        text_widget.tag_configure("reset", foreground="black")
-        text_widget.insert(tk.END, data[4:], "reset")
-    elif data.startswith("\x1b[1m"):  # Bold
-        text_widget.tag_configure("bold", font=("Helvetica", 12, "bold"))
-        text_widget.insert(tk.END, data[4:], "bold")
-    elif data.startswith("\x1b[4m"):  # Underlined
-        text_widget.tag_configure("underline", underline=True)
-        text_widget.insert(tk.END, data[4:], "underline")
-    else:
-        text_widget.insert(tk.END, data)  # If no known escape sequence, simply insert
+
+
+
+
+def check_for_keywords(data):
+    global Message_Items
+    for keyword in Message_Items:
+        if keyword in data:
+            return keyword
+    return None
+
+
+def process_received_data(ser,data):
+    global com_port_to_variable
+    found_keyword = check_for_keywords(data)
+    if found_keyword:
+        print(f"Gefundenes Schlüsselwort: {found_keyword} @ {ser}")
+        com_port_to_variable[ser.name] = True
+
+
+def read_from_com_port(ser, text_widget):
+    buffer = b""
+    while True:
+        try:
+            data = ser.read(1) # Ein Zeichen vom COM-Port lesen
+            if data:
+                # Den gelesenen Zeichenwert zum Puffer hinzufügen
+                buffer += data
+
+                # Überprüfen, ob eine vollständige Zeilenendekennung vorhanden ist
+                if b'\n' in buffer:
+                    lines = buffer.split(b'\n')
+                    buffer = lines[-1]  # Das letzte Element ist möglicherweise unvollständig
+                    for line in lines[:-1]:
+                        try:
+                            decoded_line = line.decode('utf-8', errors='ignore')
+                            # Eine vollständige Zeile verarbeiten
+                            process_received_data(ser,decoded_line)
+                        except UnicodeDecodeError:
+                            # Ungültige Bytes ignorieren
+                            pass
+
+                # Den gelesenen Zeichenwert im Textwidget anzeigen
+                text_widget.insert(tk.END, data, "green_on_black")
+                text_widget.see(tk.END)  # Zum Ende des Textwidgets scrollen
+        except serial.SerialException as e:
+            print(f"Serial connection error: {e}")
+            break        
+
 
 def start_terminal_program():
     # Specify the path to the Python program "terminal.pyw" here
@@ -251,6 +296,97 @@ def send_reset_phy_C_func():
 def send_reset_phy_D_func():
     send_to_com_port(serial_D, "miim wdata 32768")
     send_to_com_port(serial_D, "miim write 0")
+
+def GetTimeStamp():
+    current_time = datetime.datetime.now()
+    formated_current_time = current_time.strftime("%Y-%m-%d %H:%M:%S.%f")
+    milliseconds = formated_current_time[-6:-3]
+    formated_current_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+    formated_current_time_ms = formated_current_time + "." + milliseconds
+    return formated_current_time_ms
+
+Message_Items = ["BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST"]
+
+def WaitForMessage(COM_Port,Message):
+    global Message_Items
+    global com_port_to_variable
+    Message_Items = [Message]
+    while com_port_to_variable[COM_Port] == False: 
+        root.update() 
+    for COM_Port in com_port_to_variable:
+        com_port_to_variable[COM_Port] = False       
+    Message_Items = ['No Message to be received']
+
+
+def start_Test_1():
+    global timer_expired
+    global timer
+
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 started\n","red_on_white")
+    send_to_com_port(serial_A, "reset")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1 started\n","red_on_white")
+    send_to_com_port(serial_B, "reset")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1 started\n","red_on_white")
+    send_to_com_port(serial_C, "reset")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1 started\n","red_on_white")
+    send_to_com_port(serial_D, "reset")
+
+    WaitForMessage(com_port_A,"BC_TEST_STATE_IDLE")
+
+    text_widget_A.insert(tk.END, GetTimeStamp() + " run A\n","red_on_white")
+    
+    send_to_com_port(serial_A, "run")
+    WaitForMessage(com_port_A,"BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
+    
+    text_widget_B.insert(tk.END, GetTimeStamp() + " run B\n","red_on_white")
+    send_to_com_port(serial_B, "run")
+    WaitTime(1)
+    text_widget_C.insert(tk.END, GetTimeStamp() + " run C\n","red_on_white")
+    send_to_com_port(serial_C, "run")
+    WaitTime(1)
+    text_widget_D.insert(tk.END, GetTimeStamp() + " run D\n","red_on_white")
+    send_to_com_port(serial_D, "run")
+
+    WaitForMessage(com_port_D,"BC_TEST_STATE_IDLE")
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
+
+ #   text_widget_A.insert(tk.END, GetTimeStamp() + " run iperf server\n","red_on_white")
+ #   send_to_com_port(serial_A, "iperf -u -s")
+ #   WaitForMessage(com_port_A,"iperf: Server listening on UDP port 5001")
+
+ #   text_widget_B.insert(tk.END, GetTimeStamp() + " run iperf client\n","red_on_white")
+ #   send_to_com_port(serial_B, "iperf -u -c 192.168.100.11")
+ #   WaitTime(2)
+ #   text_widget_C.insert(tk.END, GetTimeStamp() + " run iperf client\n","red_on_white")
+ #   send_to_com_port(serial_C, "iperf -u -c 192.168.100.11")
+ #   WaitTime(2)
+ #   text_widget_D.insert(tk.END, GetTimeStamp() + " run iperf client\n","red_on_white")
+ #   send_to_com_port(serial_D, "iperf -u -c 192.168.100.11")
+
+ #   WaitForMessage(com_port_B,"iperf: instance 0 completed.")
+ #   text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
+ #   WaitForMessage(com_port_C,"iperf: instance 0 completed.")
+ #   text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
+ #   WaitForMessage(com_port_D,"iperf: instance 0 completed.")
+ #   text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")    
+
+
+
+def timer_callback():
+    global timer_expired
+    global timer
+    timer_expired = True
+    
+
+def WaitTime(secs):
+    global timer_expired
+    timer_expired = False
+    timer = threading.Timer(secs, timer_callback)
+    timer.start()
+    while not timer_expired:
+        root.update()
+
+
 
 #######################################################################################
 # 
@@ -382,6 +518,12 @@ send_reset_phy_C_func_button.pack(side=tk.LEFT)
 send_reset_phy_D_func_button = tk.Button(com_port_command, text="PHY Reset D", command=send_reset_phy_D_func)
 send_reset_phy_D_func_button.pack(side=tk.LEFT)
 
+
+
+send_reset_phy_D_func_button = tk.Button(com_port_command, text="Test 1", command=start_Test_1)
+send_reset_phy_D_func_button.pack(side=tk.LEFT)
+
+
 ###################################################################################################
 
 ###################################################################################################
@@ -411,11 +553,13 @@ com_port_label_D.pack(side=tk.LEFT)
 # First text widget for COM3 output
 text_widget_A = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)
 text_widget_A.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
+text_widget_A.tag_configure("red_on_white", foreground="red", background="white", font=("Helvetica", 12, "bold"))
 text_widget_A.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
 # Second text widget for COM4 output
 text_widget_B = scrolledtext.ScrolledText(top_text_widgets_frame, width=40, height=15)
 text_widget_B.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
+text_widget_B.tag_configure("red_on_white", foreground="red", background="white", font=("Helvetica", 12, "bold"))
 text_widget_B.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
 # Create a frame for the bottom two text widgets (COM5 and COM6)
@@ -425,11 +569,13 @@ bottom_text_widgets_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 # Text widget for additional output (e.g., COM5)
 text_widget_C = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)
 text_widget_C.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
+text_widget_C.tag_configure("red_on_white", foreground="red", background="white", font=("Helvetica", 12, "bold"))
 text_widget_C.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
 # Text widget for additional output (e.g., COM6)
 text_widget_D = scrolledtext.ScrolledText(bottom_text_widgets_frame, width=40, height=15)
 text_widget_D.tag_configure("green_on_black", foreground="light green", background="black", font=("Helvetica", 12, "bold"))
+text_widget_D.tag_configure("red_on_white", foreground="red", background="white", font=("Helvetica", 12, "bold"))
 text_widget_D.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 ###################################################################################################
 
