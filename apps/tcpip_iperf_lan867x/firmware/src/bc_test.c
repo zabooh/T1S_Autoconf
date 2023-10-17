@@ -156,6 +156,7 @@ void BC_TEST_Tasks(void) {
     TCPIP_NET_HANDLE netH;
     static IPV4_ADDR dwLastIP = {-1};
     SYS_STATUS tcpipStat;
+    bool result;
 
     BC_TEST_Print_State_Change();
 
@@ -209,12 +210,13 @@ void BC_TEST_Tasks(void) {
             if (bc_test.countdown == 0) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: =============================================\n\r");
                 BC_TEST_DEBUG_PRINT("BC_TEST: Timeout %s %d\n\r", __FILE__, __LINE__);
-                
-                BC_TEST_NetDown();                       vTaskDelay(1000U / portTICK_PERIOD_MS);
-                BC_TEST_SetNodeID_and_MAXcount(7,8);     vTaskDelay(1000U / portTICK_PERIOD_MS);
-                BC_TEST_NetUp();                         vTaskDelay(1000U / portTICK_PERIOD_MS);
-                
-                
+                                
+                BC_TEST_NetDown();                      
+                BC_TEST_SetNodeID_and_MAXcount(7,8);    
+                BC_TEST_NetUp();                         
+                netH = TCPIP_STACK_NetHandleGet("eth0");                
+                while( TCPIP_STACK_NetIsReady(netH) == false);
+                                
                 bc_test.random = TRNG_ReadData();               
                 
 #ifdef MY_NODE_0
@@ -298,12 +300,14 @@ void BC_TEST_Tasks(void) {
     
             bc_test.nodeid_ix = auto_conf_msg_receive.node_id;
             BC_TEST_DEBUG_PRINT("BC_TEST: Received NodeId:%d\n\r",auto_conf_msg_receive.node_id);
-            
-            BC_TEST_NetDown();                                      vTaskDelay(1000U / portTICK_PERIOD_MS);
-            BC_TEST_SetNodeID_and_MAXcount(bc_test.nodeid_ix,8);    vTaskDelay(1000U / portTICK_PERIOD_MS);
-            BC_TEST_NetUp();                                        vTaskDelay(1000U / portTICK_PERIOD_MS);
-
-            netH = TCPIP_STACK_NetHandleGet("eth0");
+                        
+            BC_TEST_NetDown();                                     
+            BC_TEST_SetNodeID_and_MAXcount(bc_test.nodeid_ix,8);  
+            BC_TEST_NetUp();             
+            netH = TCPIP_STACK_NetHandleGet("eth0");                
+            while( TCPIP_STACK_NetIsReady(netH) == false);
+                
+            netH = TCPIP_STACK_NetHandleGet("eth0");                
             ipMask.v[0] = 255;
             ipMask.v[1] = 255;
             ipMask.v[2] = 255;
@@ -322,9 +326,11 @@ void BC_TEST_Tasks(void) {
         case BC_TEST_STATE_DECIDE_TO_BE_COORDINATOR_NODE:
             if (BC_COM_is_idle() == true) {
 
-                BC_TEST_NetDown();                       vTaskDelay(1000U / portTICK_PERIOD_MS);
-                BC_TEST_SetNodeID_and_MAXcount(0,8);     vTaskDelay(1000U / portTICK_PERIOD_MS);
-                BC_TEST_NetUp();                         vTaskDelay(1000U / portTICK_PERIOD_MS);
+                BC_TEST_NetDown();                       
+                BC_TEST_SetNodeID_and_MAXcount(0,8);   
+                BC_TEST_NetUp();
+                netH = TCPIP_STACK_NetHandleGet("eth0");                
+                while( TCPIP_STACK_NetIsReady(netH) == false);
                 
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
