@@ -103,6 +103,7 @@ extern "C" {
         bool led_state;
         bool init_done;
         uint32_t random;
+        uint8_t nodeid_ix;
     } BC_TEST_DATA;
 
     // *****************************************************************************
@@ -187,6 +188,11 @@ extern "C" {
 
     void BC_TEST_DumpMem(uint32_t addr, uint32_t count);
     bool BC_TEST_Command_Init(void);
+    void BC_TEST_plca_write_config(uint16_t node_id, uint16_t node_count);
+    void BC_TEST_write_miim(uint16_t reg, uint16_t value);
+    void BC_TEST_SetNodeID_and_MAXcount(uint16_t NodeId, uint16_t MaxCount);
+    void BC_TEST_NetDown(void);
+    bool BC_TEST_NetUp(void);
 
     //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

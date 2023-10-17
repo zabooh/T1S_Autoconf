@@ -344,11 +344,15 @@ static DRV_ETHPHY_RESULT DRV_EXTPHY_MIIConfigure(const DRV_ETHPHY_OBJECT_BASE *p
         break;
 
     case 50: /* Set the PLCA node setting */
-        registerValue = F2R_(DRV_ETHPHY_PLCA_LOCAL_NODE_ID, PHY_PLCA_CTRL1_ID) |
-                        F2R_(DRV_ETHPHY_PLCA_NODE_COUNT, PHY_PLCA_CTRL1_NCNT);
+    {
+        extern volatile uint16_t bc_test_node_id;
+        extern volatile uint16_t bc_test_node_count;
+        SYS_CONSOLE_PRINT("PHY_WRITE: ID:%d COUNT:%d\n\r", bc_test_node_id, bc_test_node_count);        
+        registerValue = F2R_(bc_test_node_id, PHY_PLCA_CTRL1_ID) |
+                        F2R_(bc_test_node_count, PHY_PLCA_CTRL1_NCNT);
         miimRes = Lan867x_Write_Register(&clientObj, PHY_PLCA_CTRL1, registerValue);
         break;
-
+    }
     case 51: /* disable collision detection */
         miimRes = Lan867x_Write_Register(&clientObj, 0x1F0087, 0x0083);
         break;

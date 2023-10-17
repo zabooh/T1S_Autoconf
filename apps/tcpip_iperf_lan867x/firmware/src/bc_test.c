@@ -49,8 +49,8 @@ typedef struct {
     TCPIP_MAC_ADDR mac;
     IPV6_ADDR ip6;
     IPV4_ADDR ip4;
-    uint8_t nodeid;
-    uint8_t maxnodeid;
+    uint8_t node_max;
+    uint8_t node_id;
     uint8_t randommssg[20];
     int32_t counter_100ms;
     bool led_state;
@@ -110,6 +110,10 @@ DRV_MIIM_RESULT Read_Phy_Register(LAN867X_REG_OBJ *clientObj, int phyAddress, co
 DRV_MIIM_RESULT BC_TEST_miim_init(void);
 void BC_TEST_miim_close(void);
 
+
+volatile uint16_t bc_test_node_id;
+volatile uint16_t bc_test_node_count;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -126,8 +130,10 @@ void BC_TEST_miim_close(void);
 
 void BC_TEST_Initialize(void) {
     BC_TEST_Command_Init();
-    SYS_Initialization_TCP_Stack();
-    SYS_Task_Start_TCP();
+//    SYS_Initialization_TCP_Stack();
+//    SYS_Task_Start_TCP();
+    bc_test_node_id = 7; DRV_ETHPHY_PLCA_LOCAL_NODE_ID;
+    bc_test_node_count = DRV_ETHPHY_PLCA_NODE_COUNT;    
     bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
     bc_test.tick_100ms = 0;
     bc_test.led_state = false;    
@@ -204,6 +210,11 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: =============================================\n\r");
                 BC_TEST_DEBUG_PRINT("BC_TEST: Timeout %s %d\n\r", __FILE__, __LINE__);
                 
+                BC_TEST_NetDown();                       vTaskDelay(1000U / portTICK_PERIOD_MS);
+                BC_TEST_SetNodeID_and_MAXcount(7,8);     vTaskDelay(1000U / portTICK_PERIOD_MS);
+                BC_TEST_NetUp();                         vTaskDelay(1000U / portTICK_PERIOD_MS);
+                
+                
                 bc_test.random = TRNG_ReadData();               
                 
 #ifdef MY_NODE_0
@@ -227,7 +238,7 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.mac.v[3] = bc_test.MyMacAddr->v[3];
                 auto_conf_msg_transmit.mac.v[4] = bc_test.MyMacAddr->v[4];
                 auto_conf_msg_transmit.mac.v[5] = bc_test.MyMacAddr->v[5];
-
+                
                 auto_conf_msg_transmit.random = bc_test.random;
 
                 BC_TEST_DEBUG_PRINT("BC_TEST: Radom - Member: %08x\n\r", bc_test.random);
@@ -280,15 +291,41 @@ void BC_TEST_Tasks(void) {
             break;
 
         case BC_TEST_STATE_MEMBER_PROCESS_REQUESTED_DATA:
+        {
+            TCPIP_NET_HANDLE netH;
+            IPV4_ADDR ipMask;
+            char buff[30];
+    
+            bc_test.nodeid_ix = auto_conf_msg_receive.node_id;
+            BC_TEST_DEBUG_PRINT("BC_TEST: Received NodeId:%d\n\r",auto_conf_msg_receive.node_id);
+            
+            BC_TEST_NetDown();                                      vTaskDelay(1000U / portTICK_PERIOD_MS);
+            BC_TEST_SetNodeID_and_MAXcount(bc_test.nodeid_ix,8);    vTaskDelay(1000U / portTICK_PERIOD_MS);
+            BC_TEST_NetUp();                                        vTaskDelay(1000U / portTICK_PERIOD_MS);
+
+            netH = TCPIP_STACK_NetHandleGet("eth0");
+            ipMask.v[0] = 255;
+            ipMask.v[1] = 255;
+            ipMask.v[2] = 255;
+            ipMask.v[3] = 0;            
+            TCPIP_STACK_NetAddressSet(netH, &auto_conf_msg_receive.ip4, &ipMask, 1);
+            TCPIP_Helper_IPAddressToString(&auto_conf_msg_receive.ip4, buff, 20);
+            BC_TEST_DEBUG_PRINT("BC_TEST: new IP:%s\n\r",buff);
+            
             BC_TEST_DEBUG_PRINT("BC_TEST: Requested data received. Nor further processing\n\r");
             bc_test.state = BC_TEST_STATE_IDLE;
             break;
-
+        }
 
 
 
         case BC_TEST_STATE_DECIDE_TO_BE_COORDINATOR_NODE:
             if (BC_COM_is_idle() == true) {
+
+                BC_TEST_NetDown();                       vTaskDelay(1000U / portTICK_PERIOD_MS);
+                BC_TEST_SetNodeID_and_MAXcount(0,8);     vTaskDelay(1000U / portTICK_PERIOD_MS);
+                BC_TEST_NetUp();                         vTaskDelay(1000U / portTICK_PERIOD_MS);
+                
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
             }
@@ -314,9 +351,23 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.mac.v[3] = bc_test.MyMacAddr->v[3];
                 auto_conf_msg_transmit.mac.v[4] = bc_test.MyMacAddr->v[4];
                 auto_conf_msg_transmit.mac.v[5] = bc_test.MyMacAddr->v[5];
-
+                
                 auto_conf_msg_transmit.random = auto_conf_msg_receive.random;
 
+                if (bc_test.nodeid_ix == 6) {
+                    bc_test.nodeid_ix = 1;
+                } else {
+                    bc_test.nodeid_ix++;
+                }                
+                auto_conf_msg_transmit.node_id = bc_test.nodeid_ix;
+
+                auto_conf_msg_transmit.ip4.v[0] = bc_test.MyIpAddr.v[0];
+                auto_conf_msg_transmit.ip4.v[1] = bc_test.MyIpAddr.v[1];
+                auto_conf_msg_transmit.ip4.v[2] = bc_test.MyIpAddr.v[2];
+                auto_conf_msg_transmit.ip4.v[3] = bc_test.MyIpAddr.v[3] + bc_test.nodeid_ix;
+
+                BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Node Id:%d\n\r",auto_conf_msg_transmit.node_id);
+                
                 bc_test.tick_flag_100ms = false;
                 while (bc_test.tick_flag_100ms == false);
 
@@ -436,6 +487,8 @@ static void my_run(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 
     if (bc_test.init_done == false) {
         BC_TEST_DEBUG_PRINT("BC_TEST: state -> BC_TEST_STATE_INIT_START\r\n");
+        SYS_Initialization_TCP_Stack();
+        SYS_Task_Start_TCP();        
         bc_test.state = BC_TEST_STATE_INIT_START;
     } else {
         BC_TEST_DEBUG_PRINT("BC_TEST: state -> BC_TEST_STATE_MEMBER_START_REQUEST\r\n");
@@ -528,6 +581,73 @@ static void my_plca_write_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** a
 
 }
 
+static void my_plca_set_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
+    uint16_t node_id;
+    uint16_t node_count;
+    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
+    uint16_t data;
+
+    if (argc != 3) {
+        BC_TEST_DEBUG_PRINT("Usage: nds <node_id> <node_count>\n\r");
+        return;
+    }
+
+    bc_test_node_id = strtoul(argv[1], NULL, 16);
+    bc_test_node_count = strtoul(argv[2], NULL, 16);
+
+}
+
+void BC_TEST_write_miim(uint16_t reg, uint16_t value) {
+    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
+    uint16_t data;
+
+    BC_TEST_miim_init();
+
+    do {
+        opRes = Write_Phy_Register(&bc_test.MiimObj, 0, reg, value);
+        vTaskDelay(10U / portTICK_PERIOD_MS);
+    } while (opRes == DRV_MIIM_RES_PENDING);
+    
+    if (opRes < 0) {
+        /* In case of an error, report and close miim instance. */
+        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write Error occurred:%d\r\n", opRes);
+    } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
+        //BC_TEST_DEBUG_PRINT("BC_TEST:  Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
+    } else {
+        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write opRes: %d\n\r", opRes);
+    }
+
+    BC_TEST_miim_close();
+}
+
+void BC_TEST_plca_write_config(uint16_t node_id, uint16_t node_count){
+    
+    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
+    uint16_t data;
+
+    BC_TEST_miim_init();
+
+    /* Set the Node id as 0 and Node count as 5*/
+    data = F2R_(node_id, PHY_PLCA_CTRL1_ID) | F2R_(node_count, PHY_PLCA_CTRL1_NCNT);
+
+    do {
+        opRes = Write_Phy_Register(&bc_test.MiimObj, 0, PHY_PLCA_CTRL1, data);
+        vTaskDelay(10U / portTICK_PERIOD_MS);
+    } while (opRes == DRV_MIIM_RES_PENDING);
+
+    if (opRes < 0) {
+        /* In case of an error, report and close miim instance. */
+        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write Error occurred:%d\r\n", opRes);
+    } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
+        BC_TEST_DEBUG_PRINT("BC_TEST:  Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
+    } else {
+        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write opRes: %d\n\r", opRes);
+    }
+
+    BC_TEST_miim_close();
+
+}
+
 static void my_plca_read_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
     DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
     uint16_t data;
@@ -555,6 +675,7 @@ const SYS_CMD_DESCRIPTOR msd_cmd_tbl[] = {
     {"dump", (SYS_CMD_FNC) my_dump, ": dump memory"},
     {"run", (SYS_CMD_FNC) my_run, ": start application"},
     {"ndw", (SYS_CMD_FNC) my_plca_write_config, ": Node Config Write"},
+    {"nds", (SYS_CMD_FNC) my_plca_set_config, ": Node set Write"},
     {"ndr", (SYS_CMD_FNC) my_plca_read_config, ": Node Config Read: ndr"},
     {"reinit", (SYS_CMD_FNC) my_reinit, ": Re-Initialze Server and Client"}
 };
@@ -568,6 +689,46 @@ bool BC_TEST_Command_Init(void) {
     return ret;
 }
 
+
+void BC_TEST_NetDown(void){
+    TCPIP_NET_HANDLE netH;
+    
+    netH = TCPIP_STACK_NetHandleGet("eth0");
+    TCPIP_STACK_NetDown(netH);
+    BC_TEST_DEBUG_PRINT("BC_TEST: Net Down\n\r");
+}
+
+bool BC_TEST_NetUp(void){
+    TCPIP_NET_HANDLE netH;
+    SYS_MODULE_OBJ      tcpipStackObj;
+    TCPIP_STACK_INIT    tcpip_init_data = {{0}};
+    TCPIP_NETWORK_CONFIG ifConf, *pIfConf;
+    uint16_t net_ix = 0;
+    bool res = false;
+    
+    netH = TCPIP_STACK_NetHandleGet("eth0");    
+    net_ix = TCPIP_STACK_NetIndexGet(netH);
+    
+    // get the data passed at initialization
+    tcpipStackObj = TCPIP_STACK_Initialize(0, 0);
+    TCPIP_STACK_InitializeDataGet(tcpipStackObj, &tcpip_init_data);    
+
+    pIfConf = &ifConf;
+    memcpy(pIfConf, tcpip_init_data.pNetConf + net_ix, sizeof(*pIfConf));
+
+    // change the power mode to FULL
+    pIfConf->powerMode = TCPIP_STACK_IF_POWER_FULL;
+    res = TCPIP_STACK_NetUp(netH, pIfConf);    
+    BC_TEST_DEBUG_PRINT("BC_TEST: Net Up\n\r");
+}
+
+
+void BC_TEST_SetNodeID_and_MAXcount(uint16_t NodeId, uint16_t MaxCount){
+
+    bc_test_node_id = NodeId;
+    bc_test_node_count = MaxCount;
+    
+}
 
 /*******************************************************************************
  End of File

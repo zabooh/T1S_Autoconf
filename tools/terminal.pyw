@@ -219,6 +219,12 @@ def send_reset_all_boards():
     send_to_com_port(serial_C, "reset")
     send_to_com_port(serial_D, "reset")
 
+def send_ndr_all_boards():
+    send_to_com_port(serial_A, "ndr")
+    send_to_com_port(serial_B, "ndr")
+    send_to_com_port(serial_C, "ndr")
+    send_to_com_port(serial_D, "ndr")
+
 # Function to send netinfo command to all boards
 def send_netinfo_func():
     send_to_com_port(serial_A, "netinfo")
@@ -360,6 +366,9 @@ send_rD.pack(side=tk.LEFT)
 
 send_reset_all_boards = tk.Button(com_port_frame, text="Reset All", command=send_reset_all_boards)
 send_reset_all_boards.pack(side=tk.LEFT)
+
+send_ndr_all_boards = tk.Button(com_port_frame, text="Show Nodes", command=send_ndr_all_boards)
+send_ndr_all_boards.pack(side=tk.LEFT)
 
 send_reset_phy_A_func_button = tk.Button(com_port_command, text="PHY Reset A", command=send_reset_phy_A_func)
 send_reset_phy_A_func_button.pack(side=tk.LEFT)
