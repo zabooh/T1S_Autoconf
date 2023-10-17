@@ -51,7 +51,13 @@ serial_numbers = None
 serial_label_A = None
 serial_label_B = None
 serial_label_C =  None
-serial_label_D = None
+
+serial_label_D = None 
+
+hex_file_entry_A = None
+hex_file_entry_B = None
+hex_file_entry_C = None
+hex_file_entry_D = None
 
 HEX_FILE_01="..\\apps\\tcpip_iperf_lan867x\\firmware\\tcpip_iperf_lan867x_freertos.X\\dist\\FreeRTOS\\production\\tcpip_iperf_lan867x_freertos.X.production.hex"
 HEX_FILE_02="..\\apps\\tcpip_iperf_lan867x\\firmware\\tcpip_iperf_lan867x_freertos.X\\dist\\FreeRTOS_node_1\\production\\tcpip_iperf_lan867x_freertos.X.production.hex"
@@ -501,23 +507,23 @@ def run_prog_All():
 
 def run_prog_A():
     global current_directory
-    global HEX_FILE_01    
-    send_cmd_A("program " + current_directory + "\\" + HEX_FILE_01 + "\n")
+    global hex_file_entry_A
+    send_cmd_A("program " + current_directory + "\\" + hex_file_entry_A.get() + "\n")
 
 def run_prog_B():
     global current_directory
-    global HEX_FILE_02
-    send_cmd_B('program ' + current_directory + "\\" + HEX_FILE_02 + '\n')
+    global hex_file_entry_B
+    send_cmd_B('program ' + current_directory + "\\" + hex_file_entry_B.get() + '\n')
 
 def run_prog_C():
     global current_directory
-    global HEX_FILE_03
-    send_cmd_C('program ' + current_directory + "\\" + HEX_FILE_03 + '\n')
+    global hex_file_entry_C
+    send_cmd_C('program ' + current_directory + "\\" + hex_file_entry_C.get() + '\n')
 
 def run_prog_D():
     global current_directory
-    global HEX_FILE_03
-    send_cmd_D('program ' + current_directory + "\\" + HEX_FILE_04 + '\n')
+    global hex_file_entry_D
+    send_cmd_D('program ' + current_directory + "\\" + hex_file_entry_D.get() + '\n')
 
 
 def stop_mdb_All():
@@ -573,7 +579,10 @@ def start_gui():
     global serial_label_C
     global serial_label_D
     global selected_file_label
-
+    global hex_file_entry_A
+    global hex_file_entry_B
+    global hex_file_entry_C
+    global hex_file_entry_D
 
     # Tkinter-GUI erstellen
     root = tk.Tk()
