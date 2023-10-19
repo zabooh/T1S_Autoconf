@@ -233,6 +233,8 @@ TCPIP_STACK_HEAP_INTERNAL_CONFIG tcpipHeapConfig =
     .heapSize = TCPIP_STACK_DRAM_SIZE,
 };
 
+uint8_t my_mac_str[] = {'0', '0', ':', '0', '4', ':', '2', '5', ':', '1', 'C', ':', 'A', '0', ':', '0', '1', 0};
+
 
 const TCPIP_NETWORK_CONFIG __attribute__((unused))  TCPIP_HOSTS_CONFIGURATION[] =
 {
@@ -240,7 +242,7 @@ const TCPIP_NETWORK_CONFIG __attribute__((unused))  TCPIP_HOSTS_CONFIGURATION[] 
     {
         .interface = TCPIP_NETWORK_DEFAULT_INTERFACE_NAME_IDX0,
         .hostName = TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX0,
-        .macAddr = TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0,
+        .macAddr = my_mac_str,
         .ipAddr = TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0,
         .ipMask = TCPIP_NETWORK_DEFAULT_IP_MASK_IDX0,
         .gateway = TCPIP_NETWORK_DEFAULT_GATEWAY_IDX0,

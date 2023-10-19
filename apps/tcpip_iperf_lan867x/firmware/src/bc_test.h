@@ -96,7 +96,7 @@ extern "C" {
         SYS_TIME_HANDLE timer_client_hdl;
         uint32_t countdown;
         IPV4_ADDR MyIpAddr;
-        TCPIP_MAC_ADDR *MyMacAddr;
+        TCPIP_MAC_ADDR MyMacAddr;
         LAN867X_REG_OBJ MiimObj;
         int32_t tick_100ms;
         volatile bool tick_flag_100ms;

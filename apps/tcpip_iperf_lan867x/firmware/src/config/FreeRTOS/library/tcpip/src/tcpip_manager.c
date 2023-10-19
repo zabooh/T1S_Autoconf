@@ -3165,7 +3165,7 @@ TCPIP_NETWORK_CONFIG*   TCPIP_STACK_NetConfigSet(void* configStoreBuff, void* ne
 
     TCPIP_Helper_MACAddressToString(&pNetStg->netMACAddr, tempBuff, sizeof(tempBuff) - 1);
     pNetConf->macAddr = _NetConfigStringToBuffer(&pDstBuff, tempBuff, &dstSize, &needLen, &actualLen);
-
+    
     TCPIP_Helper_IPAddressToString(&pNetStg->netIPAddr, tempBuff, sizeof(tempBuff) - 1);
     pNetConf->ipAddr = _NetConfigStringToBuffer(&pDstBuff, tempBuff, &dstSize, &needLen, &actualLen);
 
@@ -3620,6 +3620,8 @@ static bool _LoadNetworkConfig(const TCPIP_NETWORK_CONFIG* pUsrConfig, TCPIP_NET
         if(pUsrConfig->macAddr != 0)
         {
             TCPIP_Helper_StringToMACAddress(pUsrConfig->macAddr, pNetIf->netMACAddr.v);
+            SYS_CONSOLE_PRINT("TCP Init: %s\n\r",pUsrConfig->macAddr);
+   
         }
         else
         {
