@@ -39,6 +39,13 @@
 #define BC_TEST_DEBUG_PRINT(fmt, ...)
 #endif
 
+//#define __BC_TEST_DEBUG_DUMP_PRINT 
+#ifdef __BC_TEST_DEBUG_DUMP_PRINT
+#define BC_TEST_DEBUG_DUMP_PRINT(fmt, ...)  SYS_CONSOLE_PRINT(fmt, ##__VA_ARGS__)
+#else
+#define BC_TEST_DEBUG_DUMP_PRINT(fmt, ...)
+#endif
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -474,13 +481,13 @@ void BC_TEST_DumpMem(uint32_t addr, uint32_t count) {
         if ((ix % 16) == 0) {
             if (flag == 1) {
                 str[16] = 0;
-                BC_TEST_DEBUG_PRINT("   %s\n\r", str);
+                BC_TEST_DEBUG_DUMP_PRINT("   %s\n\r", str);
             }
-            BC_TEST_DEBUG_PRINT("%08x: ", puc);
+            BC_TEST_DEBUG_DUMP_PRINT("%08x: ", puc);
             flag = 1;
             jx = 0;
         }
-        BC_TEST_DEBUG_PRINT(" %02x", *puc);
+        BC_TEST_DEBUG_DUMP_PRINT(" %02x", *puc);
         if ((*puc > 31) && (*puc < 127))
             str[jx++] = *puc;
         else
@@ -488,8 +495,8 @@ void BC_TEST_DumpMem(uint32_t addr, uint32_t count) {
         puc++;
     }
     str[jx] = 0;
-    BC_TEST_DEBUG_PRINT("   %s", str);
-    BC_TEST_DEBUG_PRINT("\n\r");
+    BC_TEST_DEBUG_DUMP_PRINT("   %s", str);
+    BC_TEST_DEBUG_DUMP_PRINT("\n\r");
 }
 
 static void my_dump(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {

@@ -45,6 +45,8 @@ Message_Items = {}
 MaxNodes = None
 result_list = None
 
+Parse_Data = False
+
 # Set the working directory to the directory where the main program is located
 working_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(working_directory)
@@ -177,23 +179,25 @@ def process_received_data(ser,data):
     global com_port_to_variable
     global result_list
     global MaxNodes
+    global Parse_Data
 
     found_keyword = check_for_keywords(data)
     if found_keyword:
         print(f"Gefundenes Schlüsselwort: {found_keyword} @ {ser}")
         com_port_to_variable[ser.name] = True
-
-    if "[0.0- 9.9 sec]" in data:
-        pattern = r'(\d+) Kbps'
-        matches = re.findall(pattern, data)
-        if matches:
-            result = [int(match) for match in matches]
-            result_str = result[0]
-            print(result_list)
-            result_list.append((MaxNodes, int(result_str)))
-            print(result_list)
-        else:
-            print("Keine Übereinstimmung gefunden")
+    
+    if Parse_Data == True:
+        if "[0.0- 9.9 sec]" in data:
+            pattern = r'(\d+) Kbps'
+            matches = re.findall(pattern, data)
+            if matches:
+                result = [int(match) for match in matches]
+                result_str = result[0]
+                print(result_list)
+                result_list.append((MaxNodes, int(result_str)))
+                print(result_list)
+            else:
+                print("Keine Übereinstimmung gefunden")
 
 
 
@@ -415,7 +419,9 @@ def start_Test_2():
     global timer
     global MaxNodes
     global result_list
+    global Parse_Data 
 
+    Parse_Data = True
     result_list = []
 
     text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 Started\n","red_on_white")
@@ -443,6 +449,8 @@ def start_Test_2():
 
         send_to_com_port(serial_B, "iperf -u -c 192.168.100.11")
         WaitForMessage(com_port_B,"iperf: instance 0 completed.")
+
+    Parse_Data = False
 
     # Trennen Sie die Werte in separate Listen für x- und y-Koordinaten
     x_values = [item[0] for item in result_list]
@@ -481,8 +489,11 @@ def start_Test_3():
     global timer
     global MaxNodes
     global result_list
+    global Parse_Data 
 
+    Parse_Data = True
     result_list = []
+    
 
     text_widget_A.insert(tk.END, GetTimeStamp() + " Test 3 Started\n","red_on_white")
     text_widget_B.insert(tk.END, GetTimeStamp() + " Test 3 Started\n","red_on_white")
@@ -523,6 +534,8 @@ def start_Test_3():
 
         WaitForMessage(com_port_D,"iperf: instance 0 completed.")
 
+    Parse_Data = False
+    
     # Trennen Sie die Werte in separate Listen für x- und y-Koordinaten
     x_values = [item[0] for item in result_list]
     y_values = [item[1] for item in result_list]
