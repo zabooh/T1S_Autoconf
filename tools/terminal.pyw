@@ -46,6 +46,8 @@ MaxNodes = None
 result_list = None
 
 Parse_Data = False
+Parse_String = None
+ 
 
 # Set the working directory to the directory where the main program is located
 working_directory = os.path.dirname(os.path.abspath(__file__))
@@ -180,6 +182,7 @@ def process_received_data(ser,data):
     global result_list
     global MaxNodes
     global Parse_Data
+    global Parse_String
 
     found_keyword = check_for_keywords(data)
     if found_keyword:
@@ -187,7 +190,7 @@ def process_received_data(ser,data):
         com_port_to_variable[ser.name] = True
     
     if Parse_Data == True:
-        if "[0.0- 9.9 sec]" in data:
+        if Parse_String in data:
             pattern = r'(\d+) Kbps'
             matches = re.findall(pattern, data)
             if matches:
@@ -332,12 +335,13 @@ def GetTimeStamp():
 
 Message_Items = ["BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST"]
 
-def WaitForMessage(COM_Port,Message):
+def wait_fr_com_port(ser,Message):
     global Message_Items
     global com_port_to_variable
     Message_Items = [Message]
+    COM_Port = ser.name
     while com_port_to_variable[COM_Port] == False: 
-        root.update() 
+        root.update()  
     for COM_Port in com_port_to_variable:
         com_port_to_variable[COM_Port] = False       
     Message_Items = ['No Message to be received']
@@ -356,16 +360,15 @@ def start_Test_1():
     send_to_com_port(serial_B, "reset")
     send_to_com_port(serial_C, "reset")
     send_to_com_port(serial_D, "reset")
-
-    WaitForMessage(com_port_A,"BC_TEST_STATE_IDLE")
+    wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")
     send_to_com_port(serial_A, "run")
-    WaitForMessage(com_port_A,"BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
+    wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
     send_to_com_port(serial_B, "run")
-    WaitForMessage(com_port_B,"BC_TEST_STATE_IDLE")
+    wait_fr_com_port(serial_B, "BC_TEST_STATE_IDLE")
     send_to_com_port(serial_C, "run")
-    WaitForMessage(com_port_C,"BC_TEST_STATE_IDLE")    
+    wait_fr_com_port(serial_C, "BC_TEST_STATE_IDLE")    
     send_to_com_port(serial_D, "run")
-    WaitForMessage(com_port_D,"BC_TEST_STATE_IDLE")  
+    wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")  
     
     text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
     text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
@@ -393,17 +396,18 @@ def start_Test_1_2():
     send_to_com_port(serial_B, "reset")
     send_to_com_port(serial_C, "reset")
     send_to_com_port(serial_D, "reset")
-
-    WaitForMessage(com_port_A,"BC_TEST_STATE_IDLE")
+    wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")
     send_to_com_port(serial_A, "run")
-    WaitForMessage(com_port_A,"BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
+    wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
     send_to_com_port(serial_B, "run")
     send_to_com_port(serial_C, "run")
-    send_to_com_port(serial_D, "run")
-    
+    send_to_com_port(serial_D, "run")    
+    wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")
+    WaitTime(2)
+
     text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")
     text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")    
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")        
     text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")
 
     text_widget_A.see(tk.END) 
@@ -420,35 +424,32 @@ def start_Test_2():
     global MaxNodes
     global result_list
     global Parse_Data 
+    global Parse_String
 
+    Parse_String = "[0.0- 1.9 sec]"
     Parse_Data = True
     result_list = []
 
-    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 Started\n","red_on_white")
-    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1 Started\n","red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1 Started\n","red_on_white")
-    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1 Started\n","red_on_white")
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
 
     for MaxNodes in [4, 8, 16, 24, 32, 40, 48, 64, 96, 128, 255]:
         
         send_to_com_port(serial_A, "reset")
         send_to_com_port(serial_B, "reset")
-
-        WaitForMessage(com_port_A,"BC_TEST_STATE_IDLE")
-        
+        wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")        
         send_to_com_port(serial_A, "nds 0 " + str(MaxNodes))
         send_to_com_port(serial_B, "nds 1 " + str(MaxNodes))
-
         send_to_com_port(serial_A, "run")
-        WaitForMessage(com_port_A,"BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")        
+        wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")        
         send_to_com_port(serial_B, "run")
-        WaitForMessage(com_port_B,"BC_TEST_STATE_IDLE")
-        
+        wait_fr_com_port(serial_B, "BC_TEST_STATE_IDLE")        
         send_to_com_port(serial_A, "iperf -u -s")
-        WaitForMessage(com_port_A,"iperf: Server listening on UDP port 5001")
-
-        send_to_com_port(serial_B, "iperf -u -c 192.168.100.11")
-        WaitForMessage(com_port_B,"iperf: instance 0 completed.")
+        wait_fr_com_port(serial_A, "iperf: Server listening on UDP port 5001")
+        send_to_com_port(serial_B, "iperf -u -c 192.168.100.11 -t 2")
+        wait_fr_com_port(serial_B, "iperf: instance 0 completed.")
 
     Parse_Data = False
 
@@ -471,10 +472,10 @@ def start_Test_2():
     # Diagramm anzeigen
     plt.show()
 
-    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
-    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
-    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
 
     text_widget_A.see(tk.END) 
     text_widget_B.see(tk.END) 
@@ -490,7 +491,9 @@ def start_Test_3():
     global MaxNodes
     global result_list
     global Parse_Data 
+    global Parse_String
 
+    Parse_String = "[0.0- 2.1 sec]"
     Parse_Data = True
     result_list = []
     
@@ -506,33 +509,27 @@ def start_Test_3():
         send_to_com_port(serial_B, "reset")
         send_to_com_port(serial_C, "reset")
         send_to_com_port(serial_D, "reset")
-
-        WaitForMessage(com_port_A,"BC_TEST_STATE_IDLE")
-        
+        wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")        
         send_to_com_port(serial_A, "nds 0 " + str(MaxNodes))
         send_to_com_port(serial_B, "nds 1 " + str(MaxNodes))
         send_to_com_port(serial_C, "nds 2 " + str(MaxNodes))
         send_to_com_port(serial_D, "nds 3 " + str(MaxNodes))
-
         send_to_com_port(serial_A, "run")
-        WaitForMessage(com_port_A,"BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")        
+        wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")        
         send_to_com_port(serial_B, "run")
-        WaitForMessage(com_port_B,"BC_TEST_STATE_IDLE")
+        wait_fr_com_port(serial_B, "BC_TEST_STATE_IDLE")
         send_to_com_port(serial_C, "run")
-        WaitForMessage(com_port_C,"BC_TEST_STATE_IDLE")    
+        wait_fr_com_port(serial_C, "BC_TEST_STATE_IDLE")    
         send_to_com_port(serial_D, "run")
-        WaitForMessage(com_port_D,"BC_TEST_STATE_IDLE")  
-        
+        wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")          
         send_to_com_port(serial_A, "iperf -u -s")
-        WaitForMessage(com_port_A,"iperf: Server listening on UDP port 5001")
-
-        send_to_com_port(serial_B, "iperf -u -c 192.168.100.11")
+        wait_fr_com_port(serial_A, "iperf: Server listening on UDP port 5001")
+        send_to_com_port(serial_B, "iperf -u -c 192.168.100.11 -t 2")
         WaitTime(3)
-        send_to_com_port(serial_C, "iperf -u -c 192.168.100.11")
+        send_to_com_port(serial_C, "iperf -u -c 192.168.100.11 -t 2")
         WaitTime(3)
-        send_to_com_port(serial_D, "iperf -u -c 192.168.100.11")
-
-        WaitForMessage(com_port_D,"iperf: instance 0 completed.")
+        send_to_com_port(serial_D, "iperf -u -c 192.168.100.11 -t 2")
+        wait_fr_com_port(serial_D, "iperf: instance 0 completed.")
 
     Parse_Data = False
     
@@ -555,10 +552,10 @@ def start_Test_3():
     # Diagramm anzeigen
     plt.show()
 
-    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
-    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
-    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
 
     text_widget_A.see(tk.END) 
     text_widget_B.see(tk.END) 
