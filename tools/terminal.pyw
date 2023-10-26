@@ -435,7 +435,7 @@ def start_Test_2():
     text_widget_C.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
     text_widget_D.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
 
-    for MaxNodes in [4, 8, 16, 24, 32, 40, 48, 64, 96, 128, 255]:
+    for MaxNodes in [8, 16, 24, 32, 40, 48, 64, 96, 128, 255]:
         
         send_to_com_port(serial_A, "reset")
         send_to_com_port(serial_B, "reset")
@@ -503,7 +503,7 @@ def start_Test_3():
     text_widget_C.insert(tk.END, GetTimeStamp() + " Test 3 Started\n","red_on_white")
     text_widget_D.insert(tk.END, GetTimeStamp() + " Test 3 Started\n","red_on_white")
 
-    for MaxNodes in [4, 8, 16, 24, 32, 40, 48, 64, 96, 128, 255]:
+    for MaxNodes in [8, 16, 24, 32, 40, 48, 64, 96, 128, 255]:
         
         send_to_com_port(serial_A, "reset")
         send_to_com_port(serial_B, "reset")
