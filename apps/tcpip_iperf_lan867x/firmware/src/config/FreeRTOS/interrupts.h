@@ -68,6 +68,7 @@ void xPortSysTickHandler (void);
 void SERCOM1_USART_InterruptHandler (void);
 void GMAC_InterruptHandler (void);
 void TC0_TimerInterruptHandler (void);
+void TC1_TimerInterruptHandler (void);
 
 
 

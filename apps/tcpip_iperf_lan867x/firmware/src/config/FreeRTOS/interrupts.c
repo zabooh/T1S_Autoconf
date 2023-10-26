@@ -48,11 +48,11 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
 #include "configuration.h"
 #include "device_vectors.h"
 #include "interrupts.h"
 #include "definitions.h"
+
 
 
 // *****************************************************************************
@@ -340,7 +340,7 @@ const H3DeviceVectors exception_table=
     .pfnTCC4_MC0_Handler           = TCC4_MC0_Handler,
     .pfnTCC4_MC1_Handler           = TCC4_MC1_Handler,
     .pfnTC0_Handler                = TC0_TimerInterruptHandler,
-    .pfnTC1_Handler                = TC1_Handler,
+    .pfnTC1_Handler                = TC1_TimerInterruptHandler,
     .pfnTC2_Handler                = TC2_Handler,
     .pfnTC3_Handler                = TC3_Handler,
     .pfnTC4_Handler                = TC4_Handler,

@@ -94,7 +94,7 @@ extern "C" {
     typedef struct {
         BC_TEST_STATES state;
         SYS_TIME_HANDLE timer_client_hdl;
-        uint32_t countdown;
+        volatile uint32_t countdown;
         IPV4_ADDR MyIpAddr;
         TCPIP_MAC_ADDR MyMacAddr;
         LAN867X_REG_OBJ MiimObj;
