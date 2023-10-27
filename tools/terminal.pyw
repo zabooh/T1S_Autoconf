@@ -7,9 +7,10 @@ from tkinter import scrolledtext
 from tkinter import ttk
 import os  # Import the 'os' module for running the other Python program
 import time
-import datetime
 import re
 import matplotlib.pyplot as plt
+import datetime as dt
+from datetime import datetime as nowt
 
 #######################################################################################
 # 
@@ -47,7 +48,8 @@ result_list = None
 
 Parse_Data = False
 Parse_String = None
- 
+Parse_pattern = None
+Parse_serial = None
 
 # Set the working directory to the directory where the main program is located
 working_directory = os.path.dirname(os.path.abspath(__file__))
@@ -183,24 +185,27 @@ def process_received_data(ser,data):
     global MaxNodes
     global Parse_Data
     global Parse_String
+    global Parse_pattern
+    global Parse_serial
 
-    found_keyword = check_for_keywords(data)
-    if found_keyword:
-        print(f"Gefundenes Schlüsselwort: {found_keyword} @ {ser}")
-        com_port_to_variable[ser.name] = True
-    
-    if Parse_Data == True:
-        if Parse_String in data:
-            pattern = r'(\d+) Kbps'
-            matches = re.findall(pattern, data)
-            if matches:
-                result = [int(match) for match in matches]
-                result_str = result[0]
-                print(result_list)
-                result_list.append((MaxNodes, int(result_str)))
-                print(result_list)
-            else:
-                print("Keine Übereinstimmung gefunden")
+    if Parse_serial == ser:
+
+        found_keyword = check_for_keywords(data)
+        if found_keyword:
+            print(f"Found Keyword: {found_keyword} @ {ser}")
+            com_port_to_variable[ser.name] = True
+        
+        if Parse_Data == True:
+            if Parse_String in data:
+                matches = re.findall(Parse_pattern, data)
+                if matches:
+                    result = [int(match) for match in matches]
+                    result_str = result[0]
+                    print(result_list)
+                    result_list.append((MaxNodes, int(result_str)))
+                    print(result_list)
+                else:
+                    print("no match found")
 
 
 
@@ -222,13 +227,15 @@ def read_from_com_port(ser, text_widget):
                             decoded_line = line.decode('utf-8', errors='ignore')
                             # Eine vollständige Zeile verarbeiten
                             process_received_data(ser,decoded_line)
+                            text_widget.insert(tk.END, decoded_line+"\n", "green_on_black")
+                            text_widget.see(tk.END)
                         except UnicodeDecodeError:
                             # Ungültige Bytes ignorieren
                             pass
 
                 # Den gelesenen Zeichenwert im Textwidget anzeigen
-                text_widget.insert(tk.END, data, "green_on_black")
-                text_widget.see(tk.END)  # Zum Ende des Textwidgets scrollen
+                #text_widget.insert(tk.END, data, "green_on_black")
+                #text_widget.see(tk.END)  # Zum Ende des Textwidgets scrollen
         except serial.SerialException as e:
             print(f"Serial connection error: {e}")
             break        
@@ -326,7 +333,7 @@ def send_reset_phy_D_func():
     send_to_com_port(serial_D, "miim write 0")
 
 def GetTimeStamp():
-    current_time = datetime.datetime.now()
+    current_time = dt.datetime.now()
     formated_current_time = current_time.strftime("%Y-%m-%d %H:%M:%S.%f")
     milliseconds = formated_current_time[-6:-3]
     formated_current_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -338,6 +345,10 @@ Message_Items = ["BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST"]
 def wait_fr_com_port(ser,Message):
     global Message_Items
     global com_port_to_variable
+    global Parse_serial
+
+    Parse_serial = ser
+
     Message_Items = [Message]
     COM_Port = ser.name
     while com_port_to_variable[COM_Port] == False: 
@@ -368,7 +379,15 @@ def start_Test_1():
     send_to_com_port(serial_C, "run")
     wait_fr_com_port(serial_C, "BC_TEST_STATE_IDLE")    
     send_to_com_port(serial_D, "run")
-    wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")  
+    wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")
+    send_to_com_port(serial_A, "ndr")  
+    send_to_com_port(serial_B, "ndr")  
+    send_to_com_port(serial_C, "ndr")  
+    send_to_com_port(serial_D, "ndr")  
+    send_to_com_port(serial_A, "netinfo")  
+    send_to_com_port(serial_B, "netinfo")  
+    send_to_com_port(serial_C, "netinfo")  
+    send_to_com_port(serial_D, "netinfo")  
     
     text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
     text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
@@ -403,6 +422,14 @@ def start_Test_1_2():
     send_to_com_port(serial_C, "run")
     send_to_com_port(serial_D, "run")    
     wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")
+    send_to_com_port(serial_A, "ndr")  
+    send_to_com_port(serial_B, "ndr")  
+    send_to_com_port(serial_C, "ndr")  
+    send_to_com_port(serial_D, "ndr")  
+    send_to_com_port(serial_A, "netinfo")  
+    send_to_com_port(serial_B, "netinfo")  
+    send_to_com_port(serial_C, "netinfo")  
+    send_to_com_port(serial_D, "netinfo")  
     WaitTime(2)
 
     text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")
@@ -425,8 +452,12 @@ def start_Test_2():
     global result_list
     global Parse_Data 
     global Parse_String
+    global Parse_pattern
+    global Parse_serial
 
     Parse_String = "[0.0- 1.9 sec]"
+    Parse_pattern = r'(\d+) Kbps'
+    Parse_serial = serial_A
     Parse_Data = True
     result_list = []
 
@@ -492,8 +523,12 @@ def start_Test_3():
     global result_list
     global Parse_Data 
     global Parse_String
+    global Parse_pattern
+    global Parse_serial
 
     Parse_String = "[0.0- 2.1 sec]"
+    Parse_pattern = r'(\d+) Kbps'
+    Parse_serial = serial_A
     Parse_Data = True
     result_list = []
     
@@ -583,6 +618,22 @@ def WaitTime(secs):
         root.update()
 
 
+# Funktion zum Speichern des Textinhalts in einer Datei
+def save_text_to_file(widget, filename):
+    text_content = widget.get("1.0", tk.END)
+    content = text_content.replace("\r", "")
+    with open(filename, "w") as file:
+        file.write(content)
+
+# Funktion zum Speichern des Inhalts aller Textfenster
+def save_all_text():
+    current_time = nowt.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+    # Speichern Sie den Inhalt jedes Textfensters in einer eigenen Datei
+    save_text_to_file(text_widget_A, f"Log_A_{current_time}.txt")
+    save_text_to_file(text_widget_B, f"Log_B_{current_time}.txt")
+    save_text_to_file(text_widget_C, f"Log_C_{current_time}.txt")
+    save_text_to_file(text_widget_D, f"Log_D_{current_time}.txt")
 
 #######################################################################################
 # 
@@ -727,6 +778,9 @@ send_start_test_2_button.pack(side=tk.LEFT)
 
 send_start_test_3_button = tk.Button(com_port_command, text="Test 3", command=start_Test_3)
 send_start_test_3_button.pack(side=tk.LEFT)
+
+save_button = tk.Button(com_port_command, text="Save", command=save_all_text)
+save_button.pack(side=tk.LEFT)
 
 ###################################################################################################
 
