@@ -189,23 +189,22 @@ def process_received_data(ser,data):
     global Parse_serial
 
     if Parse_serial == ser:
-
         found_keyword = check_for_keywords(data)
         if found_keyword:
             print(f"Found Keyword: {found_keyword} @ {ser}")
             com_port_to_variable[ser.name] = True
         
-        if Parse_Data == True:
-            if Parse_String in data:
-                matches = re.findall(Parse_pattern, data)
-                if matches:
-                    result = [int(match) for match in matches]
-                    result_str = result[0]
-                    print(result_list)
-                    result_list.append((MaxNodes, int(result_str)))
-                    print(result_list)
-                else:
-                    print("no match found")
+    if Parse_Data == True:
+        if Parse_String in data:
+            matches = re.findall(Parse_pattern, data)
+            if matches:
+                result = [int(match) for match in matches]
+                result_str = result[0]                
+                result_list.append((MaxNodes, int(result_str)))
+                
+                print(result_list)
+            else:
+                print("no match found")
 
 
 
