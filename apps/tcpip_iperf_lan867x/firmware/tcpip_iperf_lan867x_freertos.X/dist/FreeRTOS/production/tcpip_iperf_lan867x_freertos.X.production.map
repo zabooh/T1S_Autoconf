@@ -416,7 +416,7 @@ Discarded input sections
  .text          0x00000000       0xd8 build/FreeRTOS/production/_ext/1495245741/plib_cmcc.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1495245741/plib_cmcc.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1495245741/plib_cmcc.o
- .debug_info    0x00000000      0x52b build/FreeRTOS/production/_ext/1495245741/plib_cmcc.o
+ .debug_info    0x00000000      0x557 build/FreeRTOS/production/_ext/1495245741/plib_cmcc.o
  .debug_abbrev  0x00000000       0x97 build/FreeRTOS/production/_ext/1495245741/plib_cmcc.o
  .debug_aranges
                 0x00000000       0x20 build/FreeRTOS/production/_ext/1495245741/plib_cmcc.o
@@ -441,7 +441,7 @@ Discarded input sections
  .text          0x00000000        0xc build/FreeRTOS/production/_ext/1872641887/xc32_monitor.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1872641887/xc32_monitor.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1872641887/xc32_monitor.o
- .debug_info    0x00000000      0x322 build/FreeRTOS/production/_ext/1872641887/xc32_monitor.o
+ .debug_info    0x00000000      0x34e build/FreeRTOS/production/_ext/1872641887/xc32_monitor.o
  .debug_abbrev  0x00000000       0x94 build/FreeRTOS/production/_ext/1872641887/xc32_monitor.o
  .debug_loc     0x00000000       0x4a build/FreeRTOS/production/_ext/1872641887/xc32_monitor.o
  .debug_aranges
@@ -455,7 +455,7 @@ Discarded input sections
  .text          0x00000000       0x1a build/FreeRTOS/production/_ext/1107142132/sys_cache.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1107142132/sys_cache.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1107142132/sys_cache.o
- .debug_info    0x00000000      0x5cd build/FreeRTOS/production/_ext/1107142132/sys_cache.o
+ .debug_info    0x00000000      0x5f9 build/FreeRTOS/production/_ext/1107142132/sys_cache.o
  .debug_abbrev  0x00000000       0x8d build/FreeRTOS/production/_ext/1107142132/sys_cache.o
  .debug_aranges
                 0x00000000       0x20 build/FreeRTOS/production/_ext/1107142132/sys_cache.o
@@ -486,7 +486,7 @@ Discarded input sections
  .text          0x00000000        0x2 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
- .debug_info    0x00000000      0x309 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
+ .debug_info    0x00000000      0x335 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .debug_abbrev  0x00000000       0x50 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .debug_loc     0x00000000       0x15 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .debug_aranges
@@ -504,7 +504,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/croutine.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/croutine.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/croutine.o
- .debug_info    0x00000000      0x2eb build/FreeRTOS/production/_ext/404212886/croutine.o
+ .debug_info    0x00000000      0x317 build/FreeRTOS/production/_ext/404212886/croutine.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/404212886/croutine.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/404212886/croutine.o
@@ -520,7 +520,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/timers.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/timers.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/timers.o
- .debug_info    0x00000000      0x2e9 build/FreeRTOS/production/_ext/404212886/timers.o
+ .debug_info    0x00000000      0x315 build/FreeRTOS/production/_ext/404212886/timers.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/404212886/timers.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/404212886/timers.o
@@ -532,7 +532,7 @@ Discarded input sections
  .text          0x00000000      0x240 build/FreeRTOS/production/_ext/404212886/event_groups.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/event_groups.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/event_groups.o
- .debug_info    0x00000000      0xf66 build/FreeRTOS/production/_ext/404212886/event_groups.o
+ .debug_info    0x00000000      0xf92 build/FreeRTOS/production/_ext/404212886/event_groups.o
  .debug_abbrev  0x00000000      0x2ed build/FreeRTOS/production/_ext/404212886/event_groups.o
  .debug_loc     0x00000000      0xac5 build/FreeRTOS/production/_ext/404212886/event_groups.o
  .debug_aranges
@@ -547,7 +547,7 @@ Discarded input sections
  .text          0x00000000      0x544 build/FreeRTOS/production/_ext/404212886/stream_buffer.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/stream_buffer.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/stream_buffer.o
- .debug_info    0x00000000     0x1d1d build/FreeRTOS/production/_ext/404212886/stream_buffer.o
+ .debug_info    0x00000000     0x1d49 build/FreeRTOS/production/_ext/404212886/stream_buffer.o
  .debug_abbrev  0x00000000      0x316 build/FreeRTOS/production/_ext/404212886/stream_buffer.o
  .debug_loc     0x00000000     0x1a59 build/FreeRTOS/production/_ext/404212886/stream_buffer.o
  .debug_aranges
@@ -562,7 +562,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/pic32mz-crypt.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/pic32mz-crypt.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/pic32mz-crypt.o
- .debug_info    0x00000000      0x304 build/FreeRTOS/production/_ext/172253694/pic32mz-crypt.o
+ .debug_info    0x00000000      0x330 build/FreeRTOS/production/_ext/172253694/pic32mz-crypt.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/pic32mz-crypt.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/pic32mz-crypt.o
@@ -574,7 +574,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_aes_sam6149.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_aes_sam6149.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_aes_sam6149.o
- .debug_info    0x00000000      0x308 build/FreeRTOS/production/_ext/172253694/crypt_aes_sam6149.o
+ .debug_info    0x00000000      0x334 build/FreeRTOS/production/_ext/172253694/crypt_aes_sam6149.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_aes_sam6149.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_aes_sam6149.o
@@ -586,7 +586,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_aes_u2238.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_aes_u2238.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_aes_u2238.o
- .debug_info    0x00000000      0x306 build/FreeRTOS/production/_ext/172253694/crypt_aes_u2238.o
+ .debug_info    0x00000000      0x332 build/FreeRTOS/production/_ext/172253694/crypt_aes_u2238.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_aes_u2238.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_aes_u2238.o
@@ -598,7 +598,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_ecc_ba414e.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_ecc_ba414e.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_ecc_ba414e.o
- .debug_info    0x00000000      0x2f8 build/FreeRTOS/production/_ext/172253694/crypt_ecc_ba414e.o
+ .debug_info    0x00000000      0x324 build/FreeRTOS/production/_ext/172253694/crypt_ecc_ba414e.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_ecc_ba414e.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_ecc_ba414e.o
@@ -610,7 +610,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_ecc_pukcl.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_ecc_pukcl.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_ecc_pukcl.o
- .debug_info    0x00000000      0x306 build/FreeRTOS/production/_ext/172253694/crypt_ecc_pukcl.o
+ .debug_info    0x00000000      0x332 build/FreeRTOS/production/_ext/172253694/crypt_ecc_pukcl.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_ecc_pukcl.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_ecc_pukcl.o
@@ -622,7 +622,7 @@ Discarded input sections
  .text          0x00000000       0xd0 build/FreeRTOS/production/_ext/172253694/crypt_pukcl_functions.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_pukcl_functions.o
  .bss           0x00000000       0x38 build/FreeRTOS/production/_ext/172253694/crypt_pukcl_functions.o
- .debug_info    0x00000000     0x2947 build/FreeRTOS/production/_ext/172253694/crypt_pukcl_functions.o
+ .debug_info    0x00000000     0x2973 build/FreeRTOS/production/_ext/172253694/crypt_pukcl_functions.o
  .debug_abbrev  0x00000000      0x19e build/FreeRTOS/production/_ext/172253694/crypt_pukcl_functions.o
  .debug_loc     0x00000000      0x223 build/FreeRTOS/production/_ext/172253694/crypt_pukcl_functions.o
  .debug_aranges
@@ -636,7 +636,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_rng_sam6334.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_rng_sam6334.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_rng_sam6334.o
- .debug_info    0x00000000      0x308 build/FreeRTOS/production/_ext/172253694/crypt_rng_sam6334.o
+ .debug_info    0x00000000      0x334 build/FreeRTOS/production/_ext/172253694/crypt_rng_sam6334.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_rng_sam6334.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_rng_sam6334.o
@@ -648,7 +648,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_rng_u2242.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_rng_u2242.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_rng_u2242.o
- .debug_info    0x00000000      0x306 build/FreeRTOS/production/_ext/172253694/crypt_rng_u2242.o
+ .debug_info    0x00000000      0x332 build/FreeRTOS/production/_ext/172253694/crypt_rng_u2242.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_rng_u2242.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_rng_u2242.o
@@ -660,7 +660,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_rsa_pukcl.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_rsa_pukcl.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_rsa_pukcl.o
- .debug_info    0x00000000      0x306 build/FreeRTOS/production/_ext/172253694/crypt_rsa_pukcl.o
+ .debug_info    0x00000000      0x332 build/FreeRTOS/production/_ext/172253694/crypt_rsa_pukcl.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_rsa_pukcl.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_rsa_pukcl.o
@@ -672,7 +672,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sam_u2803.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sam_u2803.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sam_u2803.o
- .debug_info    0x00000000      0x2f7 build/FreeRTOS/production/_ext/172253694/crypt_sam_u2803.o
+ .debug_info    0x00000000      0x323 build/FreeRTOS/production/_ext/172253694/crypt_sam_u2803.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_sam_u2803.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_sam_u2803.o
@@ -684,7 +684,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam11105.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam11105.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam11105.o
- .debug_info    0x00000000      0x30a build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam11105.o
+ .debug_info    0x00000000      0x336 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam11105.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam11105.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam11105.o
@@ -696,7 +696,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam6156.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam6156.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam6156.o
- .debug_info    0x00000000      0x309 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam6156.o
+ .debug_info    0x00000000      0x335 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam6156.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam6156.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_sha1_sam6156.o
@@ -708,7 +708,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam11105.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam11105.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam11105.o
- .debug_info    0x00000000      0x30c build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam11105.o
+ .debug_info    0x00000000      0x338 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam11105.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam11105.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam11105.o
@@ -720,7 +720,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam6156.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam6156.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam6156.o
- .debug_info    0x00000000      0x30b build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam6156.o
+ .debug_info    0x00000000      0x337 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam6156.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam6156.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_sha224_sam6156.o
@@ -732,7 +732,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam11105.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam11105.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam11105.o
- .debug_info    0x00000000      0x30c build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam11105.o
+ .debug_info    0x00000000      0x338 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam11105.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam11105.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam11105.o
@@ -744,7 +744,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam6156.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam6156.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam6156.o
- .debug_info    0x00000000      0x30b build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam6156.o
+ .debug_info    0x00000000      0x337 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam6156.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam6156.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_sha256_sam6156.o
@@ -756,7 +756,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha384_sam6156.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha384_sam6156.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha384_sam6156.o
- .debug_info    0x00000000      0x30b build/FreeRTOS/production/_ext/172253694/crypt_sha384_sam6156.o
+ .debug_info    0x00000000      0x337 build/FreeRTOS/production/_ext/172253694/crypt_sha384_sam6156.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_sha384_sam6156.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_sha384_sam6156.o
@@ -768,7 +768,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha512_sam6156.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha512_sam6156.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_sha512_sam6156.o
- .debug_info    0x00000000      0x30b build/FreeRTOS/production/_ext/172253694/crypt_sha512_sam6156.o
+ .debug_info    0x00000000      0x337 build/FreeRTOS/production/_ext/172253694/crypt_sha512_sam6156.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_sha512_sam6156.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_sha512_sam6156.o
@@ -780,7 +780,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_tdes_sam6150.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_tdes_sam6150.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/172253694/crypt_tdes_sam6150.o
- .debug_info    0x00000000      0x2fa build/FreeRTOS/production/_ext/172253694/crypt_tdes_sam6150.o
+ .debug_info    0x00000000      0x326 build/FreeRTOS/production/_ext/172253694/crypt_tdes_sam6150.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/172253694/crypt_tdes_sam6150.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/172253694/crypt_tdes_sam6150.o
@@ -794,7 +794,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/arc4.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/arc4.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/arc4.o
- .debug_info    0x00000000      0x2f0 build/FreeRTOS/production/_ext/1664057780/arc4.o
+ .debug_info    0x00000000      0x31c build/FreeRTOS/production/_ext/1664057780/arc4.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/arc4.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/arc4.o
@@ -806,7 +806,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/asm.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/asm.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/asm.o
- .debug_info    0x00000000      0x2ef build/FreeRTOS/production/_ext/1664057780/asm.o
+ .debug_info    0x00000000      0x31b build/FreeRTOS/production/_ext/1664057780/asm.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/asm.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/asm.o
@@ -819,7 +819,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/blake2b.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/blake2b.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/blake2b.o
- .debug_info    0x00000000      0x2f3 build/FreeRTOS/production/_ext/1664057780/blake2b.o
+ .debug_info    0x00000000      0x31f build/FreeRTOS/production/_ext/1664057780/blake2b.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/blake2b.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/blake2b.o
@@ -831,7 +831,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/blake2s.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/blake2s.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/blake2s.o
- .debug_info    0x00000000      0x2f3 build/FreeRTOS/production/_ext/1664057780/blake2s.o
+ .debug_info    0x00000000      0x31f build/FreeRTOS/production/_ext/1664057780/blake2s.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/blake2s.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/blake2s.o
@@ -843,7 +843,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/camellia.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/camellia.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/camellia.o
- .debug_info    0x00000000      0x2f4 build/FreeRTOS/production/_ext/1664057780/camellia.o
+ .debug_info    0x00000000      0x320 build/FreeRTOS/production/_ext/1664057780/camellia.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/camellia.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/camellia.o
@@ -855,7 +855,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/chacha.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/chacha.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/chacha.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/chacha.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/chacha.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/chacha.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/chacha.o
@@ -867,7 +867,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/chacha20_poly1305.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/chacha20_poly1305.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/chacha20_poly1305.o
- .debug_info    0x00000000      0x2fd build/FreeRTOS/production/_ext/1664057780/chacha20_poly1305.o
+ .debug_info    0x00000000      0x329 build/FreeRTOS/production/_ext/1664057780/chacha20_poly1305.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/chacha20_poly1305.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/chacha20_poly1305.o
@@ -879,7 +879,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/cmac.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/cmac.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/cmac.o
- .debug_info    0x00000000      0x2f0 build/FreeRTOS/production/_ext/1664057780/cmac.o
+ .debug_info    0x00000000      0x31c build/FreeRTOS/production/_ext/1664057780/cmac.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/cmac.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/cmac.o
@@ -893,7 +893,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/compress.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/compress.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/compress.o
- .debug_info    0x00000000      0x2f4 build/FreeRTOS/production/_ext/1664057780/compress.o
+ .debug_info    0x00000000      0x320 build/FreeRTOS/production/_ext/1664057780/compress.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/compress.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/compress.o
@@ -905,7 +905,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/cpuid.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/cpuid.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/cpuid.o
- .debug_info    0x00000000      0x2f1 build/FreeRTOS/production/_ext/1664057780/cpuid.o
+ .debug_info    0x00000000      0x31d build/FreeRTOS/production/_ext/1664057780/cpuid.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/cpuid.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/cpuid.o
@@ -918,7 +918,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/curve25519.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/curve25519.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/curve25519.o
- .debug_info    0x00000000      0x2f6 build/FreeRTOS/production/_ext/1664057780/curve25519.o
+ .debug_info    0x00000000      0x322 build/FreeRTOS/production/_ext/1664057780/curve25519.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/curve25519.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/curve25519.o
@@ -930,7 +930,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/curve448.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/curve448.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/curve448.o
- .debug_info    0x00000000      0x2f4 build/FreeRTOS/production/_ext/1664057780/curve448.o
+ .debug_info    0x00000000      0x320 build/FreeRTOS/production/_ext/1664057780/curve448.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/curve448.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/curve448.o
@@ -942,7 +942,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/dh.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/dh.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/dh.o
- .debug_info    0x00000000      0x2ee build/FreeRTOS/production/_ext/1664057780/dh.o
+ .debug_info    0x00000000      0x31a build/FreeRTOS/production/_ext/1664057780/dh.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/dh.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/dh.o
@@ -954,7 +954,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/dsa.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/dsa.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/dsa.o
- .debug_info    0x00000000      0x2ef build/FreeRTOS/production/_ext/1664057780/dsa.o
+ .debug_info    0x00000000      0x31b build/FreeRTOS/production/_ext/1664057780/dsa.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/dsa.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/dsa.o
@@ -974,7 +974,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ed25519.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ed25519.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ed25519.o
- .debug_info    0x00000000      0x2f3 build/FreeRTOS/production/_ext/1664057780/ed25519.o
+ .debug_info    0x00000000      0x31f build/FreeRTOS/production/_ext/1664057780/ed25519.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/ed25519.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/ed25519.o
@@ -986,7 +986,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ed448.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ed448.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ed448.o
- .debug_info    0x00000000      0x2f1 build/FreeRTOS/production/_ext/1664057780/ed448.o
+ .debug_info    0x00000000      0x31d build/FreeRTOS/production/_ext/1664057780/ed448.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/ed448.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/ed448.o
@@ -998,7 +998,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/error.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/error.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/error.o
- .debug_info    0x00000000      0x2f1 build/FreeRTOS/production/_ext/1664057780/error.o
+ .debug_info    0x00000000      0x31d build/FreeRTOS/production/_ext/1664057780/error.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/error.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/error.o
@@ -1010,7 +1010,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/fe_448.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/fe_448.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/fe_448.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/fe_448.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/fe_448.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/fe_448.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/fe_448.o
@@ -1022,7 +1022,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/fe_low_mem.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/fe_low_mem.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/fe_low_mem.o
- .debug_info    0x00000000      0x2f6 build/FreeRTOS/production/_ext/1664057780/fe_low_mem.o
+ .debug_info    0x00000000      0x322 build/FreeRTOS/production/_ext/1664057780/fe_low_mem.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/fe_low_mem.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/fe_low_mem.o
@@ -1034,7 +1034,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/fe_operations.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/fe_operations.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/fe_operations.o
- .debug_info    0x00000000      0x2f9 build/FreeRTOS/production/_ext/1664057780/fe_operations.o
+ .debug_info    0x00000000      0x325 build/FreeRTOS/production/_ext/1664057780/fe_operations.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/fe_operations.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/fe_operations.o
@@ -1046,7 +1046,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ge_448.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ge_448.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ge_448.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/ge_448.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/ge_448.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/ge_448.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/ge_448.o
@@ -1058,7 +1058,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ge_low_mem.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ge_low_mem.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ge_low_mem.o
- .debug_info    0x00000000      0x2f6 build/FreeRTOS/production/_ext/1664057780/ge_low_mem.o
+ .debug_info    0x00000000      0x322 build/FreeRTOS/production/_ext/1664057780/ge_low_mem.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/ge_low_mem.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/ge_low_mem.o
@@ -1070,7 +1070,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ge_operations.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ge_operations.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ge_operations.o
- .debug_info    0x00000000      0x2f9 build/FreeRTOS/production/_ext/1664057780/ge_operations.o
+ .debug_info    0x00000000      0x325 build/FreeRTOS/production/_ext/1664057780/ge_operations.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/ge_operations.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/ge_operations.o
@@ -1086,7 +1086,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/integer.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/integer.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/integer.o
- .debug_info    0x00000000      0x2f3 build/FreeRTOS/production/_ext/1664057780/integer.o
+ .debug_info    0x00000000      0x31f build/FreeRTOS/production/_ext/1664057780/integer.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/integer.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/integer.o
@@ -1098,7 +1098,7 @@ Discarded input sections
  .text          0x00000000       0x12 build/FreeRTOS/production/_ext/1664057780/logging.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/logging.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/logging.o
- .debug_info    0x00000000     0x1042 build/FreeRTOS/production/_ext/1664057780/logging.o
+ .debug_info    0x00000000     0x106e build/FreeRTOS/production/_ext/1664057780/logging.o
  .debug_abbrev  0x00000000       0xd0 build/FreeRTOS/production/_ext/1664057780/logging.o
  .debug_loc     0x00000000       0x25 build/FreeRTOS/production/_ext/1664057780/logging.o
  .debug_aranges
@@ -1112,7 +1112,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/md2.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/md2.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/md2.o
- .debug_info    0x00000000      0x2ef build/FreeRTOS/production/_ext/1664057780/md2.o
+ .debug_info    0x00000000      0x31b build/FreeRTOS/production/_ext/1664057780/md2.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/md2.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/md2.o
@@ -1124,7 +1124,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/md4.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/md4.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/md4.o
- .debug_info    0x00000000      0x2ef build/FreeRTOS/production/_ext/1664057780/md4.o
+ .debug_info    0x00000000      0x31b build/FreeRTOS/production/_ext/1664057780/md4.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/md4.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/md4.o
@@ -1138,7 +1138,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/memory.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/memory.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/memory.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/memory.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/memory.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/memory.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/memory.o
@@ -1150,7 +1150,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/pkcs12.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/pkcs12.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/pkcs12.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/pkcs12.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/pkcs12.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/pkcs12.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/pkcs12.o
@@ -1162,7 +1162,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/pkcs7.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/pkcs7.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/pkcs7.o
- .debug_info    0x00000000      0x2f1 build/FreeRTOS/production/_ext/1664057780/pkcs7.o
+ .debug_info    0x00000000      0x31d build/FreeRTOS/production/_ext/1664057780/pkcs7.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/pkcs7.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/pkcs7.o
@@ -1174,7 +1174,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/poly1305.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/poly1305.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/poly1305.o
- .debug_info    0x00000000      0x2f4 build/FreeRTOS/production/_ext/1664057780/poly1305.o
+ .debug_info    0x00000000      0x320 build/FreeRTOS/production/_ext/1664057780/poly1305.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/poly1305.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/poly1305.o
@@ -1186,7 +1186,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/pwdbased.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/pwdbased.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/pwdbased.o
- .debug_info    0x00000000      0x2f4 build/FreeRTOS/production/_ext/1664057780/pwdbased.o
+ .debug_info    0x00000000      0x320 build/FreeRTOS/production/_ext/1664057780/pwdbased.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/pwdbased.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/pwdbased.o
@@ -1198,7 +1198,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/rc2.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/rc2.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/rc2.o
- .debug_info    0x00000000      0x2ef build/FreeRTOS/production/_ext/1664057780/rc2.o
+ .debug_info    0x00000000      0x31b build/FreeRTOS/production/_ext/1664057780/rc2.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/rc2.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/rc2.o
@@ -1210,7 +1210,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ripemd.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ripemd.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/ripemd.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/ripemd.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/ripemd.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/ripemd.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/ripemd.o
@@ -1224,7 +1224,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sha3.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sha3.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sha3.o
- .debug_info    0x00000000      0x2f0 build/FreeRTOS/production/_ext/1664057780/sha3.o
+ .debug_info    0x00000000      0x31c build/FreeRTOS/production/_ext/1664057780/sha3.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sha3.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sha3.o
@@ -1236,7 +1236,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/signature.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/signature.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/signature.o
- .debug_info    0x00000000      0x2f5 build/FreeRTOS/production/_ext/1664057780/signature.o
+ .debug_info    0x00000000      0x321 build/FreeRTOS/production/_ext/1664057780/signature.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/signature.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/signature.o
@@ -1248,7 +1248,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_arm32.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_arm32.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_arm32.o
- .debug_info    0x00000000      0x2f4 build/FreeRTOS/production/_ext/1664057780/sp_arm32.o
+ .debug_info    0x00000000      0x320 build/FreeRTOS/production/_ext/1664057780/sp_arm32.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sp_arm32.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sp_arm32.o
@@ -1260,7 +1260,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_arm64.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_arm64.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_arm64.o
- .debug_info    0x00000000      0x2f4 build/FreeRTOS/production/_ext/1664057780/sp_arm64.o
+ .debug_info    0x00000000      0x320 build/FreeRTOS/production/_ext/1664057780/sp_arm64.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sp_arm64.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sp_arm64.o
@@ -1272,7 +1272,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_armthumb.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_armthumb.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_armthumb.o
- .debug_info    0x00000000      0x2f7 build/FreeRTOS/production/_ext/1664057780/sp_armthumb.o
+ .debug_info    0x00000000      0x323 build/FreeRTOS/production/_ext/1664057780/sp_armthumb.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sp_armthumb.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sp_armthumb.o
@@ -1284,7 +1284,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_c32.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_c32.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_c32.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/sp_c32.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/sp_c32.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sp_c32.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sp_c32.o
@@ -1296,7 +1296,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_c64.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_c64.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_c64.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/sp_c64.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/sp_c64.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sp_c64.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sp_c64.o
@@ -1308,7 +1308,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_cortexm.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_cortexm.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_cortexm.o
- .debug_info    0x00000000      0x2f6 build/FreeRTOS/production/_ext/1664057780/sp_cortexm.o
+ .debug_info    0x00000000      0x322 build/FreeRTOS/production/_ext/1664057780/sp_cortexm.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sp_cortexm.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sp_cortexm.o
@@ -1320,7 +1320,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_dsp32.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_dsp32.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_dsp32.o
- .debug_info    0x00000000      0x2f4 build/FreeRTOS/production/_ext/1664057780/sp_dsp32.o
+ .debug_info    0x00000000      0x320 build/FreeRTOS/production/_ext/1664057780/sp_dsp32.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sp_dsp32.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sp_dsp32.o
@@ -1332,7 +1332,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_int.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_int.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_int.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/sp_int.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/sp_int.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sp_int.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sp_int.o
@@ -1344,7 +1344,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_x86_64.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_x86_64.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sp_x86_64.o
- .debug_info    0x00000000      0x2f5 build/FreeRTOS/production/_ext/1664057780/sp_x86_64.o
+ .debug_info    0x00000000      0x321 build/FreeRTOS/production/_ext/1664057780/sp_x86_64.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sp_x86_64.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sp_x86_64.o
@@ -1356,7 +1356,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/srp.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/srp.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/srp.o
- .debug_info    0x00000000      0x2ef build/FreeRTOS/production/_ext/1664057780/srp.o
+ .debug_info    0x00000000      0x31b build/FreeRTOS/production/_ext/1664057780/srp.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/srp.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/srp.o
@@ -1370,7 +1370,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wc_dsp.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wc_dsp.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wc_dsp.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/wc_dsp.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/wc_dsp.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/wc_dsp.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/wc_dsp.o
@@ -1382,7 +1382,7 @@ Discarded input sections
  .text          0x00000000      0x1c2 build/FreeRTOS/production/_ext/1664057780/wc_encrypt.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wc_encrypt.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wc_encrypt.o
- .debug_info    0x00000000     0x1bd9 build/FreeRTOS/production/_ext/1664057780/wc_encrypt.o
+ .debug_info    0x00000000     0x1c05 build/FreeRTOS/production/_ext/1664057780/wc_encrypt.o
  .debug_abbrev  0x00000000      0x172 build/FreeRTOS/production/_ext/1664057780/wc_encrypt.o
  .debug_loc     0x00000000      0x97d build/FreeRTOS/production/_ext/1664057780/wc_encrypt.o
  .debug_aranges
@@ -1396,7 +1396,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wc_pkcs11.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wc_pkcs11.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wc_pkcs11.o
- .debug_info    0x00000000      0x2f5 build/FreeRTOS/production/_ext/1664057780/wc_pkcs11.o
+ .debug_info    0x00000000      0x321 build/FreeRTOS/production/_ext/1664057780/wc_pkcs11.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/wc_pkcs11.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/wc_pkcs11.o
@@ -1409,7 +1409,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wolfevent.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wolfevent.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/wolfevent.o
- .debug_info    0x00000000      0x2f5 build/FreeRTOS/production/_ext/1664057780/wolfevent.o
+ .debug_info    0x00000000      0x321 build/FreeRTOS/production/_ext/1664057780/wolfevent.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/wolfevent.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/wolfevent.o
@@ -1433,7 +1433,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sha512.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sha512.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sha512.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/sha512.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/sha512.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sha512.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sha512.o
@@ -1447,7 +1447,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/kdf.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/kdf.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/kdf.o
- .debug_info    0x00000000      0x2ef build/FreeRTOS/production/_ext/1664057780/kdf.o
+ .debug_info    0x00000000      0x31b build/FreeRTOS/production/_ext/1664057780/kdf.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/kdf.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/kdf.o
@@ -1459,7 +1459,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/siphash.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/siphash.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/siphash.o
- .debug_info    0x00000000      0x2f3 build/FreeRTOS/production/_ext/1664057780/siphash.o
+ .debug_info    0x00000000      0x31f build/FreeRTOS/production/_ext/1664057780/siphash.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/siphash.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/siphash.o
@@ -1471,7 +1471,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/falcon.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/falcon.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/falcon.o
- .debug_info    0x00000000      0x2f2 build/FreeRTOS/production/_ext/1664057780/falcon.o
+ .debug_info    0x00000000      0x31e build/FreeRTOS/production/_ext/1664057780/falcon.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/falcon.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/falcon.o
@@ -1483,7 +1483,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/eccsi.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/eccsi.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/eccsi.o
- .debug_info    0x00000000      0x2f1 build/FreeRTOS/production/_ext/1664057780/eccsi.o
+ .debug_info    0x00000000      0x31d build/FreeRTOS/production/_ext/1664057780/eccsi.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/eccsi.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/eccsi.o
@@ -1495,7 +1495,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sakke.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sakke.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/sakke.o
- .debug_info    0x00000000      0x2f1 build/FreeRTOS/production/_ext/1664057780/sakke.o
+ .debug_info    0x00000000      0x31d build/FreeRTOS/production/_ext/1664057780/sakke.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/sakke.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/sakke.o
@@ -1510,7 +1510,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/misc.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/misc.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/misc.o
- .debug_info    0x00000000      0x2f0 build/FreeRTOS/production/_ext/1664057780/misc.o
+ .debug_info    0x00000000      0x31c build/FreeRTOS/production/_ext/1664057780/misc.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/misc.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/misc.o
@@ -1522,7 +1522,7 @@ Discarded input sections
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/evp.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/evp.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/1664057780/evp.o
- .debug_info    0x00000000      0x2ef build/FreeRTOS/production/_ext/1664057780/evp.o
+ .debug_info    0x00000000      0x31b build/FreeRTOS/production/_ext/1664057780/evp.o
  .debug_abbrev  0x00000000       0x1b build/FreeRTOS/production/_ext/1664057780/evp.o
  .debug_aranges
                 0x00000000       0x18 build/FreeRTOS/production/_ext/1664057780/evp.o
@@ -3028,146 +3028,146 @@ LOAD data_init
  .comment       0x0000002b       0x2c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
  .comment       0x0000002b       0x2c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(sbrk.o)
 
-.debug_info     0x00000000   0x122fa6
- .debug_info    0x00000000     0x4122 build/FreeRTOS/production/_ext/1609394304/crypto.o
- .debug_info    0x00004122     0x8963 build/FreeRTOS/production/_ext/1231519722/drv_ethphy.o
- .debug_info    0x0000ca85     0x3f18 build/FreeRTOS/production/_ext/1231519722/drv_extphy_lan867x.o
- .debug_info    0x0001099d     0x9210 build/FreeRTOS/production/_ext/41526634/drv_gmac.o
- .debug_info    0x00019bad     0xa9e9 build/FreeRTOS/production/_ext/41526634/drv_gmac_lib_samE5x.o
- .debug_info    0x00024596     0x46aa build/FreeRTOS/production/_ext/1149484450/drv_miim.o
- .debug_info    0x00028c40      0x6d1 build/FreeRTOS/production/_ext/540595297/helpers.o
- .debug_info    0x00029311     0x4adf build/FreeRTOS/production/_ext/540595297/icmp.o
- .debug_info    0x0002ddf0     0xbf76 build/FreeRTOS/production/_ext/540595297/tcp.o
- .debug_info    0x00039d66     0x7050 build/FreeRTOS/production/_ext/540595297/arp.o
- .debug_info    0x00040db6     0x9aee build/FreeRTOS/production/_ext/540595297/tcpip_commands.o
- .debug_info    0x0004a8a4     0x7ebd build/FreeRTOS/production/_ext/540595297/iperf.o
- .debug_info    0x00052761     0x7d8a build/FreeRTOS/production/_ext/540595297/ipv4.o
- .debug_info    0x0005a4eb      0xd6d build/FreeRTOS/production/_ext/540595297/tcpip_heap_alloc.o
- .debug_info    0x0005b258     0x1bd6 build/FreeRTOS/production/_ext/540595297/tcpip_heap_internal.o
- .debug_info    0x0005ce2e     0x9d12 build/FreeRTOS/production/_ext/540595297/dhcp.o
- .debug_info    0x00066b40     0x814c build/FreeRTOS/production/_ext/540595297/dns.o
- .debug_info    0x0006ec8c      0x42e build/FreeRTOS/production/_ext/540595297/hash_fnv.o
- .debug_info    0x0006f0ba      0xc59 build/FreeRTOS/production/_ext/540595297/oahash.o
- .debug_info    0x0006fd13     0x4460 build/FreeRTOS/production/_ext/540595297/tcpip_helpers.o
- .debug_info    0x00074173     0xcab9 build/FreeRTOS/production/_ext/540595297/tcpip_manager.o
- .debug_info    0x00080c2c      0xe12 build/FreeRTOS/production/_ext/540595297/tcpip_notify.o
- .debug_info    0x00081a3e     0x391f build/FreeRTOS/production/_ext/540595297/tcpip_packet.o
- .debug_info    0x0008535d     0x9626 build/FreeRTOS/production/_ext/540595297/udp.o
- .debug_info    0x0008e983      0xb9c build/FreeRTOS/production/_ext/891571577/osal_freertos.o
- .debug_info    0x0008f51f      0xb5c build/FreeRTOS/production/_ext/892004133/plib_clock.o
- .debug_info    0x0009007b      0x318 build/FreeRTOS/production/_ext/894153619/plib_evsys.o
- .debug_info    0x00090393     0x163f build/FreeRTOS/production/_ext/1494909205/plib_nvic.o
- .debug_info    0x000919d2      0xe57 build/FreeRTOS/production/_ext/320424729/plib_nvmctrl.o
- .debug_info    0x00092829     0x10c3 build/FreeRTOS/production/_ext/1494856054/plib_port.o
- .debug_info    0x000938ec     0x21a3 build/FreeRTOS/production/_ext/2092608928/plib_sercom1_usart.o
- .debug_info    0x00095a8f      0xc7e build/FreeRTOS/production/_ext/579449528/plib_tc0.o
- .debug_info    0x0009670d      0xc57 build/FreeRTOS/production/_ext/579449528/plib_tc1.o
- .debug_info    0x00097364      0x496 build/FreeRTOS/production/_ext/1494734144/plib_trng.o
- .debug_info    0x000977fa     0x2773 build/FreeRTOS/production/_ext/1005353002/sys_command.o
- .debug_info    0x00099f6d     0x147e build/FreeRTOS/production/_ext/548640822/sys_console_uart.o
- .debug_info    0x0009b3eb     0x1410 build/FreeRTOS/production/_ext/548640822/sys_console.o
- .debug_info    0x0009c7fb      0x782 build/FreeRTOS/production/_ext/147610190/sys_debug.o
- .debug_info    0x0009cf7d     0x11aa build/FreeRTOS/production/_ext/1690414130/sys_int.o
- .debug_info    0x0009e127      0x5a6 build/FreeRTOS/production/_ext/1093154855/sys_reset.o
- .debug_info    0x0009e6cd     0x3046 build/FreeRTOS/production/_ext/832704728/sys_time.o
- .debug_info    0x000a1713      0x655 build/FreeRTOS/production/_ext/2072568807/sys_time_h2_adapter.o
- .debug_info    0x000a1d68      0xb4f build/FreeRTOS/production/_ext/2072568807/sys_random_h2_adapter.o
- .debug_info    0x000a28b7      0x994 build/FreeRTOS/production/_ext/161576091/tasks.o
- .debug_info    0x000a324b     0x751d build/FreeRTOS/production/_ext/161576091/initialization.o
- .debug_info    0x000aa768     0x179a build/FreeRTOS/production/_ext/161576091/interrupts.o
- .debug_info    0x000abf02      0x3da build/FreeRTOS/production/_ext/161576091/exceptions.o
- .debug_info    0x000ac2dc      0x897 build/FreeRTOS/production/_ext/161576091/startup_xc32.o
- .debug_info    0x000acb73      0x52a build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
- .debug_info    0x000ad09d      0x784 build/FreeRTOS/production/_ext/246609638/port.o
- .debug_info    0x000ad821      0x4e4 build/FreeRTOS/production/_ext/1665200909/heap_1.o
- .debug_info    0x000add05      0x631 build/FreeRTOS/production/_ext/404212886/list.o
- .debug_info    0x000ae336     0x21eb build/FreeRTOS/production/_ext/404212886/queue.o
- .debug_info    0x000b0521     0x3169 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
- .debug_info    0x000b368a     0x25b6 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
- .debug_info    0x000b5c40    0x11c5f build/FreeRTOS/production/_ext/1664057780/asn.o
- .debug_info    0x000c789f     0x1b9f build/FreeRTOS/production/_ext/1664057780/coding.o
- .debug_info    0x000c943e     0x4f78 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
- .debug_info    0x000ce3b6     0x24b5 build/FreeRTOS/production/_ext/1664057780/hash.o
- .debug_info    0x000d086b     0x24c1 build/FreeRTOS/production/_ext/1664057780/hmac.o
- .debug_info    0x000d2d2c     0x25b0 build/FreeRTOS/production/_ext/1664057780/md5.o
- .debug_info    0x000d52dc     0x51ac build/FreeRTOS/production/_ext/1664057780/rsa.o
- .debug_info    0x000da488     0x8b27 build/FreeRTOS/production/_ext/1664057780/tfm.o
- .debug_info    0x000e2faf     0x11a5 build/FreeRTOS/production/_ext/1664057780/wc_port.o
- .debug_info    0x000e4154     0x1719 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
- .debug_info    0x000e586d     0x8aaa build/FreeRTOS/production/_ext/1664057780/aes.o
- .debug_info    0x000ee317     0x31b8 build/FreeRTOS/production/_ext/1664057780/des3.o
- .debug_info    0x000f14cf     0x3d15 build/FreeRTOS/production/_ext/1664057780/random.o
- .debug_info    0x000f51e4     0x4c37 build/FreeRTOS/production/_ext/1664057780/sha.o
- .debug_info    0x000f9e1b     0x3dc1 build/FreeRTOS/production/_ext/1664057780/sha256.o
- .debug_info    0x000fdbdc     0xb058 build/FreeRTOS/production/_ext/1664057780/ecc.o
- .debug_info    0x00108c34     0x1bf5 build/FreeRTOS/production/_ext/1360937237/app.o
- .debug_info    0x0010a829      0x330 build/FreeRTOS/production/_ext/1360937237/main.o
- .debug_info    0x0010ab59      0xd6d build/FreeRTOS/production/_ext/1360937237/bc_com.o
- .debug_info    0x0010b8c6     0x5939 build/FreeRTOS/production/_ext/1360937237/bc_test.o
- .debug_info    0x001111ff      0x2ae c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
- .debug_info    0x001114ad      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
- .debug_info    0x00111804      0x35a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
- .debug_info    0x00111b5e      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(tolower.o)
- .debug_info    0x00111eb5      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(toupper.o)
- .debug_info    0x0011220c      0x627 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__libc_start_main.o)
- .debug_info    0x00112833      0x539 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(libc.o)
- .debug_info    0x00112d6c     0x13a9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(malloc.o)
- .debug_info    0x00114115      0x380 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(expand_heap.o)
- .debug_info    0x00114495      0x330 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(rand.o)
- .debug_info    0x001147c5      0x706 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsnprintf.o)
- .debug_info    0x00114ecb      0x350 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(snprintf.o)
- .debug_info    0x0011521b      0x326 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(sprintf.o)
- .debug_info    0x00115541      0x320 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsprintf.o)
- .debug_info    0x00115861      0x2ff c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(atoi.o)
- .debug_info    0x00115b60      0x9f3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtol.o)
- .debug_info    0x00116553      0x2e6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcmp.o)
- .debug_info    0x00116839      0x2fb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcpy.o)
- .debug_info    0x00116b34      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memmove.o)
- .debug_info    0x00116e31      0x2b9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memset.o)
- .debug_info    0x001170ea      0x2aa c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strlen.o)
- .debug_info    0x00117394      0x2cc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchr.o)
- .debug_info    0x00117660      0x3ef c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchrnul.o)
- .debug_info    0x00117a4f      0x28e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcmp.o)
- .debug_info    0x00117cdd      0x2b8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcpy.o)
- .debug_info    0x00117f95      0x2f4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncmp.o)
- .debug_info    0x00118289      0x2dd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncpy.o)
- .debug_info    0x00118566      0x2e6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strrchr.o)
- .debug_info    0x0011884c      0x2fa c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtok.o)
- .debug_info    0x00118b46      0x3d7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime.o)
- .debug_info    0x00118f1d      0x401 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime_r.o)
- .debug_info    0x0011931e      0x31f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(time.o)
- .debug_info    0x0011963d      0x2b3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__environ.o)
- .debug_info    0x001198f0      0x277 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__errno_location.o)
- .debug_info    0x00119b67      0x849 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(intscan.o)
- .debug_info    0x0011a3b0      0x64e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(shgetc.o)
- .debug_info    0x0011a9fe      0x61a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__uflow.o)
- .debug_info    0x0011b018      0x6c7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vfprintf.o)
- .debug_info    0x0011b6df      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memrchr.o)
- .debug_info    0x0011b9dc      0x2bc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpcpy.o)
- .debug_info    0x0011bc98      0x2f8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpncpy.o)
- .debug_info    0x0011bf90      0x31f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcspn.o)
- .debug_info    0x0011c2af      0x304 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strspn.o)
- .debug_info    0x0011c5b3      0x52f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__secs_to_tm.o)
- .debug_info    0x0011cae2      0x4a8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(clock_gettime.o)
- .debug_info    0x0011cf8a      0x326 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gettimeofday.o)
- .debug_info    0x0011d2b0      0x2ce c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(syscall_ret.o)
- .debug_info    0x0011d57e      0x634 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__toread.o)
- .debug_info    0x0011dbb2      0xd37 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__printf_core.o)
- .debug_info    0x0011e8e9      0x8fc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_a.o)
- .debug_info    0x0011f1e5      0x5c6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_d.o)
- .debug_info    0x0011f7ab      0x9e1 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_fp.o)
- .debug_info    0x0012018c      0x597 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_o.o)
- .debug_info    0x00120723      0x53b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_s.o)
- .debug_info    0x00120c5e      0x664 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_u.o)
- .debug_info    0x001212c2      0x5fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_x.o)
- .debug_info    0x001218bf      0x3e1 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_float.o)
- .debug_info    0x00121ca0      0x405 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_int.o)
- .debug_info    0x001220a5      0x40b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_ptr.o)
- .debug_info    0x001224b0       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_ldivmod.o)
- .debug_info    0x001224d6       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_info    0x001224fc      0x7f3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_info    0x00122cef       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
- .debug_info    0x00122d15      0x291 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(sbrk.o)
+.debug_info     0x00000000   0x123c8a
+ .debug_info    0x00000000     0x414e build/FreeRTOS/production/_ext/1609394304/crypto.o
+ .debug_info    0x0000414e     0x898f build/FreeRTOS/production/_ext/1231519722/drv_ethphy.o
+ .debug_info    0x0000cadd     0x3f44 build/FreeRTOS/production/_ext/1231519722/drv_extphy_lan867x.o
+ .debug_info    0x00010a21     0x923c build/FreeRTOS/production/_ext/41526634/drv_gmac.o
+ .debug_info    0x00019c5d     0xaa15 build/FreeRTOS/production/_ext/41526634/drv_gmac_lib_samE5x.o
+ .debug_info    0x00024672     0x46d6 build/FreeRTOS/production/_ext/1149484450/drv_miim.o
+ .debug_info    0x00028d48      0x6fd build/FreeRTOS/production/_ext/540595297/helpers.o
+ .debug_info    0x00029445     0x4b0b build/FreeRTOS/production/_ext/540595297/icmp.o
+ .debug_info    0x0002df50     0xbfa2 build/FreeRTOS/production/_ext/540595297/tcp.o
+ .debug_info    0x00039ef2     0x707c build/FreeRTOS/production/_ext/540595297/arp.o
+ .debug_info    0x00040f6e     0x9b1a build/FreeRTOS/production/_ext/540595297/tcpip_commands.o
+ .debug_info    0x0004aa88     0x7ee9 build/FreeRTOS/production/_ext/540595297/iperf.o
+ .debug_info    0x00052971     0x7db6 build/FreeRTOS/production/_ext/540595297/ipv4.o
+ .debug_info    0x0005a727      0xd99 build/FreeRTOS/production/_ext/540595297/tcpip_heap_alloc.o
+ .debug_info    0x0005b4c0     0x1c02 build/FreeRTOS/production/_ext/540595297/tcpip_heap_internal.o
+ .debug_info    0x0005d0c2     0x9d3e build/FreeRTOS/production/_ext/540595297/dhcp.o
+ .debug_info    0x00066e00     0x8178 build/FreeRTOS/production/_ext/540595297/dns.o
+ .debug_info    0x0006ef78      0x45a build/FreeRTOS/production/_ext/540595297/hash_fnv.o
+ .debug_info    0x0006f3d2      0xc85 build/FreeRTOS/production/_ext/540595297/oahash.o
+ .debug_info    0x00070057     0x448c build/FreeRTOS/production/_ext/540595297/tcpip_helpers.o
+ .debug_info    0x000744e3     0xcae5 build/FreeRTOS/production/_ext/540595297/tcpip_manager.o
+ .debug_info    0x00080fc8      0xe3e build/FreeRTOS/production/_ext/540595297/tcpip_notify.o
+ .debug_info    0x00081e06     0x394b build/FreeRTOS/production/_ext/540595297/tcpip_packet.o
+ .debug_info    0x00085751     0x9652 build/FreeRTOS/production/_ext/540595297/udp.o
+ .debug_info    0x0008eda3      0xbc8 build/FreeRTOS/production/_ext/891571577/osal_freertos.o
+ .debug_info    0x0008f96b      0xb88 build/FreeRTOS/production/_ext/892004133/plib_clock.o
+ .debug_info    0x000904f3      0x344 build/FreeRTOS/production/_ext/894153619/plib_evsys.o
+ .debug_info    0x00090837     0x166b build/FreeRTOS/production/_ext/1494909205/plib_nvic.o
+ .debug_info    0x00091ea2      0xe83 build/FreeRTOS/production/_ext/320424729/plib_nvmctrl.o
+ .debug_info    0x00092d25     0x10ef build/FreeRTOS/production/_ext/1494856054/plib_port.o
+ .debug_info    0x00093e14     0x21cf build/FreeRTOS/production/_ext/2092608928/plib_sercom1_usart.o
+ .debug_info    0x00095fe3      0xcaa build/FreeRTOS/production/_ext/579449528/plib_tc0.o
+ .debug_info    0x00096c8d      0xc83 build/FreeRTOS/production/_ext/579449528/plib_tc1.o
+ .debug_info    0x00097910      0x4c2 build/FreeRTOS/production/_ext/1494734144/plib_trng.o
+ .debug_info    0x00097dd2     0x279f build/FreeRTOS/production/_ext/1005353002/sys_command.o
+ .debug_info    0x0009a571     0x14aa build/FreeRTOS/production/_ext/548640822/sys_console_uart.o
+ .debug_info    0x0009ba1b     0x143c build/FreeRTOS/production/_ext/548640822/sys_console.o
+ .debug_info    0x0009ce57      0x7ae build/FreeRTOS/production/_ext/147610190/sys_debug.o
+ .debug_info    0x0009d605     0x11d6 build/FreeRTOS/production/_ext/1690414130/sys_int.o
+ .debug_info    0x0009e7db      0x5d2 build/FreeRTOS/production/_ext/1093154855/sys_reset.o
+ .debug_info    0x0009edad     0x3072 build/FreeRTOS/production/_ext/832704728/sys_time.o
+ .debug_info    0x000a1e1f      0x681 build/FreeRTOS/production/_ext/2072568807/sys_time_h2_adapter.o
+ .debug_info    0x000a24a0      0xb7b build/FreeRTOS/production/_ext/2072568807/sys_random_h2_adapter.o
+ .debug_info    0x000a301b      0x9c0 build/FreeRTOS/production/_ext/161576091/tasks.o
+ .debug_info    0x000a39db     0x7549 build/FreeRTOS/production/_ext/161576091/initialization.o
+ .debug_info    0x000aaf24     0x17c6 build/FreeRTOS/production/_ext/161576091/interrupts.o
+ .debug_info    0x000ac6ea      0x406 build/FreeRTOS/production/_ext/161576091/exceptions.o
+ .debug_info    0x000acaf0      0x8c3 build/FreeRTOS/production/_ext/161576091/startup_xc32.o
+ .debug_info    0x000ad3b3      0x556 build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
+ .debug_info    0x000ad909      0x7b0 build/FreeRTOS/production/_ext/246609638/port.o
+ .debug_info    0x000ae0b9      0x510 build/FreeRTOS/production/_ext/1665200909/heap_1.o
+ .debug_info    0x000ae5c9      0x65d build/FreeRTOS/production/_ext/404212886/list.o
+ .debug_info    0x000aec26     0x2217 build/FreeRTOS/production/_ext/404212886/queue.o
+ .debug_info    0x000b0e3d     0x3195 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
+ .debug_info    0x000b3fd2     0x25e2 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
+ .debug_info    0x000b65b4    0x11c8b build/FreeRTOS/production/_ext/1664057780/asn.o
+ .debug_info    0x000c823f     0x1bcb build/FreeRTOS/production/_ext/1664057780/coding.o
+ .debug_info    0x000c9e0a     0x4fa4 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
+ .debug_info    0x000cedae     0x24e1 build/FreeRTOS/production/_ext/1664057780/hash.o
+ .debug_info    0x000d128f     0x24ed build/FreeRTOS/production/_ext/1664057780/hmac.o
+ .debug_info    0x000d377c     0x25dc build/FreeRTOS/production/_ext/1664057780/md5.o
+ .debug_info    0x000d5d58     0x51d8 build/FreeRTOS/production/_ext/1664057780/rsa.o
+ .debug_info    0x000daf30     0x8b53 build/FreeRTOS/production/_ext/1664057780/tfm.o
+ .debug_info    0x000e3a83     0x11d1 build/FreeRTOS/production/_ext/1664057780/wc_port.o
+ .debug_info    0x000e4c54     0x1745 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
+ .debug_info    0x000e6399     0x8ad6 build/FreeRTOS/production/_ext/1664057780/aes.o
+ .debug_info    0x000eee6f     0x31e4 build/FreeRTOS/production/_ext/1664057780/des3.o
+ .debug_info    0x000f2053     0x3d41 build/FreeRTOS/production/_ext/1664057780/random.o
+ .debug_info    0x000f5d94     0x4c63 build/FreeRTOS/production/_ext/1664057780/sha.o
+ .debug_info    0x000fa9f7     0x3ded build/FreeRTOS/production/_ext/1664057780/sha256.o
+ .debug_info    0x000fe7e4     0xb084 build/FreeRTOS/production/_ext/1664057780/ecc.o
+ .debug_info    0x00109868     0x1c21 build/FreeRTOS/production/_ext/1360937237/app.o
+ .debug_info    0x0010b489      0x35c build/FreeRTOS/production/_ext/1360937237/main.o
+ .debug_info    0x0010b7e5      0xd99 build/FreeRTOS/production/_ext/1360937237/bc_com.o
+ .debug_info    0x0010c57e     0x5965 build/FreeRTOS/production/_ext/1360937237/bc_test.o
+ .debug_info    0x00111ee3      0x2ae c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
+ .debug_info    0x00112191      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
+ .debug_info    0x001124e8      0x35a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
+ .debug_info    0x00112842      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(tolower.o)
+ .debug_info    0x00112b99      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(toupper.o)
+ .debug_info    0x00112ef0      0x627 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__libc_start_main.o)
+ .debug_info    0x00113517      0x539 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(libc.o)
+ .debug_info    0x00113a50     0x13a9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(malloc.o)
+ .debug_info    0x00114df9      0x380 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(expand_heap.o)
+ .debug_info    0x00115179      0x330 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(rand.o)
+ .debug_info    0x001154a9      0x706 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsnprintf.o)
+ .debug_info    0x00115baf      0x350 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(snprintf.o)
+ .debug_info    0x00115eff      0x326 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(sprintf.o)
+ .debug_info    0x00116225      0x320 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsprintf.o)
+ .debug_info    0x00116545      0x2ff c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(atoi.o)
+ .debug_info    0x00116844      0x9f3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtol.o)
+ .debug_info    0x00117237      0x2e6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcmp.o)
+ .debug_info    0x0011751d      0x2fb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcpy.o)
+ .debug_info    0x00117818      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memmove.o)
+ .debug_info    0x00117b15      0x2b9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memset.o)
+ .debug_info    0x00117dce      0x2aa c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strlen.o)
+ .debug_info    0x00118078      0x2cc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchr.o)
+ .debug_info    0x00118344      0x3ef c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchrnul.o)
+ .debug_info    0x00118733      0x28e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcmp.o)
+ .debug_info    0x001189c1      0x2b8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcpy.o)
+ .debug_info    0x00118c79      0x2f4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncmp.o)
+ .debug_info    0x00118f6d      0x2dd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncpy.o)
+ .debug_info    0x0011924a      0x2e6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strrchr.o)
+ .debug_info    0x00119530      0x2fa c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtok.o)
+ .debug_info    0x0011982a      0x3d7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime.o)
+ .debug_info    0x00119c01      0x401 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime_r.o)
+ .debug_info    0x0011a002      0x31f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(time.o)
+ .debug_info    0x0011a321      0x2b3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__environ.o)
+ .debug_info    0x0011a5d4      0x277 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__errno_location.o)
+ .debug_info    0x0011a84b      0x849 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(intscan.o)
+ .debug_info    0x0011b094      0x64e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(shgetc.o)
+ .debug_info    0x0011b6e2      0x61a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__uflow.o)
+ .debug_info    0x0011bcfc      0x6c7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vfprintf.o)
+ .debug_info    0x0011c3c3      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memrchr.o)
+ .debug_info    0x0011c6c0      0x2bc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpcpy.o)
+ .debug_info    0x0011c97c      0x2f8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpncpy.o)
+ .debug_info    0x0011cc74      0x31f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcspn.o)
+ .debug_info    0x0011cf93      0x304 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strspn.o)
+ .debug_info    0x0011d297      0x52f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__secs_to_tm.o)
+ .debug_info    0x0011d7c6      0x4a8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(clock_gettime.o)
+ .debug_info    0x0011dc6e      0x326 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gettimeofday.o)
+ .debug_info    0x0011df94      0x2ce c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(syscall_ret.o)
+ .debug_info    0x0011e262      0x634 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__toread.o)
+ .debug_info    0x0011e896      0xd37 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__printf_core.o)
+ .debug_info    0x0011f5cd      0x8fc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_a.o)
+ .debug_info    0x0011fec9      0x5c6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_d.o)
+ .debug_info    0x0012048f      0x9e1 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_fp.o)
+ .debug_info    0x00120e70      0x597 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_o.o)
+ .debug_info    0x00121407      0x53b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_s.o)
+ .debug_info    0x00121942      0x664 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_u.o)
+ .debug_info    0x00121fa6      0x5fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_x.o)
+ .debug_info    0x001225a3      0x3e1 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_float.o)
+ .debug_info    0x00122984      0x405 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_int.o)
+ .debug_info    0x00122d89      0x40b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_ptr.o)
+ .debug_info    0x00123194       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_ldivmod.o)
+ .debug_info    0x001231ba       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_info    0x001231e0      0x7f3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_info    0x001239d3       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+ .debug_info    0x001239f9      0x291 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(sbrk.o)
 
 .debug_abbrev   0x00000000    0x133eb
  .debug_abbrev  0x00000000      0x386 build/FreeRTOS/production/_ext/1609394304/crypto.o

@@ -508,22 +508,22 @@ def run_prog_All():
 def run_prog_A():
     global current_directory
     global hex_file_entry_A
-    send_cmd_A("program " + current_directory + "\\" + hex_file_entry_A.get() + "\n")
+    send_cmd_A("program " + "\"" + current_directory + "\\" + hex_file_entry_A.get() + "\""  + "\n")
 
 def run_prog_B():
     global current_directory
     global hex_file_entry_B
-    send_cmd_B('program ' + current_directory + "\\" + hex_file_entry_B.get() + '\n')
+    send_cmd_B('program ' + "\"" +  current_directory  + "\\" + hex_file_entry_B.get() + "\"" + '\n')
 
 def run_prog_C():
     global current_directory
     global hex_file_entry_C
-    send_cmd_C('program ' + current_directory + "\\" + hex_file_entry_C.get() + '\n')
+    send_cmd_C('program ' + "\"" + current_directory  + "\\" + hex_file_entry_C.get()+ "\""  + '\n')
 
 def run_prog_D():
     global current_directory
     global hex_file_entry_D
-    send_cmd_D('program ' + current_directory + "\\" + hex_file_entry_D.get() + '\n')
+    send_cmd_D('program ' + "\"" + current_directory  + "\\" + hex_file_entry_D.get() + "\"" + '\n')
 
 
 def stop_mdb_All():
