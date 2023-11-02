@@ -7,6 +7,7 @@ from tkinter import scrolledtext
 from tkinter import ttk
 import os  # Import the 'os' module for running the other Python program
 import time
+import random
 import re
 import matplotlib.pyplot as plt
 import datetime as dt
@@ -19,10 +20,10 @@ from datetime import datetime as nowt
 #######################################################################################
 
 # Default COM Port Settings
-default_com_port_A = 'COM3'
-default_com_port_B = 'COM4'
-default_com_port_C = 'COM14'
-default_com_port_D = 'COM21'
+default_com_port_A = 'COM9'
+default_com_port_B = 'COM12'
+default_com_port_C = 'COM13'
+default_com_port_D = 'COM14'
 baud_rate = 115200
 
 com_port_A = None
@@ -404,11 +405,19 @@ def start_Test_1():
 def start_Test_1_2():
     global timer_expired
     global timer
+    last_function_called = None  # Variable to store the last function called
 
-    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n","red_on_white")
-    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n","red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n","red_on_white")
-    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n","red_on_white")
+    functions_to_call = [
+        lambda: send_to_com_port(serial_B, "run"),
+        lambda: send_to_com_port(serial_C, "run"),
+        lambda: send_to_com_port(serial_D, "run")
+    ]
+    random.shuffle(functions_to_call)
+
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n", "red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n", "red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n", "red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n", "red_on_white")
 
     send_to_com_port(serial_A, "reset")
     send_to_com_port(serial_B, "reset")
@@ -417,10 +426,13 @@ def start_Test_1_2():
     wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")
     send_to_com_port(serial_A, "run")
     wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
-    send_to_com_port(serial_B, "run")
-    send_to_com_port(serial_C, "run")
-    send_to_com_port(serial_D, "run")    
-    wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")
+
+    for function in functions_to_call:
+        time.sleep(random.uniform(0, 3))  # Random delay between 0 and 3 seconds
+        text_widget_A.insert(tk.END, GetTimeStamp() + "\n")
+        function()
+        last_function_called = function  # Update the last function called
+
     send_to_com_port(serial_A, "ndr")  
     send_to_com_port(serial_B, "ndr")  
     send_to_com_port(serial_C, "ndr")  
@@ -431,15 +443,18 @@ def start_Test_1_2():
     send_to_com_port(serial_D, "netinfo")  
     WaitTime(2)
 
-    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")
-    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")        
-    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n","red_on_white")
+    # Access the last function executed
+    print("Last function called:", last_function_called)
 
-    text_widget_A.see(tk.END) 
-    text_widget_B.see(tk.END) 
-    text_widget_C.see(tk.END) 
-    text_widget_D.see(tk.END) 
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n", "red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n", "red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n", "red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n", "red_on_white")
+
+    text_widget_A.see(tk.END)
+    text_widget_B.see(tk.END)
+    text_widget_C.see(tk.END)
+    text_widget_D.see(tk.END)
 
     root.update()
 
