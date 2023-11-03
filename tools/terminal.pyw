@@ -482,18 +482,18 @@ def start_Test_2():
 
     for MaxNodes in [8, 16, 24, 32, 40, 48, 64, 96, 128, 255]:
         
-        send_to_com_port(serial_A, "reset")
-        send_to_com_port(serial_B, "reset")
+        send_to_com_port(serial_A, "reset" + "\n")
+        send_to_com_port(serial_B, "reset" + "\n")
         wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")        
-        send_to_com_port(serial_A, "nds 0 " + str(MaxNodes))
-        send_to_com_port(serial_B, "nds 1 " + str(MaxNodes))
-        send_to_com_port(serial_A, "run")
+        send_to_com_port(serial_A, "nds 0 " + str(MaxNodes) + "\n")
+        send_to_com_port(serial_B, "nds 1 " + str(MaxNodes) + "\n")
+        send_to_com_port(serial_A, "run" + "\n")
         wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")        
-        send_to_com_port(serial_B, "run")
+        send_to_com_port(serial_B, "run" + "\n")
         wait_fr_com_port(serial_B, "BC_TEST_STATE_IDLE")        
-        send_to_com_port(serial_A, "iperf -u -s")
+        send_to_com_port(serial_A, "iperf -u -s" + "\n")
         wait_fr_com_port(serial_A, "iperf: Server listening on UDP port 5001")
-        send_to_com_port(serial_B, "iperf -u -c 192.168.100.11 -t 2")
+        send_to_com_port(serial_B, "iperf -u -c 192.168.100.11 -t 2" + "\n")
         wait_fr_com_port(serial_B, "iperf: instance 0 completed.")
 
     Parse_Data = False
@@ -529,6 +529,75 @@ def start_Test_2():
 
     root.update()
 
+def start_Test_2_1():
+    global timer_expired
+    global timer
+    global MaxNodes
+    global result_list
+    global Parse_Data 
+    global Parse_String
+    global Parse_pattern
+    global Parse_serial
+
+    Parse_String = "[0.0- 1.9 sec]"
+    Parse_pattern = r'(\d+) Kbps'
+    Parse_serial = serial_A
+    Parse_Data = True
+    result_list = []
+
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 2 Started\n","red_on_white")
+
+    for MaxNodes in [8, 128, 96, 64, 48, 40, 32, 24, 16, 8]:
+        
+        send_to_com_port(serial_A, "reset" + "\n")
+        send_to_com_port(serial_B, "reset" + "\n")
+        wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")        
+        send_to_com_port(serial_A, "nds 0 " + str(MaxNodes) + "\n")
+        send_to_com_port(serial_B, "nds 1 " + str(MaxNodes) + "\n")
+        send_to_com_port(serial_A, "run" + "\n")
+        wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")        
+        send_to_com_port(serial_B, "run" + "\n")
+        wait_fr_com_port(serial_B, "BC_TEST_STATE_IDLE")        
+        send_to_com_port(serial_A, "iperf -u -s")
+        wait_fr_com_port(serial_A, "iperf: Server listening on UDP port 5001")
+        send_to_com_port(serial_B, "iperf -u -c 192.168.100.11 -t 2" + "\n")
+        wait_fr_com_port(serial_B, "iperf: instance 0 completed.")
+
+    Parse_Data = False
+
+    # Trennen Sie die Werte in separate Listen für x- und y-Koordinaten
+    x_values = [item[0] for item in result_list]
+    y_values = [item[1] for item in result_list]
+
+    # Erstellen Sie ein Liniendiagramm
+    plt.figure(figsize=(8, 6))  # Größe des Diagramms festlegen (optional)
+    plt.plot(x_values, y_values, marker='o', linestyle='-')
+
+    # Beschriftungen und Titel hinzufügen
+    plt.xlabel('Max Nodes')
+    plt.ylabel('Bandwidth Bits/secs')
+    plt.title('iperf Bandwidth in Respect to Max Nodes')
+
+    # Gitterlinien hinzufügen (optional)
+    plt.grid(True)
+
+    # Diagramm anzeigen
+    plt.show()
+
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 2 Ready\n","red_on_white")
+
+    text_widget_A.see(tk.END) 
+    text_widget_B.see(tk.END) 
+    text_widget_C.see(tk.END) 
+    text_widget_D.see(tk.END) 
+
+    root.update()
 
 def start_Test_3():
     global timer_expired
@@ -789,6 +858,9 @@ send_start_test_1_2_button.pack(side=tk.LEFT)
 
 send_start_test_2_button = tk.Button(com_port_command, text="Test 2", command=start_Test_2)
 send_start_test_2_button.pack(side=tk.LEFT)
+
+send_start_test_2_1_button = tk.Button(com_port_command, text="Test 2.1", command=start_Test_2_1)
+send_start_test_2_1_button.pack(side=tk.LEFT)
 
 send_start_test_3_button = tk.Button(com_port_command, text="Test 3", command=start_Test_3)
 send_start_test_3_button.pack(side=tk.LEFT)
