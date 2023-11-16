@@ -373,7 +373,8 @@ def start_Test_1():
     send_to_com_port(serial_B, "reset")
     send_to_com_port(serial_C, "reset")
     send_to_com_port(serial_D, "reset")
-    wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")
+    wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")
+
     send_to_com_port(serial_A, "run")
     text_widget_A.insert(tk.END, GetTimeStamp() + " Host Time: RUN A\n","red_on_white")
     wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
@@ -385,8 +386,10 @@ def start_Test_1():
     wait_fr_com_port(serial_C, "BC_TEST_STATE_IDLE")    
     send_to_com_port(serial_D, "run")
     text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: RUN D\n","red_on_white")
+
     wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")
     text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: D Ready\n","red_on_white")
+
     send_to_com_port(serial_A, "ndr")  
     send_to_com_port(serial_B, "ndr")  
     send_to_com_port(serial_C, "ndr")  
@@ -424,7 +427,8 @@ def start_Test_1_2():
     send_to_com_port(serial_B, "reset")
     send_to_com_port(serial_C, "reset")
     send_to_com_port(serial_D, "reset")
-    wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")
+    wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")
+    
     send_to_com_port(serial_A, "run")
     text_widget_A.insert(tk.END, GetTimeStamp() + " Host Time: RUN A\n","red_on_white")
     wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
@@ -435,6 +439,8 @@ def start_Test_1_2():
     text_widget_C.insert(tk.END, GetTimeStamp() + " Host Time: RUN C\n","red_on_white")
     send_to_com_port(serial_D, "run")
     text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: RUN D\n","red_on_white")
+    
+    wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")
     
     send_to_com_port(serial_A, "ndr")  
     send_to_com_port(serial_B, "ndr")  
