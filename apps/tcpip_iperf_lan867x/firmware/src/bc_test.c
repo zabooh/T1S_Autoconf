@@ -46,6 +46,8 @@
 #define BC_TEST_DEBUG_DUMP_PRINT(fmt, ...)
 #endif
 
+#define TIMER_MS_RESOLUTION 100
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -150,8 +152,8 @@ void BC_TEST_Initialize(void) {
 //    SYS_Initialization_TCP_Stack();
 //    SYS_Task_Start_TCP();
     bc_test_node_id = 1; //DRV_ETHPHY_PLCA_LOCAL_NODE_ID;
-    bc_test_node_count = 255; //DRV_ETHPHY_PLCA_NODE_COUNT;    
-    bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(100), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
+    bc_test_node_count = DRV_ETHPHY_PLCA_NODE_COUNT;    
+    bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(TIMER_MS_RESOLUTION), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
     bc_test.tick_100ms = 0;
     bc_test.led_state = false;    
     LED_1_Set();
@@ -216,6 +218,7 @@ void BC_TEST_Tasks(void) {
 
 
         case BC_TEST_STATE_INIT_START:
+            BC_TEST_DEBUG_PRINT("BC_TEST: Build Time "__DATE__" "__TIME__"\n\r");
             BC_TEST_Time_Measure_Start();
             SYS_Initialization_TCP_Stack();
             SYS_Task_Start_TCP();                    
@@ -320,7 +323,7 @@ void BC_TEST_Tasks(void) {
                 if (auto_conf_msg_receive.random != auto_conf_msg_transmit.random) {
                     BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Member\n\r");
                     BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
-                    BC_TEST_DEBUG_PRINT("BC_TEST: Wrong Random, skip packet\n\r");
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Wrong Random %08x, skip packet\n\r",auto_conf_msg_receive.random);
                     bc_test.countdown = 10;
                     while (BC_COM_is_idle() == false);
                     BC_COM_listen(sizeof (AUTOCONFMSG));                    
@@ -428,7 +431,8 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.mac.v[5] = bc_test.MyMacAddr.v[5];
                 
                 auto_conf_msg_transmit.random = auto_conf_msg_receive.random;
-
+                BC_TEST_DEBUG_PRINT("BC_TEST: Received Radom - Member: %08x\n\r", auto_conf_msg_receive.random);
+                
                 if (bc_test.nodeid_ix == 7) {
                     bc_test.nodeid_ix = 2;
                 } else {
@@ -567,6 +571,8 @@ static void my_run(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 //        bc_test.state = BC_TEST_STATE_INIT_START;
 //    } else {
         BC_TEST_DEBUG_PRINT("BC_TEST: state -> BC_TEST_STATE_MEMBER_START_REQUEST\r\n");
+        bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1 ) * 10 ) / 16 ;  
+        BC_TEST_DEBUG_PRINT("BC_TEST: Random Delay %d ms\r\n",bc_test.countdown* TIMER_MS_RESOLUTION);
         bc_test.state = BC_TEST_STATE_MEMBER_START_REQUEST;
 //    }
 }

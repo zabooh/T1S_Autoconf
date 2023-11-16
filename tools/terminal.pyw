@@ -20,10 +20,10 @@ from datetime import datetime as nowt
 #######################################################################################
 
 # Default COM Port Settings
-default_com_port_A = 'COM9'
-default_com_port_B = 'COM12'
-default_com_port_C = 'COM13'
-default_com_port_D = 'COM14'
+default_com_port_A = 'COM3'
+default_com_port_B = 'COM4'
+default_com_port_C = 'COM14'
+default_com_port_D = 'COM21'
 baud_rate = 115200
 
 com_port_A = None
@@ -51,6 +51,8 @@ Parse_Data = False
 Parse_String = None
 Parse_pattern = None
 Parse_serial = None
+
+default_Log_File_Name_Prefix = 'Test_'
 
 # Set the working directory to the directory where the main program is located
 working_directory = os.path.dirname(os.path.abspath(__file__))
@@ -362,10 +364,10 @@ def start_Test_1():
     global timer_expired
     global timer
 
-    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 started\n","red_on_white")
-    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1 started\n","red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1 started\n","red_on_white")
-    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1 started\n","red_on_white")
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Host Time: Test 1 started\n","red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Host Time: Test 1 started\n","red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Host Time: Test 1 started\n","red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: Test 1 started\n","red_on_white")
 
     send_to_com_port(serial_A, "reset")
     send_to_com_port(serial_B, "reset")
@@ -373,13 +375,18 @@ def start_Test_1():
     send_to_com_port(serial_D, "reset")
     wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")
     send_to_com_port(serial_A, "run")
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Host Time: RUN A\n","red_on_white")
     wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
     send_to_com_port(serial_B, "run")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Host Time: RUN B\n","red_on_white")
     wait_fr_com_port(serial_B, "BC_TEST_STATE_IDLE")
     send_to_com_port(serial_C, "run")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Host Time: RUN C\n","red_on_white")
     wait_fr_com_port(serial_C, "BC_TEST_STATE_IDLE")    
     send_to_com_port(serial_D, "run")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: RUN D\n","red_on_white")
     wait_fr_com_port(serial_D, "BC_TEST_STATE_IDLE")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: D Ready\n","red_on_white")
     send_to_com_port(serial_A, "ndr")  
     send_to_com_port(serial_B, "ndr")  
     send_to_com_port(serial_C, "ndr")  
@@ -389,10 +396,12 @@ def start_Test_1():
     send_to_com_port(serial_C, "netinfo")  
     send_to_com_port(serial_D, "netinfo")  
     
-    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
-    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")    
-    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1 Ready\n","red_on_white")
+    wait_fr_com_port(serial_D, "Status: Ready")
+    
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Host Time: Test 1 Ready\n","red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Host Time: Test 1 Ready\n","red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Host Time: Test 1 Ready\n","red_on_white")    
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: Test 1 Ready\n","red_on_white")
 
     text_widget_A.see(tk.END) 
     text_widget_B.see(tk.END) 
@@ -405,19 +414,11 @@ def start_Test_1():
 def start_Test_1_2():
     global timer_expired
     global timer
-    last_function_called = None  # Variable to store the last function called
 
-    functions_to_call = [
-        lambda: send_to_com_port(serial_B, "run"),
-        lambda: send_to_com_port(serial_C, "run"),
-        lambda: send_to_com_port(serial_D, "run")
-    ]
-    random.shuffle(functions_to_call)
-
-    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n", "red_on_white")
-    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n", "red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n", "red_on_white")
-    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1.2 started\n", "red_on_white")
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Host Time: Test 1.2 started\n", "red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Host Time: Test 1.2 started\n", "red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Host Time: Test 1.2 started\n", "red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: Test 1.2 started\n", "red_on_white")
 
     send_to_com_port(serial_A, "reset")
     send_to_com_port(serial_B, "reset")
@@ -425,14 +426,16 @@ def start_Test_1_2():
     send_to_com_port(serial_D, "reset")
     wait_fr_com_port(serial_A, "BC_TEST_STATE_IDLE")
     send_to_com_port(serial_A, "run")
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Host Time: RUN A\n","red_on_white")
     wait_fr_com_port(serial_A, "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST")
 
-    for function in functions_to_call:
-        time.sleep(random.uniform(0, 3))  # Random delay between 0 and 3 seconds
-        text_widget_A.insert(tk.END, GetTimeStamp() + "\n")
-        function()
-        last_function_called = function  # Update the last function called
-
+    send_to_com_port(serial_B, "run")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Host Time: RUN B\n","red_on_white")
+    send_to_com_port(serial_C, "run")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Host Time: RUN C\n","red_on_white")
+    send_to_com_port(serial_D, "run")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: RUN D\n","red_on_white")
+    
     send_to_com_port(serial_A, "ndr")  
     send_to_com_port(serial_B, "ndr")  
     send_to_com_port(serial_C, "ndr")  
@@ -441,15 +444,13 @@ def start_Test_1_2():
     send_to_com_port(serial_B, "netinfo")  
     send_to_com_port(serial_C, "netinfo")  
     send_to_com_port(serial_D, "netinfo")  
-    WaitTime(2)
 
-    # Access the last function executed
-    print("Last function called:", last_function_called)
+    wait_fr_com_port(serial_D, "Status: Ready")
 
-    text_widget_A.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n", "red_on_white")
-    text_widget_B.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n", "red_on_white")
-    text_widget_C.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n", "red_on_white")
-    text_widget_D.insert(tk.END, GetTimeStamp() + " Test 1.2 Ready\n", "red_on_white")
+    text_widget_A.insert(tk.END, GetTimeStamp() + " Host Time: Test 1.2 Ready\n", "red_on_white")
+    text_widget_B.insert(tk.END, GetTimeStamp() + " Host Time: Test 1.2 Ready\n", "red_on_white")
+    text_widget_C.insert(tk.END, GetTimeStamp() + " Host Time: Test 1.2 Ready\n", "red_on_white")
+    text_widget_D.insert(tk.END, GetTimeStamp() + " Host Time: Test 1.2 Ready\n", "red_on_white")
 
     text_widget_A.see(tk.END)
     text_widget_B.see(tk.END)
@@ -712,11 +713,12 @@ def save_text_to_file(widget, filename):
 def save_all_text():
     current_time = nowt.now().strftime("%Y-%m-%d_%H-%M-%S")
 
+    
     # Speichern Sie den Inhalt jedes Textfensters in einer eigenen Datei
-    save_text_to_file(text_widget_A, f"Log_A_{current_time}.txt")
-    save_text_to_file(text_widget_B, f"Log_B_{current_time}.txt")
-    save_text_to_file(text_widget_C, f"Log_C_{current_time}.txt")
-    save_text_to_file(text_widget_D, f"Log_D_{current_time}.txt")
+    save_text_to_file(text_widget_A, f"{Log_File_Name.get()}_Log_A_{current_time}.txt")
+    save_text_to_file(text_widget_B, f"{Log_File_Name.get()}_Log_B_{current_time}.txt")
+    save_text_to_file(text_widget_C, f"{Log_File_Name.get()}_Log_C_{current_time}.txt")
+    save_text_to_file(text_widget_D, f"{Log_File_Name.get()}_Log_D_{current_time}.txt")
 
 #######################################################################################
 # 
@@ -867,6 +869,10 @@ send_start_test_3_button.pack(side=tk.LEFT)
 
 save_button = tk.Button(com_port_command, text="Save", command=save_all_text)
 save_button.pack(side=tk.LEFT)
+
+Log_File_Name = tk.Entry(com_port_command, width=12)
+Log_File_Name.insert(0, default_Log_File_Name_Prefix)
+Log_File_Name.pack(side=tk.LEFT)
 
 ###################################################################################################
 
