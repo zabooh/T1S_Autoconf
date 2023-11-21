@@ -58,6 +58,7 @@ typedef struct {
     TCPIP_MAC_ADDR mac;
     IPV6_ADDR ip6;
     IPV4_ADDR ip4;
+    uint8_t origin;
     uint8_t node_max;
     uint8_t node_id;
     uint8_t randommssg[20];
@@ -70,6 +71,9 @@ AUTOCONFMSG auto_conf_msg_transmit;
 AUTOCONFMSG auto_conf_msg_receive;
 
 AUTOCONFMSG member[8];
+
+#define BC_TEST_MEMBER       12
+#define BC_TEST_COORDINATOR  24
 
 // *****************************************************************************
 /* Application Data
@@ -299,7 +303,8 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.mac.v[5] = bc_test.MyMacAddr.v[5];
                 
                 auto_conf_msg_transmit.random = bc_test.random;
-
+                auto_conf_msg_transmit.origin = BC_TEST_MEMBER;
+                
                 BC_TEST_DEBUG_PRINT("BC_TEST: Radom - Member: %08x\n\r", bc_test.random);
 
                 BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Member\n\r");
@@ -320,6 +325,17 @@ void BC_TEST_Tasks(void) {
 
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
 
+                if(auto_conf_msg_receive.origin != BC_TEST_COORDINATOR){
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - But not from Coordinator\n\r");
+                    BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+                    bc_test.countdown = 10;
+                    while (BC_COM_is_idle() == false);
+                    BC_COM_listen(sizeof (AUTOCONFMSG));                      
+                    bc_test.state = BC_TEST_STATE_MEMBER_WAIT_FOR_REQUESTED_ANSWER;
+                    BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Time to Restart Receiving: %s secs\n\r",time_result);                                       
+                    break;                }
+                
                 if (auto_conf_msg_receive.random != auto_conf_msg_transmit.random) {
                     BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Member\n\r");
                     BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
@@ -332,6 +348,7 @@ void BC_TEST_Tasks(void) {
                     BC_TEST_DEBUG_PRINT("BC_TEST: Time to Restart Receiving: %s secs\n\r",time_result);                                       
                     break;
                 }
+                
                 BC_TEST_DEBUG_PRINT("BC_TEST: Correct Random, process packet\n\r");
                 
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
@@ -431,6 +448,8 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.mac.v[5] = bc_test.MyMacAddr.v[5];
                 
                 auto_conf_msg_transmit.random = auto_conf_msg_receive.random;
+                auto_conf_msg_transmit.origin = BC_TEST_COORDINATOR;
+                
                 BC_TEST_DEBUG_PRINT("BC_TEST: Received Radom - Member: %08x\n\r", auto_conf_msg_receive.random);
                 
                 if (bc_test.nodeid_ix == 7) {
