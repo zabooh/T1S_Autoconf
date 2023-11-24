@@ -138,10 +138,9 @@ char time_result[100];
 
 volatile int tc1_int_counter = 0;
 
-void BC_TEST_TC1_Interrupt_Handler (TC_TIMER_STATUS status, uintptr_t context){
+void BC_TEST_TC1_Interrupt_Handler(TC_TIMER_STATUS status, uintptr_t context) {
     tc1_int_counter++;
 }
-
 
 /*******************************************************************************
   Function:
@@ -153,53 +152,53 @@ void BC_TEST_TC1_Interrupt_Handler (TC_TIMER_STATUS status, uintptr_t context){
 
 void BC_TEST_Initialize(void) {
     BC_TEST_Command_Init();
-//    SYS_Initialization_TCP_Stack();
-//    SYS_Task_Start_TCP();
+    //    SYS_Initialization_TCP_Stack();
+    //    SYS_Task_Start_TCP();
     bc_test_node_id = 1; //DRV_ETHPHY_PLCA_LOCAL_NODE_ID;
-    bc_test_node_count = DRV_ETHPHY_PLCA_NODE_COUNT;    
+    bc_test_node_count = DRV_ETHPHY_PLCA_NODE_COUNT;
     bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(TIMER_MS_RESOLUTION), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
     bc_test.tick_100ms = 0;
-    bc_test.led_state = false;    
+    bc_test.led_state = false;
     LED_1_Set();
     LED_2_Set();
     SYS_TIME_TimerStart(bc_test.timer_client_hdl);
     bc_test.init_done = false;
-    
-        
+
+
     bc_test.MyMacAddr.v[0] = 0x00;
     bc_test.MyMacAddr.v[1] = 0x04;
     bc_test.MyMacAddr.v[2] = 0x25;
-    bc_test.MyMacAddr.v[3] = (uint8_t)TRNG_ReadData();
-    bc_test.MyMacAddr.v[4] = (uint8_t)TRNG_ReadData();
-    bc_test.MyMacAddr.v[5] = (uint8_t)TRNG_ReadData();    
-    TCPIP_Helper_MACAddressToString(&bc_test.MyMacAddr, my_mac_str, 18);        
-            
-    TC1_TimerCallbackRegister(BC_TEST_TC1_Interrupt_Handler, (uintptr_t)NULL);
-    
+    bc_test.MyMacAddr.v[3] = (uint8_t) TRNG_ReadData();
+    bc_test.MyMacAddr.v[4] = (uint8_t) TRNG_ReadData();
+    bc_test.MyMacAddr.v[5] = (uint8_t) TRNG_ReadData();
+    TCPIP_Helper_MACAddressToString(&bc_test.MyMacAddr, my_mac_str, 18);
+
+    TC1_TimerCallbackRegister(BC_TEST_TC1_Interrupt_Handler, (uintptr_t) NULL);
+
     bc_test.state = BC_TEST_STATE_INIT_START;
 }
 
-void BC_TEST_Time_Measure_Start(void){
+void BC_TEST_Time_Measure_Start(void) {
     TC1_TimerStop();
     TC1_Timer16bitCounterSet(0);
     tc1_int_counter = 0;
     TC1_TimerStart();
 }
 
-void BC_Test_Time_Measure_Stop_And_Get_Result(char *str){
+void BC_Test_Time_Measure_Stop_And_Get_Result(char *str) {
     float f_result;
     float f_frequency;
     float f_period;
     float f_value;
-    
+
     TC1_TimerStop();
-    f_result = (float)TC1_Timer16bitCounterGet();
-    f_frequency = (float)TC1_TimerFrequencyGet();
-    f_period = 1.0/f_frequency;
-    f_value = ((float)tc1_int_counter * f_period) + f_result / f_frequency;
+    f_result = (float) TC1_Timer16bitCounterGet();
+    f_frequency = (float) TC1_TimerFrequencyGet();
+    f_period = 1.0 / f_frequency;
+    f_value = ((float) tc1_int_counter * f_period) + f_result / f_frequency;
     f_value *= 1000.0;
-    
-    sprintf(str,"%f",f_value);
+
+    sprintf(str, "%f", f_value);
 }
 
 /******************************************************************************
@@ -225,7 +224,7 @@ void BC_TEST_Tasks(void) {
             BC_TEST_DEBUG_PRINT("BC_TEST: Build Time "__DATE__" "__TIME__"\n\r");
             BC_TEST_Time_Measure_Start();
             SYS_Initialization_TCP_Stack();
-            SYS_Task_Start_TCP();                    
+            SYS_Task_Start_TCP();
             bc_test.state = BC_TEST_STATE_INIT_TCPIP_WAIT_START;
             break;
 
@@ -246,9 +245,9 @@ void BC_TEST_Tasks(void) {
                 break;
             }
             bc_test.MyIpAddr.Val = TCPIP_STACK_NetAddress(netH);
-            
+
             TCPIP_MAC_ADDR * mac_ptr;
-            mac_ptr = (TCPIP_MAC_ADDR*) TCPIP_STACK_NetAddressMac(netH);            
+            mac_ptr = (TCPIP_MAC_ADDR*) TCPIP_STACK_NetAddressMac(netH);
             bc_test.MyMacAddr.v[0] = mac_ptr->v[0];
             bc_test.MyMacAddr.v[1] = mac_ptr->v[1];
             bc_test.MyMacAddr.v[2] = mac_ptr->v[2];
@@ -261,13 +260,13 @@ void BC_TEST_Tasks(void) {
                 dwLastIP.Val = bc_test.MyIpAddr.Val;
                 BC_TEST_DEBUG_PRINT("BC_TEST: IP Address : %d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
                 BC_TEST_DEBUG_PRINT("BC_TEST: MAC Address: %02x:%02x:%02x:%02x:%02x:%02x\r\n", bc_test.MyMacAddr.v[0], bc_test.MyMacAddr.v[1], bc_test.MyMacAddr.v[2], bc_test.MyMacAddr.v[3], bc_test.MyMacAddr.v[4], bc_test.MyMacAddr.v[5]);
-                
+
                 bc_test.countdown = 10;
                 bc_test.init_done = true;
-              
+
                 BC_COM_Initialize_Runtime();
                 BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
-                BC_TEST_DEBUG_PRINT("BC_TEST: Time to Init TCP Stack: %s secs\n\r",time_result);                
+                BC_TEST_DEBUG_PRINT("BC_TEST: Time to Init TCP Stack: %s secs\n\r", time_result);
                 bc_test.state = BC_TEST_STATE_IDLE;
             }
             break;
@@ -282,17 +281,17 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: =============================================\n\r");
                 BC_TEST_DEBUG_PRINT("BC_TEST: Build Time %s %s\n\r", __DATE__, __TIME__);
                 BC_TEST_DEBUG_PRINT("BC_TEST: Timeout %s %d\n\r", __FILE__, __LINE__);
-                
-                
-                BC_TEST_NetDown();                      
+
+
+                BC_TEST_NetDown();
                 BC_TEST_DEBUG_PRINT("BC_TEST: bc_test_node_count: %d\n\r", bc_test_node_count);
-                BC_TEST_SetNodeID_and_MAXcount(1,bc_test_node_count);    
-                BC_TEST_NetUp();                         
-                netH = TCPIP_STACK_NetHandleGet("eth0");                
-                while( TCPIP_STACK_NetIsReady(netH) == false);
-                                
-                bc_test.random = TRNG_ReadData();               
-                
+                BC_TEST_SetNodeID_and_MAXcount(1, bc_test_node_count);
+                BC_TEST_NetUp();
+                netH = TCPIP_STACK_NetHandleGet("eth0");
+                while (TCPIP_STACK_NetIsReady(netH) == false);
+
+                bc_test.random = TRNG_ReadData();
+
                 memset((void*) &auto_conf_msg_transmit, 0xEE, sizeof (AUTOCONFMSG));
 
                 auto_conf_msg_transmit.mac.v[0] = bc_test.MyMacAddr.v[0];
@@ -301,16 +300,16 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.mac.v[3] = bc_test.MyMacAddr.v[3];
                 auto_conf_msg_transmit.mac.v[4] = bc_test.MyMacAddr.v[4];
                 auto_conf_msg_transmit.mac.v[5] = bc_test.MyMacAddr.v[5];
-                
+
                 auto_conf_msg_transmit.random = bc_test.random;
                 auto_conf_msg_transmit.origin = BC_TEST_MEMBER;
-                
+
                 BC_TEST_DEBUG_PRINT("BC_TEST: Radom - Member: %08x\n\r", bc_test.random);
 
                 BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Member\n\r");
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
 
-                BC_TEST_Time_Measure_Start();       
+                BC_TEST_Time_Measure_Start();
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 while (BC_COM_is_idle() == false);
                 BC_COM_listen(sizeof (AUTOCONFMSG));
@@ -325,32 +324,22 @@ void BC_TEST_Tasks(void) {
 
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
 
-                if(auto_conf_msg_receive.origin != BC_TEST_COORDINATOR){
-                    BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - But not from Coordinator\n\r");
+                if (auto_conf_msg_receive.origin != BC_TEST_COORDINATOR ||
+                    auto_conf_msg_receive.random != auto_conf_msg_transmit.random) {
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Wrong Data Received\n\r");
                     BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
                     bc_test.countdown = 10;
                     while (BC_COM_is_idle() == false);
-                    BC_COM_listen(sizeof (AUTOCONFMSG));                      
+                    BC_COM_listen(sizeof (AUTOCONFMSG));
                     bc_test.state = BC_TEST_STATE_MEMBER_WAIT_FOR_REQUESTED_ANSWER;
                     BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
-                    BC_TEST_DEBUG_PRINT("BC_TEST: Time to Restart Receiving: %s secs\n\r",time_result);                                       
-                    break;                }
-                
-                if (auto_conf_msg_receive.random != auto_conf_msg_transmit.random) {
-                    BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Member\n\r");
-                    BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
-                    BC_TEST_DEBUG_PRINT("BC_TEST: Wrong Random %08x, skip packet\n\r",auto_conf_msg_receive.random);
-                    bc_test.countdown = 10;
-                    while (BC_COM_is_idle() == false);
-                    BC_COM_listen(sizeof (AUTOCONFMSG));                    
-                    bc_test.state = BC_TEST_STATE_MEMBER_WAIT_FOR_REQUESTED_ANSWER;
-                    BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
-                    BC_TEST_DEBUG_PRINT("BC_TEST: Time to Restart Receiving: %s secs\n\r",time_result);                                       
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Time to Restart Receiving: %s secs\n\r", time_result);
                     break;
                 }
-                
+
+
                 BC_TEST_DEBUG_PRINT("BC_TEST: Correct Random, process packet\n\r");
-                
+
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
                 bc_test.tick_100ms = auto_conf_msg_receive.counter_100ms;
                 bc_test.led_state = auto_conf_msg_receive.led_state;
@@ -360,8 +349,8 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DumpMem((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
 
                 BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
-                BC_TEST_DEBUG_PRINT("BC_TEST: Time to start process received data: %s secs\n\r",time_result);                   
-                
+                BC_TEST_DEBUG_PRINT("BC_TEST: Time to start process received data: %s secs\n\r", time_result);
+
                 bc_test.state = BC_TEST_STATE_MEMBER_PROCESS_REQUESTED_DATA;
                 break;
             }
@@ -370,8 +359,8 @@ void BC_TEST_Tasks(void) {
                 BC_COM_listen_stop();
 
                 BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
-                BC_TEST_DEBUG_PRINT("BC_TEST: Time to Timeout and start Coordinator: %s secs\n\r",time_result);                   
-                
+                BC_TEST_DEBUG_PRINT("BC_TEST: Time to Timeout and start Coordinator: %s secs\n\r", time_result);
+
                 bc_test.state = BC_TEST_STATE_DECIDE_TO_BE_COORDINATOR_NODE;
             }
             break;
@@ -381,28 +370,28 @@ void BC_TEST_Tasks(void) {
             TCPIP_NET_HANDLE netH;
             IPV4_ADDR ipMask;
             char buff[30];
-    
+
             bc_test.nodeid_ix = auto_conf_msg_receive.node_id;
-            BC_TEST_DEBUG_PRINT("BC_TEST: Received NodeId:%d\n\r",auto_conf_msg_receive.node_id);
+            BC_TEST_DEBUG_PRINT("BC_TEST: Received NodeId:%d\n\r", auto_conf_msg_receive.node_id);
 
             BC_TEST_Time_Measure_Start();
-            BC_TEST_NetDown();                                     
-            BC_TEST_SetNodeID_and_MAXcount(bc_test.nodeid_ix,bc_test_node_count);  
-            BC_TEST_NetUp();             
-            netH = TCPIP_STACK_NetHandleGet("eth0");                
-            while( TCPIP_STACK_NetIsReady(netH) == false);
+            BC_TEST_NetDown();
+            BC_TEST_SetNodeID_and_MAXcount(bc_test.nodeid_ix, bc_test_node_count);
+            BC_TEST_NetUp();
+            netH = TCPIP_STACK_NetHandleGet("eth0");
+            while (TCPIP_STACK_NetIsReady(netH) == false);
             BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
-            BC_TEST_DEBUG_PRINT("BC_TEST: Time to Re-Init TCP Stack: %s secs\n\r",time_result);                   
+            BC_TEST_DEBUG_PRINT("BC_TEST: Time to Re-Init TCP Stack: %s secs\n\r", time_result);
 
-            netH = TCPIP_STACK_NetHandleGet("eth0");                
+            netH = TCPIP_STACK_NetHandleGet("eth0");
             ipMask.v[0] = 255;
             ipMask.v[1] = 255;
             ipMask.v[2] = 255;
-            ipMask.v[3] = 0;            
+            ipMask.v[3] = 0;
             TCPIP_STACK_NetAddressSet(netH, &auto_conf_msg_receive.ip4, &ipMask, 1);
             TCPIP_Helper_IPAddressToString(&auto_conf_msg_receive.ip4, buff, 20);
-            BC_TEST_DEBUG_PRINT("BC_TEST: new IP:%s\n\r",buff);
-            
+            BC_TEST_DEBUG_PRINT("BC_TEST: new IP:%s\n\r", buff);
+
             BC_TEST_DEBUG_PRINT("BC_TEST: Requested data received. Nor further processing\n\r");
             bc_test.state = BC_TEST_STATE_IDLE;
             break;
@@ -413,14 +402,14 @@ void BC_TEST_Tasks(void) {
         case BC_TEST_STATE_DECIDE_TO_BE_COORDINATOR_NODE:
             if (BC_COM_is_idle() == true) {
 
-                BC_TEST_NetDown();                       
-                BC_TEST_SetNodeID_and_MAXcount(0,bc_test_node_count);   
+                BC_TEST_NetDown();
+                BC_TEST_SetNodeID_and_MAXcount(0, bc_test_node_count);
                 BC_TEST_NetUp();
-                netH = TCPIP_STACK_NetHandleGet("eth0");                
-                while( TCPIP_STACK_NetIsReady(netH) == false);
-                
+                netH = TCPIP_STACK_NetHandleGet("eth0");
+                while (TCPIP_STACK_NetIsReady(netH) == false);
+
                 bc_test.nodeid_ix = 1;
-                
+
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
             }
@@ -446,17 +435,17 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.mac.v[3] = bc_test.MyMacAddr.v[3];
                 auto_conf_msg_transmit.mac.v[4] = bc_test.MyMacAddr.v[4];
                 auto_conf_msg_transmit.mac.v[5] = bc_test.MyMacAddr.v[5];
-                
+
                 auto_conf_msg_transmit.random = auto_conf_msg_receive.random;
                 auto_conf_msg_transmit.origin = BC_TEST_COORDINATOR;
-                
+
                 BC_TEST_DEBUG_PRINT("BC_TEST: Received Radom - Member: %08x\n\r", auto_conf_msg_receive.random);
-                
+
                 if (bc_test.nodeid_ix == 7) {
                     bc_test.nodeid_ix = 2;
                 } else {
                     bc_test.nodeid_ix++;
-                }                
+                }
                 auto_conf_msg_transmit.node_id = bc_test.nodeid_ix;
 
                 auto_conf_msg_transmit.ip4.v[0] = bc_test.MyIpAddr.v[0];
@@ -464,8 +453,8 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.ip4.v[2] = bc_test.MyIpAddr.v[2];
                 auto_conf_msg_transmit.ip4.v[3] = bc_test.MyIpAddr.v[3] + bc_test.nodeid_ix;
 
-                BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Node Id:%d\n\r",auto_conf_msg_transmit.node_id);
-                
+                BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Node Id:%d\n\r", auto_conf_msg_transmit.node_id);
+
                 bc_test.tick_flag_100ms = false;
                 while (bc_test.tick_flag_100ms == false);
 
@@ -483,7 +472,7 @@ void BC_TEST_Tasks(void) {
             break;
 
 
-        case BC_TEST_STATE_IDLE:            
+        case BC_TEST_STATE_IDLE:
             break;
 
         default:
@@ -583,17 +572,17 @@ static void my_dump(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 
 static void my_run(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 
-//    if (bc_test.init_done == false) {
-//        BC_TEST_DEBUG_PRINT("BC_TEST: state -> BC_TEST_STATE_INIT_START\r\n");
-//        SYS_Initialization_TCP_Stack();
-//        SYS_Task_Start_TCP();        
-//        bc_test.state = BC_TEST_STATE_INIT_START;
-//    } else {
-        BC_TEST_DEBUG_PRINT("BC_TEST: state -> BC_TEST_STATE_MEMBER_START_REQUEST\r\n");
-        bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1 ) * 10 ) / 16 ;  
-        BC_TEST_DEBUG_PRINT("BC_TEST: Random Delay %d ms\r\n",bc_test.countdown* TIMER_MS_RESOLUTION);
-        bc_test.state = BC_TEST_STATE_MEMBER_START_REQUEST;
-//    }
+    //    if (bc_test.init_done == false) {
+    //        BC_TEST_DEBUG_PRINT("BC_TEST: state -> BC_TEST_STATE_INIT_START\r\n");
+    //        SYS_Initialization_TCP_Stack();
+    //        SYS_Task_Start_TCP();        
+    //        bc_test.state = BC_TEST_STATE_INIT_START;
+    //    } else {
+    BC_TEST_DEBUG_PRINT("BC_TEST: state -> BC_TEST_STATE_MEMBER_START_REQUEST\r\n");
+    bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 10) / 16;
+    BC_TEST_DEBUG_PRINT("BC_TEST: Random Delay %d ms\r\n", bc_test.countdown * TIMER_MS_RESOLUTION);
+    bc_test.state = BC_TEST_STATE_MEMBER_START_REQUEST;
+    //    }
 }
 
 static void my_reinit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
@@ -603,7 +592,7 @@ static void my_reinit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 }
 
 DRV_MIIM_RESULT BC_TEST_miim_init(void) {
-    
+
     DRV_MIIM_SETUP miimSetup;
     DRV_MIIM_RESULT res;
     static DRV_MIIM_OPERATION_HANDLE opHandle;
@@ -707,7 +696,7 @@ void BC_TEST_write_miim(uint16_t reg, uint16_t value) {
         opRes = Write_Phy_Register(&bc_test.MiimObj, 0, reg, value);
         vTaskDelay(10U / portTICK_PERIOD_MS);
     } while (opRes == DRV_MIIM_RES_PENDING);
-    
+
     if (opRes < 0) {
         /* In case of an error, report and close miim instance. */
         BC_TEST_DEBUG_PRINT("BC_TEST: Register Write Error occurred:%d\r\n", opRes);
@@ -720,8 +709,8 @@ void BC_TEST_write_miim(uint16_t reg, uint16_t value) {
     BC_TEST_miim_close();
 }
 
-void BC_TEST_plca_write_config(uint16_t node_id, uint16_t node_count){
-    
+void BC_TEST_plca_write_config(uint16_t node_id, uint16_t node_count) {
+
     DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
     uint16_t data;
 
@@ -789,45 +778,44 @@ bool BC_TEST_Command_Init(void) {
     return ret;
 }
 
-
-void BC_TEST_NetDown(void){
+void BC_TEST_NetDown(void) {
     TCPIP_NET_HANDLE netH;
-    
+
     netH = TCPIP_STACK_NetHandleGet("eth0");
     TCPIP_STACK_NetDown(netH);
     BC_TEST_DEBUG_PRINT("BC_TEST: Net Down\n\r");
 }
 
-bool BC_TEST_NetUp(void){
+bool BC_TEST_NetUp(void) {
     TCPIP_NET_HANDLE netH;
-    SYS_MODULE_OBJ      tcpipStackObj;
-    TCPIP_STACK_INIT    tcpip_init_data = {{0}};
+    SYS_MODULE_OBJ tcpipStackObj;
+    TCPIP_STACK_INIT tcpip_init_data = {
+        {0}};
     TCPIP_NETWORK_CONFIG ifConf, *pIfConf;
     uint16_t net_ix = 0;
     bool res = false;
-    
-    netH = TCPIP_STACK_NetHandleGet("eth0");    
+
+    netH = TCPIP_STACK_NetHandleGet("eth0");
     net_ix = TCPIP_STACK_NetIndexGet(netH);
-    
+
     // get the data passed at initialization
     tcpipStackObj = TCPIP_STACK_Initialize(0, 0);
-    TCPIP_STACK_InitializeDataGet(tcpipStackObj, &tcpip_init_data);    
+    TCPIP_STACK_InitializeDataGet(tcpipStackObj, &tcpip_init_data);
 
     pIfConf = &ifConf;
-    memcpy(pIfConf, tcpip_init_data.pNetConf + net_ix, sizeof(*pIfConf));
+    memcpy(pIfConf, tcpip_init_data.pNetConf + net_ix, sizeof (*pIfConf));
 
     // change the power mode to FULL
     pIfConf->powerMode = TCPIP_STACK_IF_POWER_FULL;
-    res = TCPIP_STACK_NetUp(netH, pIfConf);    
+    res = TCPIP_STACK_NetUp(netH, pIfConf);
     BC_TEST_DEBUG_PRINT("BC_TEST: Net Up\n\r");
 }
 
-
-void BC_TEST_SetNodeID_and_MAXcount(uint16_t NodeId, uint16_t MaxCount){
+void BC_TEST_SetNodeID_and_MAXcount(uint16_t NodeId, uint16_t MaxCount) {
 
     bc_test_node_id = NodeId;
     bc_test_node_count = MaxCount;
-    
+
 }
 
 /*******************************************************************************
