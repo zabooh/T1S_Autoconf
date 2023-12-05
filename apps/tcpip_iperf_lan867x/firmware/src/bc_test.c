@@ -39,7 +39,7 @@
 #define BC_TEST_DEBUG_PRINT(fmt, ...)
 #endif
 
-//#define __BC_TEST_DEBUG_DUMP_PRINT 
+#define __BC_TEST_DEBUG_DUMP_PRINT 
 #ifdef __BC_TEST_DEBUG_DUMP_PRINT
 #define BC_TEST_DEBUG_DUMP_PRINT(fmt, ...)  SYS_CONSOLE_PRINT(fmt, ##__VA_ARGS__)
 #else
