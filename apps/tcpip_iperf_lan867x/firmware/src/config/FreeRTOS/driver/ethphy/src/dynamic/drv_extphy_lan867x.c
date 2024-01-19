@@ -347,7 +347,7 @@ static DRV_ETHPHY_RESULT DRV_EXTPHY_MIIConfigure(const DRV_ETHPHY_OBJECT_BASE *p
     {
         extern volatile uint16_t bc_test_node_id;
         extern volatile uint16_t bc_test_node_count;
-        SYS_CONSOLE_PRINT("PHY_WRITE: ID:%d COUNT:%d\n\r", bc_test_node_id, bc_test_node_count);        
+        //MR: SYS_CONSOLE_PRINT("PHY_WRITE: ID:%d COUNT:%d\n\r", bc_test_node_id, bc_test_node_count);        
         registerValue = F2R_(bc_test_node_id, PHY_PLCA_CTRL1_ID) |
                         F2R_(bc_test_node_count, PHY_PLCA_CTRL1_NCNT);
         miimRes = Lan867x_Write_Register(&clientObj, PHY_PLCA_CTRL1, registerValue);

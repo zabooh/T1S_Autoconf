@@ -3620,7 +3620,7 @@ static bool _LoadNetworkConfig(const TCPIP_NETWORK_CONFIG* pUsrConfig, TCPIP_NET
         if(pUsrConfig->macAddr != 0)
         {
             TCPIP_Helper_StringToMACAddress(pUsrConfig->macAddr, pNetIf->netMACAddr.v);
-            SYS_CONSOLE_PRINT("TCP Init: %s\n\r",pUsrConfig->macAddr);
+            //MR: SYS_CONSOLE_PRINT("TCP Init: %s\n\r",pUsrConfig->macAddr);
    
         }
         else

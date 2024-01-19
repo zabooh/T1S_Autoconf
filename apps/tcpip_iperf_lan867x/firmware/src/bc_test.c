@@ -91,8 +91,8 @@ AUTOCONFMSG auto_conf_msg_receive;
 
 AUTOCONFMSG member[8];
 
-#define BC_TEST_MEMBER       12
-#define BC_TEST_COORDINATOR  24
+#define BC_TEST_MEMBER       1
+#define BC_TEST_COORDINATOR  0
 
 // *****************************************************************************
 /* Application Data
@@ -184,7 +184,7 @@ void BC_TEST_Initialize(void) {
     LED_2_Set();
     SYS_TIME_TimerStart(bc_test.timer_client_hdl);
     bc_test.init_done = false;
-
+    bc_test.nodeid_ix = 1;
 
     bc_test.MyMacAddr.v[0] = 0x00;
     bc_test.MyMacAddr.v[1] = 0x04;
@@ -237,6 +237,8 @@ void BC_TEST_Tasks(void) {
     static IPV4_ADDR dwLastIP = {-1};
     SYS_STATUS tcpipStat;
     bool result;
+    char mac_str[20];
+
 
     BC_TEST_Print_State_Change_And_Trigger_Watchdog();
 
@@ -298,7 +300,7 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: Build Time %s %s\n\r", __DATE__, __TIME__);
                 BC_TEST_DEBUG_PRINT("BC_TEST: Start in %d Ticks\n\r", bc_test.countdown);
 
-                bc_test.state = BC_TEST_STATE_IDLE;
+                bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
             }
             break;
 
@@ -311,8 +313,8 @@ void BC_TEST_Tasks(void) {
             if (bc_test.countdown == 0) {
 
                 BC_TEST_DEBUG_PRINT("BC_TEST: Member Init\n\r");
-                
-                BC_TEST_NetDown();                
+
+                BC_TEST_NetDown();
                 BC_TEST_SetNodeID_and_MAXcount(1, bc_test_node_count);
                 BC_TEST_NetUp();
                 netH = TCPIP_STACK_NetHandleGet("eth0");
@@ -327,7 +329,7 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.origin = BC_TEST_MEMBER;
                 auto_conf_msg_transmit.control_code = MEMBER_INIT_REQUEST;
 
-                BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Radom - Member: %08x\n\r", bc_test.random);
+                BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Radom: %s => %08x\n\r", my_mac_str, auto_conf_msg_transmit.random);
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
 
                 //BC_TEST_Time_Measure_Start();
@@ -342,13 +344,15 @@ void BC_TEST_Tasks(void) {
 
         case BC_TEST_STATE_MEMBER_INIT_WAIT_FOR_REQUESTED_ANSWER:
             if (BC_COM_is_data_received() == true) {
-
+                memset((void*) &auto_conf_msg_receive, 0xFF, sizeof (AUTOCONFMSG));
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
-
+                BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+                
                 if (auto_conf_msg_receive.origin != BC_TEST_COORDINATOR ||
                         auto_conf_msg_receive.random != auto_conf_msg_transmit.random) {
-                    BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Wrong Data Received\n\r");
-                    BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+                    TCPIP_Helper_MACAddressToString(&auto_conf_msg_receive.mac, mac_str, 18);
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Wrong Data Received from %d - %s => %08x\n\r", auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);
+                    
                     bc_test.countdown = TIMEOUT_1_SECOND;
                     while (BC_COM_is_idle() == false);
                     BC_COM_listen(sizeof (AUTOCONFMSG));
@@ -358,7 +362,8 @@ void BC_TEST_Tasks(void) {
                     break;
                 }
 
-                BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Correct Random, process packet\n\r");
+                TCPIP_Helper_MACAddressToString(&auto_conf_msg_receive.mac, mac_str, 18);
+                BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Correct Random packet from %d - %s => %0x8\n\r", auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);
 
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
                 bc_test.tick_100ms = auto_conf_msg_receive.counter_100ms;
@@ -425,10 +430,7 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_SetNodeID_and_MAXcount(0, bc_test_node_count);
                 BC_TEST_NetUp();
                 netH = TCPIP_STACK_NetHandleGet("eth0");
-                while (TCPIP_STACK_NetIsReady(netH) == false);
-
-                bc_test.nodeid_ix = 1;
-                LED_2_Clear();
+                while (TCPIP_STACK_NetIsReady(netH) == false);                
 
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.countdown = TIMEOUT_20_SECONDS;
@@ -446,13 +448,14 @@ void BC_TEST_Tasks(void) {
                 bc_test.random = TRNG_ReadData();
 
                 memset((void*) &auto_conf_msg_transmit, 0xEE, sizeof (AUTOCONFMSG));
-                memcpy(&auto_conf_msg_transmit.mac.v[0], &bc_test.MyMacAddr.v[0],6);
+                memcpy(&auto_conf_msg_transmit.mac.v[0], &bc_test.MyMacAddr.v[0], 6);
 
                 auto_conf_msg_transmit.random = bc_test.random;
                 auto_conf_msg_transmit.origin = BC_TEST_MEMBER;
                 auto_conf_msg_transmit.control_code = MEMBER_LIVE_REQUEST;
 
-                BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Radom: %08x\n\r", bc_test.random);
+                TCPIP_Helper_MACAddressToString(&auto_conf_msg_transmit.mac, mac_str, 18);
+                BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Radom: %s => %08x\n\r", mac_str, auto_conf_msg_transmit.random);
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
 
                 //BC_TEST_Time_Measure_Start();
@@ -467,12 +470,15 @@ void BC_TEST_Tasks(void) {
         case BC_TEST_STATE_MEMBER_LIVE_WAIT_FOR_REQUESTED_ANSWER:
             if (BC_COM_is_data_received() == true) {
 
+                memset((void*) &auto_conf_msg_receive, 0xFF, sizeof (AUTOCONFMSG));
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
+                BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+                
+                TCPIP_Helper_MACAddressToString(&auto_conf_msg_receive.mac, mac_str, 18);
 
                 if (auto_conf_msg_receive.origin != BC_TEST_COORDINATOR ||
                         auto_conf_msg_receive.random != auto_conf_msg_transmit.random) {
-                    BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Wrong Data Received\n\r");
-                    BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Wrong Data Received from %d - %s => %08x\n\r", auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);                    
                     bc_test.countdown = TIMEOUT_1_SECOND;
                     while (BC_COM_is_idle() == false);
                     BC_COM_listen(sizeof (AUTOCONFMSG));
@@ -482,7 +488,7 @@ void BC_TEST_Tasks(void) {
                     break;
                 }
 
-                BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Correct Random, process packet\n\r");
+                BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Correct Random packet from %d - %s => %08x\n\r",auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);
 
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
                 bc_test.tick_100ms = auto_conf_msg_receive.counter_100ms;
@@ -519,13 +525,17 @@ void BC_TEST_Tasks(void) {
 
         case BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST:
             if (BC_COM_is_data_received() == true) {
+                memset((void*) &auto_conf_msg_receive, 0xFF, sizeof (AUTOCONFMSG));
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
+                BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+                
                 if (auto_conf_msg_receive.origin == BC_TEST_COORDINATOR) {
                     BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Data Received from other Coordinator-\n\r");
                     break;
                 }
-                BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Data Received from Member\n\r");
-                BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+                TCPIP_Helper_MACAddressToString(&auto_conf_msg_receive.mac, mac_str, 18);
+                BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Data Received from Member: %s => %08x \n\r", mac_str, auto_conf_msg_receive.random);
+                
                 BC_COM_listen_stop();
                 bc_test.state = BC_TEST_STATE_COORDINATOR_ANSWER_REQUEST;
             }
@@ -542,12 +552,13 @@ void BC_TEST_Tasks(void) {
             if (BC_COM_is_idle() == true) {
 
                 memset((void*) &auto_conf_msg_transmit, 0xCC, sizeof (AUTOCONFMSG));
-                memcpy(&auto_conf_msg_transmit.mac.v[0], &bc_test.MyMacAddr.v[0],6);
+                memcpy(&auto_conf_msg_transmit.mac.v[0], &bc_test.MyMacAddr.v[0], 6);
 
                 auto_conf_msg_transmit.random = auto_conf_msg_receive.random;
                 auto_conf_msg_transmit.origin = BC_TEST_COORDINATOR;
 
-                BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Received Radom from Member: %08x\n\r", auto_conf_msg_receive.random);
+                TCPIP_Helper_MACAddressToString(&auto_conf_msg_receive.mac, mac_str, 18);
+                BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Received Radom from Member: %s => %08x\n\r", mac_str, auto_conf_msg_receive.random);
 
                 if (auto_conf_msg_receive.control_code == MEMBER_INIT_REQUEST) {
                     BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Received Init Request\n\r");
@@ -565,7 +576,8 @@ void BC_TEST_Tasks(void) {
                     auto_conf_msg_transmit.ip4.v[2] = bc_test.MyIpAddr.v[2];
                     auto_conf_msg_transmit.ip4.v[3] = BC_TEST_calculateCRC8((uint8_t *) & auto_conf_msg_receive.mac, 6);
 
-                    BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Data Sent Init - Node Id:%d\n\r", auto_conf_msg_transmit.node_id);
+                    TCPIP_Helper_MACAddressToString(&auto_conf_msg_transmit.mac, mac_str, 18);
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Data Sent Init - Node Id:%d to %s\n\r", auto_conf_msg_transmit.node_id, mac_str);
                 }
 
                 if (auto_conf_msg_receive.control_code == MEMBER_LIVE_REQUEST) {
@@ -632,6 +644,15 @@ void BC_TEST_TimerCallback(uintptr_t context) {
         }
     }
 
+    if (bc_test.state == BC_TEST_STATE_MEMBER_INIT_DECIDE_TO_BE_COORDINATOR_NODE ||
+            bc_test.state == BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST ||
+            bc_test.state == BC_TEST_STATE_COORDINATOR_ANSWER_REQUEST) {
+        LED_2_Clear();
+    } else {
+        LED_2_Set();
+    }
+    
+        
 }
 
 char *app_states_str[] = {
