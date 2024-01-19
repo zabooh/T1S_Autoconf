@@ -98,6 +98,7 @@ extern "C" {
         BC_TEST_STATES state;
         SYS_TIME_HANDLE timer_client_hdl;
         volatile uint32_t countdown;
+        volatile uint32_t watchdog;
         IPV4_ADDR MyIpAddr;
         TCPIP_MAC_ADDR MyMacAddr;
         LAN867X_REG_OBJ MiimObj;

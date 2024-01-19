@@ -20,6 +20,18 @@
                     <name>FreeRTOS</name>
                     <type>2</type>
                 </confElem>
+                <confElem>
+                    <name>FreeRTOS_node_1</name>
+                    <type>2</type>
+                </confElem>
+                <confElem>
+                    <name>FreeRTOS_node_2</name>
+                    <type>2</type>
+                </confElem>
+                <confElem>
+                    <name>FreeRTOS_node_3</name>
+                    <type>2</type>
+                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>

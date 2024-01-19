@@ -59,6 +59,7 @@
 #define TIMEOUT_1_SECOND            10
 #define TIMEOUT_10_SECONDS          100
 #define TIMEOUT_20_SECONDS          200
+#define TIMEOUT_30_SECONDS          300
 
 #define MEMBER_INIT_REQUEST 1
 #define MEMBER_LIVE_REQUEST 2
@@ -129,7 +130,7 @@ extern SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 void BC_TEST_TimerCallback(uintptr_t context);
-void BC_TEST_Print_State_Change(void);
+void BC_TEST_Print_State_Change_And_Trigger_Watchdog(void);
 
 void SYS_Task_Start_TCP(void);
 void SYS_Initialization_TCP_Stack(void);
@@ -145,6 +146,8 @@ extern uint8_t my_mac_str[];
 
 volatile uint16_t bc_test_node_id;
 volatile uint16_t bc_test_node_count;
+
+uint8_t BC_TEST_calculateCRC8(uint8_t *data, int length);
 
 // *****************************************************************************
 // *****************************************************************************
@@ -193,6 +196,8 @@ void BC_TEST_Initialize(void) {
 
     TC1_TimerCallbackRegister(BC_TEST_TC1_Interrupt_Handler, (uintptr_t) NULL);
 
+    bc_test.watchdog = TIMEOUT_30_SECONDS;
+    
     bc_test.state = BC_TEST_STATE_INIT_START;
 }
 
@@ -233,8 +238,17 @@ void BC_TEST_Tasks(void) {
     SYS_STATUS tcpipStat;
     bool result;
 
-    BC_TEST_Print_State_Change();
+    BC_TEST_Print_State_Change_And_Trigger_Watchdog();
 
+    if(bc_test.watchdog == 0){
+        BC_TEST_DEBUG_PRINT("BC_TEST: Soft-Watchdog Triggered\r\n");
+        BC_COM_DeInitialize_Runtime();
+        BC_COM_Initialize_Runtime();
+        bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
+        BC_TEST_DEBUG_PRINT("BC_TEST: Watchdog Triggered Restart in %d Ticks\n\r",bc_test.countdown);  
+        bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
+    }
+    
     switch (bc_test.state) {
 
 
@@ -279,7 +293,9 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: IP Address : %d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
                 BC_TEST_DEBUG_PRINT("BC_TEST: MAC Address: %02x:%02x:%02x:%02x:%02x:%02x\r\n", bc_test.MyMacAddr.v[0], bc_test.MyMacAddr.v[1], bc_test.MyMacAddr.v[2], bc_test.MyMacAddr.v[3], bc_test.MyMacAddr.v[4], bc_test.MyMacAddr.v[5]);
 
-                bc_test.countdown = TIMEOUT_1_SECOND;
+                bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
+                BC_TEST_DEBUG_PRINT("BC_TEST: Start in %d Ticks\n\r",bc_test.countdown);    
+
                 bc_test.init_done = true;
 
                 BC_COM_Initialize_Runtime();
@@ -323,8 +339,7 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.control_code = MEMBER_INIT_REQUEST;
                         
                 BC_TEST_DEBUG_PRINT("BC_TEST: Radom - Member: %08x\n\r", bc_test.random);
-
-                BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Member\n\r");
+                BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Member Init\n\r");
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
 
                 BC_TEST_Time_Measure_Start();
@@ -460,8 +475,7 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.control_code = MEMBER_LIVE_REQUEST;
                 
                 BC_TEST_DEBUG_PRINT("BC_TEST: Radom - Member: %08x\n\r", bc_test.random);
-
-                BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Member\n\r");
+                BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent - Member Live\n\r");
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
 
                 BC_TEST_Time_Measure_Start();
@@ -531,11 +545,20 @@ void BC_TEST_Tasks(void) {
         case BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST:
             if (BC_COM_is_data_received() == true) {
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
-                BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Controller\n\r");
+                if(auto_conf_msg_receive.origin == BC_TEST_COORDINATOR){
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Coordinator\n\r");
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Packet dropped\n\r");
+                    break;
+                }
+                BC_TEST_DEBUG_PRINT("BC_TEST: Data Received - Member\n\r");
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_receive, sizeof (AUTOCONFMSG));
+                BC_COM_listen_stop();
                 bc_test.state = BC_TEST_STATE_COORDINATOR_ANSWER_REQUEST;
             }
             if( bc_test.countdown == 0){
+                BC_COM_listen_stop();
+                bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
+                BC_TEST_DEBUG_PRINT("BC_TEST: Restart in %d Ticks\n\r",bc_test.countdown);                
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
             }
             break;
@@ -567,11 +590,11 @@ void BC_TEST_Tasks(void) {
                         bc_test.nodeid_ix++;
                     }
                     auto_conf_msg_transmit.node_id = bc_test.nodeid_ix;
-
+                                        
                     auto_conf_msg_transmit.ip4.v[0] = bc_test.MyIpAddr.v[0];
                     auto_conf_msg_transmit.ip4.v[1] = bc_test.MyIpAddr.v[1];
                     auto_conf_msg_transmit.ip4.v[2] = bc_test.MyIpAddr.v[2];
-                    auto_conf_msg_transmit.ip4.v[3] = bc_test.MyIpAddr.v[3] + bc_test.nodeid_ix;
+                    auto_conf_msg_transmit.ip4.v[3] = BC_TEST_calculateCRC8((uint8_t *)&auto_conf_msg_receive.mac,6);
     
                     BC_TEST_DEBUG_PRINT("BC_TEST: Data Sent Init - Node Id:%d\n\r", auto_conf_msg_transmit.node_id);
                 }
@@ -625,6 +648,10 @@ void BC_TEST_TimerCallback(uintptr_t context) {
         bc_test.countdown--;
     }
 
+    if (bc_test.watchdog) {
+        bc_test.watchdog--;
+    }
+    
     bc_test.tick_100ms++;
     bc_test.tick_flag_100ms = true;
 
@@ -657,10 +684,11 @@ char *app_states_str[] = {
     "BC_TEST_VOID"
 };
 
-void BC_TEST_Print_State_Change(void) {
+void BC_TEST_Print_State_Change_And_Trigger_Watchdog(void) {
     static BC_TEST_STATES states = BC_TEST_VOID;
     if (states != bc_test.state) {
         states = bc_test.state;
+        bc_test.watchdog = TIMEOUT_30_SECONDS;
         BC_TEST_DEBUG_PRINT("%s\n\r", app_states_str[states]);
     }
 }
@@ -726,7 +754,8 @@ static void my_run(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
 static void my_reinit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
     BC_COM_DeInitialize_Runtime();
     BC_COM_Initialize_Runtime();
-    bc_test.state = BC_TEST_STATE_IDLE;
+    bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 10) / 16;
+    bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
 }
 
 DRV_MIIM_RESULT BC_TEST_miim_init(void) {
@@ -955,6 +984,47 @@ void BC_TEST_SetNodeID_and_MAXcount(uint16_t NodeId, uint16_t MaxCount) {
     bc_test_node_count = MaxCount;
 
 }
+
+#define BC_TEST_POLYNOMIAL_16 0x8005 
+
+uint16_t BC_TEST_calculateCRC16(uint8_t *data, int length) {
+    uint16_t crc = 0;
+
+    for (int i = 0; i < length; i++) {
+        crc ^= (uint16_t) data[i] << 8;
+
+        for (int j = 0; j < 8; j++) {
+            if (crc & 0x8000) {
+                crc = (crc << 1) ^ BC_TEST_POLYNOMIAL_16;
+            } else {
+                crc <<= 1;
+            }
+        }
+    }
+
+    return crc;
+}
+
+#define BC_TEST_POLYNOMIAL_8 0x07 
+
+uint8_t BC_TEST_calculateCRC8(uint8_t *data, int length) {
+    uint8_t crc = 0;
+
+    for (int i = 0; i < length; i++) {
+        crc ^= data[i];
+
+        for (int j = 0; j < 8; j++) {
+            if (crc & 0x80) {
+                crc = (crc << 1) ^ BC_TEST_POLYNOMIAL_8;
+            } else {
+                crc <<= 1;
+            }
+        }
+    }
+
+    return crc;
+}
+
 
 /*******************************************************************************
  End of File
