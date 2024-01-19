@@ -39,7 +39,7 @@
 #define BC_TEST_DEBUG_PRINT(fmt, ...)
 #endif
 
-#define __BC_TEST_DEBUG_DUMP_PRINT 
+//#define __BC_TEST_DEBUG_DUMP_PRINT 
 #ifdef __BC_TEST_DEBUG_DUMP_PRINT
 #define BC_TEST_DEBUG_DUMP_PRINT(fmt, ...)  SYS_CONSOLE_PRINT(fmt, ##__VA_ARGS__)
 #else
@@ -57,9 +57,23 @@
 
 #define TIMEOUT_100_MILLI_SECONDS   1
 #define TIMEOUT_1_SECOND            10
+
+#define TIMEOUT_2_SECONDS           10
+#define TIMEOUT_3_SECONDS           20
+#define TIMEOUT_4_SECONDS           40
+#define TIMEOUT_5_SECONDS           50
+#define TIMEOUT_6_SECONDS           60
+#define TIMEOUT_7_SECONDS           70
+#define TIMEOUT_8_SECONDS           80
+#define TIMEOUT_9_SECONDS           90
 #define TIMEOUT_10_SECONDS          100
+#define TIMEOUT_15_SECONDS          150
 #define TIMEOUT_20_SECONDS          200
 #define TIMEOUT_30_SECONDS          300
+
+#define TIMEOUT_LIVE_REQUEST        TIMEOUT_10_SECONDS
+#define TIMEOUT_COORDINATOR         TIMEOUT_15_SECONDS
+#define TIMEOUT_WATCHDOG            TIMEOUT_20_SECONDS
 
 #define MEMBER_INIT_REQUEST 1
 #define MEMBER_LIVE_REQUEST 2
@@ -148,6 +162,8 @@ volatile uint16_t bc_test_node_id;
 volatile uint16_t bc_test_node_count;
 
 uint8_t BC_TEST_calculateCRC8(uint8_t *data, int length);
+
+void BS_TEST_Check_BC_COM_For_Idle(void);
 
 // *****************************************************************************
 // *****************************************************************************
@@ -248,6 +264,8 @@ void BC_TEST_Tasks(void) {
         BC_COM_Initialize_Runtime();
         bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
         BC_TEST_DEBUG_PRINT("BC_TEST: Watchdog Triggered Restart in %d Ticks\n\r", bc_test.countdown);
+        SYS_CONSOLE_PRINT("Restart Member Init Request\n\r");
+        bc_test.watchdog == TIMEOUT_WATCHDOG;
         bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
     }
 
@@ -296,9 +314,9 @@ void BC_TEST_Tasks(void) {
                 BC_COM_Initialize_Runtime();
                 //BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
                 //BC_TEST_DEBUG_PRINT("BC_TEST: Time to Init TCP Stack: %s secs\n\r", time_result);
-                BC_TEST_DEBUG_PRINT("BC_TEST: =============================================\n\r");
-                BC_TEST_DEBUG_PRINT("BC_TEST: Build Time %s %s\n\r", __DATE__, __TIME__);
-                BC_TEST_DEBUG_PRINT("BC_TEST: Start in %d Ticks\n\r", bc_test.countdown);
+                SYS_CONSOLE_PRINT("=============================================\n\r");
+                SYS_CONSOLE_PRINT("Build Time %s %s\n\r", __DATE__, __TIME__);
+                SYS_CONSOLE_PRINT("Start in %d Ticks\n\r", bc_test.countdown);
 
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
             }
@@ -332,12 +350,14 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Radom: %s => %08x\n\r", my_mac_str, auto_conf_msg_transmit.random);
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
 
+                bc_test.state = BC_TEST_STATE_MEMBER_INIT_WAIT_FOR_REQUESTED_ANSWER;
+                
                 //BC_TEST_Time_Measure_Start();
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
-                while (BC_COM_is_idle() == false);
+                BS_TEST_Check_BC_COM_For_Idle();
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.countdown = TIMEOUT_1_SECOND;
-                bc_test.state = BC_TEST_STATE_MEMBER_INIT_WAIT_FOR_REQUESTED_ANSWER;
+                
             }
             break;
 
@@ -352,11 +372,11 @@ void BC_TEST_Tasks(void) {
                         auto_conf_msg_receive.random != auto_conf_msg_transmit.random) {
                     TCPIP_Helper_MACAddressToString(&auto_conf_msg_receive.mac, mac_str, 18);
                     BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Wrong Data Received from %d - %s => %08x\n\r", auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);
-                    
-                    bc_test.countdown = TIMEOUT_1_SECOND;
-                    while (BC_COM_is_idle() == false);
-                    BC_COM_listen(sizeof (AUTOCONFMSG));
                     bc_test.state = BC_TEST_STATE_MEMBER_INIT_WAIT_FOR_REQUESTED_ANSWER;
+                    bc_test.countdown = TIMEOUT_1_SECOND;
+                    BS_TEST_Check_BC_COM_For_Idle();
+                    BC_COM_listen(sizeof (AUTOCONFMSG));
+                    
                     //BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
                     //BC_TEST_DEBUG_PRINT("BC_TEST: Time to Restart Receiving: %s secs\n\r", time_result);
                     break;
@@ -385,6 +405,8 @@ void BC_TEST_Tasks(void) {
                 //BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
                 //BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Time to Timeout and start Coordinator: %s secs\n\r", time_result);
 
+                bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
+                BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator start in %d Ticks\n\r", bc_test.countdown);
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_DECIDE_TO_BE_COORDINATOR_NODE;
             }
             break;
@@ -415,8 +437,8 @@ void BC_TEST_Tasks(void) {
             TCPIP_STACK_NetAddressSet(netH, &auto_conf_msg_receive.ip4, &ipMask, 1);
             TCPIP_Helper_IPAddressToString(&auto_conf_msg_receive.ip4, buff, 20);
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init new IP:%s\n\r", buff);
-
-            bc_test.countdown = TIMEOUT_10_SECONDS;
+            SYS_CONSOLE_PRINT("Set to Member with IP:%s\n\r", buff);
+            bc_test.countdown = TIMEOUT_LIVE_REQUEST;
             bc_test.state = BC_TEST_STATE_IDLE;
             break;
         }
@@ -424,16 +446,19 @@ void BC_TEST_Tasks(void) {
 
 
         case BC_TEST_STATE_MEMBER_INIT_DECIDE_TO_BE_COORDINATOR_NODE:
+            if (bc_test.countdown) {
+                break;
+            }
             if (BC_COM_is_idle() == true) {
-
+                SYS_CONSOLE_PRINT("Set to Coordinator\n\r");
                 BC_TEST_NetDown();
                 BC_TEST_SetNodeID_and_MAXcount(0, bc_test_node_count);
                 BC_TEST_NetUp();
                 netH = TCPIP_STACK_NetHandleGet("eth0");
-                while (TCPIP_STACK_NetIsReady(netH) == false);                
+                while (TCPIP_STACK_NetIsReady(netH) == false);
 
                 BC_COM_listen(sizeof (AUTOCONFMSG));
-                bc_test.countdown = TIMEOUT_20_SECONDS;
+                bc_test.countdown = TIMEOUT_COORDINATOR;
                 bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
             }
             break;
@@ -457,13 +482,15 @@ void BC_TEST_Tasks(void) {
                 TCPIP_Helper_MACAddressToString(&auto_conf_msg_transmit.mac, mac_str, 18);
                 BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Radom: %s => %08x\n\r", mac_str, auto_conf_msg_transmit.random);
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
-
+                
+                bc_test.state = BC_TEST_STATE_MEMBER_LIVE_WAIT_FOR_REQUESTED_ANSWER;
+                
                 //BC_TEST_Time_Measure_Start();
-                BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
-                while (BC_COM_is_idle() == false);
+                BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));                
+                BS_TEST_Check_BC_COM_For_Idle();                
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.countdown = TIMEOUT_1_SECOND;
-                bc_test.state = BC_TEST_STATE_MEMBER_LIVE_WAIT_FOR_REQUESTED_ANSWER;
+                
             }
             break;
 
@@ -479,10 +506,11 @@ void BC_TEST_Tasks(void) {
                 if (auto_conf_msg_receive.origin != BC_TEST_COORDINATOR ||
                         auto_conf_msg_receive.random != auto_conf_msg_transmit.random) {
                     BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Wrong Data Received from %d - %s => %08x\n\r", auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);                    
-                    bc_test.countdown = TIMEOUT_1_SECOND;
-                    while (BC_COM_is_idle() == false);
-                    BC_COM_listen(sizeof (AUTOCONFMSG));
                     bc_test.state = BC_TEST_STATE_MEMBER_LIVE_WAIT_FOR_REQUESTED_ANSWER;
+                    
+                    BS_TEST_Check_BC_COM_For_Idle();
+                    BC_COM_listen(sizeof (AUTOCONFMSG));
+                    bc_test.countdown = TIMEOUT_1_SECOND;
                     //BC_Test_Time_Measure_Stop_And_Get_Result(time_result);
                     //BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Time to Restart Live Request Receiving: %s secs\n\r", time_result);
                     break;
@@ -517,7 +545,7 @@ void BC_TEST_Tasks(void) {
 
         case BC_TEST_STATE_MEMBER_LIVE_PROCESS_REQUESTED_DATA:
         {
-            bc_test.countdown = TIMEOUT_10_SECONDS;
+            bc_test.countdown = TIMEOUT_LIVE_REQUEST;
             bc_test.state = BC_TEST_STATE_IDLE;
             break;
         }
@@ -531,6 +559,10 @@ void BC_TEST_Tasks(void) {
                 
                 if (auto_conf_msg_receive.origin == BC_TEST_COORDINATOR) {
                     BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Data Received from other Coordinator-\n\r");
+                    BC_COM_listen_stop();
+                    bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Restart as Member in %d Ticks\n\r", bc_test.countdown);
+                    bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;                    
                     break;
                 }
                 TCPIP_Helper_MACAddressToString(&auto_conf_msg_receive.mac, mac_str, 18);
@@ -593,12 +625,14 @@ void BC_TEST_Tasks(void) {
 
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
-
-                while (BC_COM_is_idle() == false);
+                
+                bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
+                
+                BS_TEST_Check_BC_COM_For_Idle();                
                 BC_COM_listen(sizeof (AUTOCONFMSG));
 
                 bc_test.countdown = TIMEOUT_20_SECONDS;
-                bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
+                
             }
             break;
 
@@ -676,7 +710,7 @@ void BC_TEST_Print_State_Change_And_Trigger_Watchdog(void) {
     static BC_TEST_STATES states = BC_TEST_VOID;
     if (states != bc_test.state) {
         states = bc_test.state;
-        bc_test.watchdog = TIMEOUT_30_SECONDS;
+        bc_test.watchdog = TIMEOUT_WATCHDOG; 
         BC_TEST_DEBUG_PRINT("%s\n\r", app_states_str[states]);
     }
 }
@@ -746,6 +780,19 @@ static void my_reinit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
     bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
 }
 
+void BS_TEST_Check_BC_COM_For_Idle(void) {
+    bc_test.countdown = TIMEOUT_5_SECONDS;
+    do {
+        if (bc_test.countdown == 0) {
+            BC_COM_DeInitialize_Runtime();
+            BC_COM_Initialize_Runtime();
+            bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 10) / 16;
+            bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
+        }
+    } while (BC_COM_is_idle() == false);
+}
+
+                
 DRV_MIIM_RESULT BC_TEST_miim_init(void) {
 
     DRV_MIIM_SETUP miimSetup;

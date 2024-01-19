@@ -59,6 +59,13 @@ static DRV_MIIM_RESULT Lan867x_Miim_Task(LAN867X_REG_OBJ *clientObj, DRV_MIIM_OP
  *  DEFINITION
  ******************************************************************************/
 
+//#define __DRV_LAN768X_DEBUG_PRINT 
+#ifdef __DRV_LAN768X_DEBUG_PRINT
+#define DRV_LAN768X_DEBUG_PRINT(fmt, ...)  SYS_CONSOLE_PRINT(fmt, ##__VA_ARGS__)
+#else
+#define DRV_LAN768X_DEBUG_PRINT(fmt, ...)
+#endif
+
 typedef struct {
     uint8_t version;
     uint8_t value1;
@@ -347,7 +354,7 @@ static DRV_ETHPHY_RESULT DRV_EXTPHY_MIIConfigure(const DRV_ETHPHY_OBJECT_BASE *p
     {
         extern volatile uint16_t bc_test_node_id;
         extern volatile uint16_t bc_test_node_count;
-        //MR: SYS_CONSOLE_PRINT("PHY_WRITE: ID:%d COUNT:%d\n\r", bc_test_node_id, bc_test_node_count);        
+        DRV_LAN768X_DEBUG_PRINT("PHY_WRITE: ID:%d COUNT:%d\n\r", bc_test_node_id, bc_test_node_count);        
         registerValue = F2R_(bc_test_node_id, PHY_PLCA_CTRL1_ID) |
                         F2R_(bc_test_node_count, PHY_PLCA_CTRL1_NCNT);
         miimRes = Lan867x_Write_Register(&clientObj, PHY_PLCA_CTRL1, registerValue);
@@ -392,7 +399,7 @@ static DRV_ETHPHY_RESULT DRV_EXTPHY_MIIConfigure(const DRV_ETHPHY_OBJECT_BASE *p
                      */
                     repeat = false;
                     if ((registerValue & 0x0800u) == 0x0800u) {
-                        SYS_CONSOLE_PRINT("LAN867x Reset has occurred,pos=2 \r\n");
+                        DRV_LAN768X_DEBUG_PRINT("LAN867x Reset has occurred,pos=2 \r\n");
                     }
                     if (info.version != LAN867x_PHY_ID_REV_B1) {
                         state = 12; //Start initial settings for Rev C0/C1,otherwise for Rev B
@@ -409,7 +416,7 @@ static DRV_ETHPHY_RESULT DRV_EXTPHY_MIIConfigure(const DRV_ETHPHY_OBJECT_BASE *p
                 if (registerValue == 1u) {
                     info.chiphealth = true;
                 } else {
-                    SYS_CONSOLE_PRINT("chip_error -1! Please contact microchip support for replacement \r\n");
+                    DRV_LAN768X_DEBUG_PRINT("chip_error -1! Please contact microchip support for replacement \r\n");
                     res = DRV_ETHPHY_RES_MIIM_ERR;
                 }
                 break;
@@ -419,7 +426,7 @@ static DRV_ETHPHY_RESULT DRV_EXTPHY_MIIConfigure(const DRV_ETHPHY_OBJECT_BASE *p
                 if ((info.value1 & CHECK_SIGN) != 0u) {
                     info.offset1 = info.value1 | 0x00E0u;
                     if (info.offset1 < -5) {
-                        SYS_CONSOLE_PRINT("chip_error -2! Please contact microchip support for replacement \r\n");
+                        DRV_LAN768X_DEBUG_PRINT("chip_error -2! Please contact microchip support for replacement \r\n");
                         res = DRV_ETHPHY_RES_MIIM_ERR;
                     }
                 } else {
@@ -585,7 +592,7 @@ static DRV_ETHPHY_RESULT DRV_ETHPHY_Detect(const struct DRV_ETHPHY_OBJECT_BASE_T
                 break;
             } else {
                 if ((registerValue & 0x0800u) == 0x0800u) {
-                    SYS_CONSOLE_PRINT("LAN867x Reset has occurred,pos=1\r\n");
+                    DRV_LAN768X_DEBUG_PRINT("LAN867x Reset has occurred,pos=1\r\n");
                 }
                 /* communication with PHY seems to be successful, therefore
                  * skip the 2nd time reading the Reset status bit,
@@ -632,13 +639,13 @@ static DRV_ETHPHY_RESULT DRV_ETHPHY_Detect(const struct DRV_ETHPHY_OBJECT_BASE_T
                 info.version = R2F(registerValue, PHY_PHY_ID2_REV);
                 switch (info.version) {
                     case LAN867x_PHY_ID_REV_B1:
-                        SYS_CONSOLE_PRINT("LAN867x Rev.B1 \r\n");
+                        DRV_LAN768X_DEBUG_PRINT("LAN867x Rev.B1 \r\n");
                         break;
                     case LAN867x_PHY_ID_REV_C1:
-                        SYS_CONSOLE_PRINT("LAN867x Rev.C1 \r\n");
+                        DRV_LAN768X_DEBUG_PRINT("LAN867x Rev.C1 \r\n");
                         break;
                     default:
-                        SYS_CONSOLE_PRINT("LAN867x Unknown version!\r\n");
+                        DRV_LAN768X_DEBUG_PRINT("LAN867x Unknown version!\r\n");
                         break;
                 }
                 ++state;
