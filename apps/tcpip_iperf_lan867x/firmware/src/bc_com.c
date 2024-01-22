@@ -316,11 +316,6 @@ bool BC_COM_send(uint8_t *buffer, int32_t count) {
     return false;
 }
 
-//void BC_COM_stop_send(void) {
-//    BC_COM_DEBUG_PRINT("BC_COM_stop_send()\n\r");
-//    bc_com.state = BC_COM_STATE_CLIENT_CLOSE;
-//}
-
 bool BC_COM_is_idle(void) {
     if (bc_com.state == BC_COM_STATE_IDLE) {
         return true;
@@ -328,7 +323,6 @@ bool BC_COM_is_idle(void) {
         return false;
     }
 }
-
 
 void BC_COM_Print_State_Change(void) {
     static BC_COM_STATES states = BC_COM_VOID;

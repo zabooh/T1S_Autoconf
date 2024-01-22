@@ -265,7 +265,7 @@ void BC_TEST_Tasks(void) {
         BC_TEST_DEBUG_PRINT("BC_TEST: Soft-Watchdog Triggered\r\n");
         BC_COM_DeInitialize_Runtime();
         BC_COM_Initialize_Runtime();
-        bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
+        bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
         BC_TEST_DEBUG_PRINT("BC_TEST: Watchdog Triggered Restart in %d Ticks\n\r", bc_test.timeout);
         SYS_CONSOLE_PRINT("Restart Member Init Request\n\r");
         bc_test.watchdog == TIMEOUT_WATCHDOG;
@@ -319,7 +319,7 @@ void BC_TEST_Tasks(void) {
                 SYS_CONSOLE_PRINT("=============================================\n\r");
                 SYS_CONSOLE_PRINT("Build Time %s %s\n\r", __DATE__, __TIME__);
 
-                bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
+                bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                 SYS_CONSOLE_PRINT("Start in %d Ticks\n\r", bc_test.countdown);
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
             }
@@ -396,6 +396,7 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Timeout %s %d\n\r", __FILE__, __LINE__);
                 BC_COM_listen_stop();
                 bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
+                BC_TEST_DEBUG_PRINT("BC_TEST: Start as Coordinator in %d Ticks\n\r", bc_test.countdown);
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_DECIDE_TO_BE_COORDINATOR_NODE;
             }
             break;
@@ -435,7 +436,6 @@ void BC_TEST_Tasks(void) {
             if (bc_test.countdown) {
                 break;
             }
-            
             if (BC_COM_is_idle() == true) {
                 SYS_CONSOLE_PRINT("Set to Coordinator\n\r");
                 BC_TEST_NetDown();
@@ -457,7 +457,6 @@ void BC_TEST_Tasks(void) {
             if (bc_test.countdown) {
                 break;
             }
-
             netH = TCPIP_STACK_NetHandleGet("eth0");
             while (TCPIP_STACK_NetIsReady(netH) == false);
 
@@ -543,7 +542,7 @@ void BC_TEST_Tasks(void) {
                 if (auto_conf_msg_receive.origin == BC_TEST_COORDINATOR) {
                     BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Data Received from other Coordinator-\n\r");
                     BC_COM_listen_stop();
-                    bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
+                    bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                     BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Restart as Member in %d Ticks\n\r", bc_test.timeout);
                     bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
                     break;
@@ -557,7 +556,7 @@ void BC_TEST_Tasks(void) {
             if (bc_test.timeout == 0) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Timeout %s %d\n\r", __FILE__, __LINE__);
                 BC_COM_listen_stop();
-                bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * 100) / 16;
+                bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                 BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Restart as Member in %d Ticks\n\r", bc_test.timeout);
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
             }
