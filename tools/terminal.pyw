@@ -20,9 +20,9 @@ from datetime import datetime as nowt
 #######################################################################################
 
 # Default COM Port Settings
-default_com_port_A = 'COM9'
-default_com_port_B = 'COM12'
-default_com_port_C = 'COM13'
+default_com_port_A = 'COM3'
+default_com_port_B = 'COM4'
+default_com_port_C = 'COM21'
 default_com_port_D = 'COM14'
 baud_rate = 115200
 
