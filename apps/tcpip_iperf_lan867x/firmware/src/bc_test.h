@@ -110,6 +110,7 @@ extern "C" {
         bool init_done;
         uint32_t random;
         uint8_t nodeid_ix;
+        bool sync;
     } BC_TEST_DATA;
 
     // *****************************************************************************

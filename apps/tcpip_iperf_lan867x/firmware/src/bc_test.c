@@ -204,6 +204,7 @@ void BC_TEST_Initialize(void) {
     SYS_TIME_TimerStart(bc_test.timer_client_hdl);
     bc_test.init_done = false;
     bc_test.nodeid_ix = 1;
+    bc_test.sync = false;
 
     bc_test.MyMacAddr.v[0] = 0x00;
     bc_test.MyMacAddr.v[1] = 0x04;
@@ -262,6 +263,7 @@ void BC_TEST_Tasks(void) {
     BC_TEST_Print_State_Change_And_Trigger_Watchdog();
 
     if (bc_test.watchdog == 0) {
+        gfx_mono_print_scroll("Soft Watchdog Trg");
         BC_TEST_DEBUG_PRINT("BC_TEST: Soft-Watchdog Triggered\r\n");
         BC_COM_DeInitialize_Runtime();
         BC_COM_Initialize_Runtime();
@@ -277,6 +279,12 @@ void BC_TEST_Tasks(void) {
             /* ============== Init States ============== */
 
         case BC_TEST_STATE_INIT_START:
+            
+            gfx_mono_ssd1306_init();
+            gfx_mono_print_scroll("LAN867x PLCA Node: %d",DRV_ETHPHY_PLCA_LOCAL_NODE_ID); 
+            gfx_mono_print_scroll("%s",TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0); 
+            gfx_mono_print_scroll("%s",TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0);
+    
             BC_TEST_DEBUG_PRINT("BC_TEST: Build Time "__DATE__" "__TIME__"\n\r");
 
             SYS_Initialization_TCP_Stack();
@@ -318,7 +326,8 @@ void BC_TEST_Tasks(void) {
 
                 SYS_CONSOLE_PRINT("=============================================\n\r");
                 SYS_CONSOLE_PRINT("Build Time %s %s\n\r", __DATE__, __TIME__);
-
+                gfx_mono_print_scroll("Start System");
+                
                 bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                 SYS_CONSOLE_PRINT("Start in %d Ticks\n\r", bc_test.countdown);
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
@@ -334,7 +343,7 @@ void BC_TEST_Tasks(void) {
             if (bc_test.countdown) {
                 break;
             }
-
+            gfx_mono_print_scroll("Member Init Request");
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init\n\r");
             BC_TEST_NetDown();
             BC_TEST_SetNodeID_and_MAXcount(1, bc_test_node_count);
@@ -425,7 +434,10 @@ void BC_TEST_Tasks(void) {
             TCPIP_Helper_IPAddressToString(&auto_conf_msg_receive.ip4, buff, 20);
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init new IP:%s\n\r", buff);
             SYS_CONSOLE_PRINT("Set to Member with IP:%s\n\r", buff);
+            gfx_mono_print_scroll("New Member IP:");
+            gfx_mono_print_scroll("%s",buff);
             bc_test.timeout_live_request = TIMEOUT_LIVE_REQUEST;
+            bc_test.sync = true;
             bc_test.state = BC_TEST_STATE_IDLE;
             break;
         }
@@ -437,7 +449,11 @@ void BC_TEST_Tasks(void) {
                 break;
             }
             if (BC_COM_is_idle() == true) {
+                char buff[30];
+                sprintf(buff,"%d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);                
                 SYS_CONSOLE_PRINT("Set to Coordinator\n\r");
+                gfx_mono_print_scroll("%s",buff);
+                gfx_mono_print_scroll("Set to Coordinator");
                 BC_TEST_NetDown();
                 BC_TEST_SetNodeID_and_MAXcount(0, bc_test_node_count);
                 BC_TEST_NetUp();
@@ -515,9 +531,10 @@ void BC_TEST_Tasks(void) {
                 break;
             }
             if (bc_test.timeout == 0) {
+                gfx_mono_print_scroll("Member Live Timeout");
                 BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Timeout %s %d\n\r", __FILE__, __LINE__);
                 BC_COM_listen_stop();
-
+                bc_test.sync = false;
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
             }
             break;
@@ -669,15 +686,23 @@ void BC_TEST_TimerCallback(uintptr_t context) {
         }
     }
 
-    if (bc_test.state == BC_TEST_STATE_MEMBER_INIT_DECIDE_TO_BE_COORDINATOR_NODE ||
-            bc_test.state == BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST ||
-            bc_test.state == BC_TEST_STATE_COORDINATOR_ANSWER_REQUEST) {
-        LED_2_Clear();
+
+    if (bc_test.state == BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST
+            || bc_test.state == BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST) {
+        if (bc_test.led_state == false) {
+            LED_2_Set();
+        } else {
+            LED_2_Clear();
+        }
     } else {
-        LED_2_Set();
+        if (bc_test.sync == false) {
+            LED_2_Clear();
+        } else {
+            LED_2_Set();
+        }
     }
 
-
+        
 }
 
 char *app_states_str[] = {
@@ -687,10 +712,10 @@ char *app_states_str[] = {
     "BC_TEST_STATE_MEMBER_INIT_START_REQUEST",
     "BC_TEST_STATE_MEMBER_INIT_WAIT_FOR_REQUESTED_ANSWER",
     "BC_TEST_STATE_MEMBER_INIT_PROCESS_REQUESTED_DATA",
+    "BC_TEST_STATE_MEMBER_INIT_DECIDE_TO_BE_COORDINATOR_NODE",
     "BC_TEST_STATE_MEMBER_LIVE_START_REQUEST",
     "BC_TEST_STATE_MEMBER_LIVE_WAIT_FOR_REQUESTED_ANSWER",
     "BC_TEST_STATE_MEMBER_LIVE_PROCESS_REQUESTED_DATA",
-    "BC_TEST_STATE_MEMBER_INIT_DECIDE_TO_BE_COORDINATOR_NODE",
     "BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST",
     "BC_TEST_STATE_COORDINATOR_ANSWER_REQUEST",
     "BC_TEST_STATE_IDLE",

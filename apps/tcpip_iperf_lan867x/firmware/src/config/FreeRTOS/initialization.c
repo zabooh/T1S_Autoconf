@@ -48,7 +48,6 @@
 #include "device.h"
 
 
-
 // ****************************************************************************
 // ****************************************************************************
 // Section: Configuration Bits
@@ -480,6 +479,7 @@ void SYS_Initialize ( void* data )
 
     EVSYS_Initialize();
 
+    SERCOM0_SPI_Initialize();
 
 
    /* Initialize the MIIM Driver Instance 0*/
@@ -493,7 +493,6 @@ void SYS_Initialize ( void* data )
 
         
     sysObj.sysDebug = SYS_DEBUG_Initialize(SYS_DEBUG_INDEX_0, (SYS_MODULE_INIT*)&debugInit);
-
 
 
 
