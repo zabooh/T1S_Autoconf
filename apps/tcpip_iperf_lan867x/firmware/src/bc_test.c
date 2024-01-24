@@ -168,6 +168,8 @@ uint8_t BC_TEST_calculateCRC8(uint8_t *data, int length);
 
 void BS_TEST_Check_BC_COM_For_Idle(void);
 
+void BS_TEST_CheckButtons(void);
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -192,8 +194,6 @@ void BC_TEST_TC1_Interrupt_Handler(TC_TIMER_STATUS status, uintptr_t context) {
 
 void BC_TEST_Initialize(void) {
     BC_TEST_Command_Init();
-    //    SYS_Initialization_TCP_Stack();
-    //    SYS_Task_Start_TCP();
     bc_test_node_id = 1; //DRV_ETHPHY_PLCA_LOCAL_NODE_ID;
     bc_test_node_count = DRV_ETHPHY_PLCA_NODE_COUNT;
     bc_test.timer_client_hdl = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(TIMER_MS_RESOLUTION), &BC_TEST_TimerCallback, (uintptr_t) NULL, SYS_TIME_PERIODIC);
@@ -261,7 +261,8 @@ void BC_TEST_Tasks(void) {
 
 
     BC_TEST_Print_State_Change_And_Trigger_Watchdog();
-
+    BS_TEST_CheckButtons();
+    
     if (bc_test.watchdog == 0) {
         gfx_mono_print_scroll("Soft Watchdog Trg");
         BC_TEST_DEBUG_PRINT("BC_TEST: Soft-Watchdog Triggered\r\n");
@@ -279,15 +280,14 @@ void BC_TEST_Tasks(void) {
             /* ============== Init States ============== */
 
         case BC_TEST_STATE_INIT_START:
-            
+
             gfx_mono_ssd1306_init();
-            gfx_mono_print_scroll("LAN867x PLCA Node: %d",DRV_ETHPHY_PLCA_LOCAL_NODE_ID); 
-            gfx_mono_print_scroll("%s",TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0); 
-            gfx_mono_print_scroll("%s",TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0);
-    
+            gfx_mono_print_scroll("LAN867x PLCA Node: %d", DRV_ETHPHY_PLCA_LOCAL_NODE_ID);
+            gfx_mono_print_scroll("%s", TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0);
+            gfx_mono_print_scroll("%s", TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0);
+
             BC_TEST_DEBUG_PRINT("BC_TEST: Build Time "__DATE__" "__TIME__"\n\r");
 
-            SYS_Initialization_TCP_Stack();
             SYS_Task_Start_TCP();
             bc_test.state = BC_TEST_STATE_INIT_TCPIP_WAIT_START;
             break;
@@ -327,7 +327,7 @@ void BC_TEST_Tasks(void) {
                 SYS_CONSOLE_PRINT("=============================================\n\r");
                 SYS_CONSOLE_PRINT("Build Time %s %s\n\r", __DATE__, __TIME__);
                 gfx_mono_print_scroll("Start System");
-                
+
                 bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                 SYS_CONSOLE_PRINT("Start in %d Ticks\n\r", bc_test.countdown);
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
@@ -435,7 +435,7 @@ void BC_TEST_Tasks(void) {
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init new IP:%s\n\r", buff);
             SYS_CONSOLE_PRINT("Set to Member with IP:%s\n\r", buff);
             gfx_mono_print_scroll("New Member IP:");
-            gfx_mono_print_scroll("%s",buff);
+            gfx_mono_print_scroll("%s", buff);
             bc_test.timeout_live_request = TIMEOUT_LIVE_REQUEST;
             bc_test.sync = true;
             bc_test.state = BC_TEST_STATE_IDLE;
@@ -450,9 +450,9 @@ void BC_TEST_Tasks(void) {
             }
             if (BC_COM_is_idle() == true) {
                 char buff[30];
-                sprintf(buff,"%d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);                
+                sprintf(buff, "%d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
                 SYS_CONSOLE_PRINT("Set to Coordinator\n\r");
-                gfx_mono_print_scroll("%s",buff);
+                gfx_mono_print_scroll("%s", buff);
                 gfx_mono_print_scroll("Set to Coordinator");
                 BC_TEST_NetDown();
                 BC_TEST_SetNodeID_and_MAXcount(0, bc_test_node_count);
@@ -702,7 +702,7 @@ void BC_TEST_TimerCallback(uintptr_t context) {
         }
     }
 
-        
+
 }
 
 char *app_states_str[] = {
@@ -800,180 +800,9 @@ void BS_TEST_Check_BC_COM_For_Idle(void) {
     } while (BC_COM_is_idle() == false);
 }
 
-DRV_MIIM_RESULT BC_TEST_miim_init(void) {
-
-    DRV_MIIM_SETUP miimSetup;
-    DRV_MIIM_RESULT res;
-    static DRV_MIIM_OPERATION_HANDLE opHandle;
-    static SYS_MODULE_INDEX miimObjIx = 0; // MIIM object index
-
-    opHandle = 0;
-    bc_test.MiimObj.miimOpHandle = &opHandle;
-    bc_test.MiimObj.miimBase = &DRV_MIIM_OBJECT_BASE_Default;
-    miimObjIx = DRV_MIIM_DRIVER_INDEX_0;
-
-    /*  Open the MIIM driver and get an instance to it. */
-    bc_test.MiimObj.miimHandle = bc_test.MiimObj.miimBase->DRV_MIIM_Open(miimObjIx, DRV_IO_INTENT_SHARED);
-    if ((bc_test.MiimObj.miimHandle == DRV_HANDLE_INVALID) || (bc_test.MiimObj.miimHandle == 0)) {
-        BC_TEST_DEBUG_PRINT("BC_TEST: Local miim open: failed!\r\n");
-        bc_test.MiimObj.miimHandle = 0;
-        res = DRV_MIIM_RES_OP_INTERNAL_ERR;
-    } else {
-
-        miimSetup.hostClockFreq = (uint32_t) TCPIP_INTMAC_PERIPHERAL_CLK;
-        miimSetup.maxBusFreq = 2000000;
-        miimSetup.setupFlags = 0;
-
-        /*  Setup the miim driver instance. */
-        res = bc_test.MiimObj.miimBase->DRV_MIIM_Setup(bc_test.MiimObj.miimHandle, &miimSetup);
-        if (res < 0) {
-            BC_TEST_DEBUG_PRINT("BC_TEST: Local miim setup: failed!\r\n");
-        } else {
-            //SYS_CONSOLE_PRINT("> Miim Successfully opened. \r\n");
-        }
-    }
-
-    return res;
-}
-
-void BC_TEST_miim_close(void) {
-    bc_test.MiimObj.miimBase->DRV_MIIM_Close(bc_test.MiimObj.miimHandle);
-    bc_test.MiimObj.miimHandle = 0;
-}
-
-static void my_plca_write_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
-    uint16_t node_id;
-    uint16_t node_count;
-    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
-    uint16_t data;
-
-    if (argc != 3) {
-        BC_TEST_DEBUG_PRINT("Usage: ndw <node_id> <node_count>\n\r");
-        return;
-    }
-
-    BC_TEST_miim_init();
-
-    node_id = strtoul(argv[1], NULL, 16);
-    node_count = strtoul(argv[2], NULL, 16);
-
-    /* Set the Node id as 0 and Node count as 5*/
-    data = F2R_(node_id, PHY_PLCA_CTRL1_ID) | F2R_(node_count, PHY_PLCA_CTRL1_NCNT);
-
-    do {
-        opRes = Write_Phy_Register(&bc_test.MiimObj, 0, PHY_PLCA_CTRL1, data);
-        vTaskDelay(10U / portTICK_PERIOD_MS);
-    } while (opRes == DRV_MIIM_RES_PENDING);
-
-    if (opRes < 0) {
-        /* In case of an error, report and close miim instance. */
-        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write Error occurred:%d\r\n", opRes);
-    } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
-        BC_TEST_DEBUG_PRINT("BC_TEST:  Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
-    } else {
-        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write opRes: %d\n\r", opRes);
-    }
-
-    BC_TEST_miim_close();
-
-}
-
-static void my_plca_set_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
-    uint16_t node_id;
-    uint16_t node_count;
-    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
-    uint16_t data;
-
-    if (argc != 3) {
-        BC_TEST_DEBUG_PRINT("Usage: nds <node_id> <node_count>\n\r");
-        return;
-    }
-
-    bc_test_node_id = strtoul(argv[1], NULL, 10);
-    bc_test_node_count = strtoul(argv[2], NULL, 10);
-
-}
-
-void BC_TEST_write_miim(uint16_t reg, uint16_t value) {
-    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
-    uint16_t data;
-
-    BC_TEST_miim_init();
-
-    do {
-        opRes = Write_Phy_Register(&bc_test.MiimObj, 0, reg, value);
-        vTaskDelay(10U / portTICK_PERIOD_MS);
-    } while (opRes == DRV_MIIM_RES_PENDING);
-
-    if (opRes < 0) {
-        /* In case of an error, report and close miim instance. */
-        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write Error occurred:%d\r\n", opRes);
-    } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
-        //BC_TEST_DEBUG_PRINT("BC_TEST:  Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
-    } else {
-        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write opRes: %d\n\r", opRes);
-    }
-
-    BC_TEST_miim_close();
-}
-
-void BC_TEST_plca_write_config(uint16_t node_id, uint16_t node_count) {
-
-    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
-    uint16_t data;
-
-    BC_TEST_miim_init();
-
-    /* Set the Node id as 0 and Node count as 5*/
-    data = F2R_(node_id, PHY_PLCA_CTRL1_ID) | F2R_(node_count, PHY_PLCA_CTRL1_NCNT);
-
-    do {
-        opRes = Write_Phy_Register(&bc_test.MiimObj, 0, PHY_PLCA_CTRL1, data);
-        vTaskDelay(10U / portTICK_PERIOD_MS);
-    } while (opRes == DRV_MIIM_RES_PENDING);
-
-    if (opRes < 0) {
-        /* In case of an error, report and close miim instance. */
-        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write Error occurred:%d\r\n", opRes);
-    } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
-        BC_TEST_DEBUG_PRINT("BC_TEST:  Register set, Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
-    } else {
-        BC_TEST_DEBUG_PRINT("BC_TEST: Register Write opRes: %d\n\r", opRes);
-    }
-
-    BC_TEST_miim_close();
-
-}
-
-static void my_plca_read_config(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
-    DRV_MIIM_RESULT opRes = DRV_MIIM_RES_OK;
-    uint16_t data;
-
-    BC_TEST_miim_init();
-
-    do {
-        opRes = Read_Phy_Register(&bc_test.MiimObj, 0, PHY_PLCA_CTRL1, &data);
-        vTaskDelay(10U / portTICK_PERIOD_MS);
-    } while (opRes == DRV_MIIM_RES_PENDING);
-
-    if (opRes < 0) {
-        /* In case of an error, report and close miim instance. */
-        BC_TEST_DEBUG_PRINT("BC_TEST: Register Read Error occurred:%d\r\n", opRes);
-    } else if (opRes == DRV_MIIM_RES_OK) /* Check operation is completed. */ {
-        BC_TEST_DEBUG_PRINT("BC_TEST:  Node Id: %d, Node count: %d. \r\n", R2F(data, PHY_PLCA_CTRL1_ID), R2F(data, PHY_PLCA_CTRL1_NCNT));
-    } else {
-        BC_TEST_DEBUG_PRINT("BC_TEST: Register Read opRes: %d\n\r", opRes);
-    }
-
-    BC_TEST_miim_close();
-}
-
 const SYS_CMD_DESCRIPTOR msd_cmd_tbl[] = {
     {"dump", (SYS_CMD_FNC) my_dump, ": dump memory"},
     {"run", (SYS_CMD_FNC) my_run, ": start application"},
-    {"ndw", (SYS_CMD_FNC) my_plca_write_config, ": Node Config Write"},
-    {"nds", (SYS_CMD_FNC) my_plca_set_config, ": Node set Write"},
-    {"ndr", (SYS_CMD_FNC) my_plca_read_config, ": Node Config Read: ndr"},
     {"reinit", (SYS_CMD_FNC) my_reinit, ": Re-Initialze Server and Client"}
 };
 
@@ -1022,6 +851,7 @@ bool BC_TEST_NetUp(void) {
 
 void BC_TEST_SetNodeID_and_MAXcount(uint16_t NodeId, uint16_t MaxCount) {
 
+    gfx_mono_print_scroll("Id:%d Max:%d", NodeId, MaxCount);
     bc_test_node_id = NodeId;
     bc_test_node_count = MaxCount;
 
@@ -1066,6 +896,45 @@ uint8_t BC_TEST_calculateCRC8(uint8_t *data, int length) {
 
     return crc;
 }
+
+void BS_TEST_CheckButtons(void) {
+    static int old_but1 = 0;
+    int temp_but1 = BUTTON1_Get();
+    if (temp_but1 && !old_but1) {
+        LED1_Set();
+    }
+    if (!temp_but1 && old_but1) {
+        LED1_Clear();
+        //SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
+        //gfx_mono_print_scroll("iperf TCP server");
+    }
+    old_but1 = temp_but1;
+
+    static int old_but2 = 0;
+    int temp_but2 = BUTTON2_Get();
+    if (temp_but2 && !old_but2) {
+        LED2_Set();
+    }
+    if (!temp_but2 && old_but2) {
+        LED2_Clear();
+        SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
+        gfx_mono_print_scroll("iperf UDP server");
+    }
+    old_but2 = temp_but2;
+
+    static int old_but3 = 0;
+    int temp_but3 = BUTTON3_Get();
+    if (temp_but3 && !old_but3) {
+        LED3_Set();
+    }
+    if (!temp_but3 && old_but3) {
+        LED3_Clear();
+        SERCOM1_USART_Virtual_Receive("iperf -u -c 192.168.100.11\n");
+        gfx_mono_print_scroll("iperf UDP client");
+    }
+    old_but3 = temp_but3;
+}
+
 
 /*******************************************************************************
  End of File

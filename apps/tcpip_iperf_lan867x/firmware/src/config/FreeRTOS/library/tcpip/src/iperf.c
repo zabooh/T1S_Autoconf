@@ -42,7 +42,7 @@ Microchip or any third party.
 #if defined(TCPIP_STACK_USE_IPERF)
 
 #include "system/command/sys_command.h"
-
+void gfx_mono_print_scroll(const char* format, ...);
 //****************************************************************************
 // CONSTANTS (Defines and enums)
 //****************************************************************************
@@ -763,6 +763,7 @@ static void ReportBW_Jitter_Loss(tIperfState* pIState, tIperfReport reportType)
             }
 
             sec = (pIState->lastCheckTime - pIState->startTime) / tickFreq;
+            gfx_mono_print_scroll("%4lu Kbps",(unsigned long) (kbps + ((double) 0.5)));
 
             (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "    - [%2lu- %2lu sec] %3lu/ %3lu (%2lu%%)    %4lu Kbps\r\n",
                       (unsigned long)sec, 
@@ -800,6 +801,8 @@ static void ReportBW_Jitter_Loss(tIperfState* pIState, tIperfReport reportType)
             {
    				kbps = (pIState->totalLen * ((double) 8)) / msec;
             }
+            gfx_mono_print_scroll("AVG: %4lu Kbps",(unsigned long) (kbps + ((double) 0.5)));
+            gfx_mono_print_scroll("iperf done");
 
             (pIState->pCmdIO->pCmdApi->print)(cmdIoParam, "    - [0.0- %lu.%lu sec] %3lu/ %3lu (%2lu%%)    %4lu Kbps\r\n",
                              (unsigned long)(msec/1000),
