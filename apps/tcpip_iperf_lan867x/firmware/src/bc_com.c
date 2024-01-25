@@ -140,7 +140,7 @@ void BC_COM_Tasks(void) {
     switch (bc_com.state) {
 
         case BC_COM_STATE_INIT:
-        {             
+        {
             bc_com.state = BC_COM_STATE_IDLE;
             break;
         }
@@ -155,8 +155,8 @@ void BC_COM_Tasks(void) {
         case BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION:
             if (TCPIP_UDP_IsConnected(bc_com.udp_server_socket) == true) {
                 BC_COM_DEBUG_PRINT("BC_COM: Server is Connected\n\r");
-                bc_com.receive_buffer = malloc( bc_com.receive_number_of_data_to_read);
-                BC_COM_DEBUG_PRINT("BC_COM: Server Buffer malloc\n\r");
+                bc_com.receive_buffer = malloc(bc_com.receive_number_of_data_to_read);
+                BC_COM_DEBUG_PRINT("BC_COM: Server Buffer malloc %08X\n\r", bc_com.receive_buffer);
                 bc_com.state = BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY;
             }
             break;
@@ -179,10 +179,10 @@ void BC_COM_Tasks(void) {
 
         case BC_COM_STATE_SERVER_STOP_WAIT:
             BC_COM_DEBUG_PRINT("BC_COM: Server Stop Wait\n\r");
-            if(bc_com.receive_buffer != 0){
+            if (bc_com.receive_buffer != 0) {
                 free(bc_com.receive_buffer);
+                BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free %08X\n\r", bc_com.receive_buffer);
                 bc_com.receive_buffer = 0;
-                BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free\n\r");
             }
             bc_com.state = BC_COM_STATE_IDLE;
             break;
@@ -226,11 +226,11 @@ void BC_COM_Tasks(void) {
             break;
 
         case BC_COM_STATE_CLIENT_CLOSE:
-            if(bc_com.receive_buffer != 0){
+            if (bc_com.receive_buffer != 0) {
                 free(bc_com.receive_buffer);
+                BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free %08X\n\r", bc_com.receive_buffer);
                 bc_com.receive_buffer = 0;
-                BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free\n\r");
-            }            
+            }
             TCPIP_UDP_Close(bc_com.udp_client_socket);
             BC_COM_DEBUG_PRINT("BC_COM: Client Close\n\r");
             bc_com.state = BC_COM_STATE_IDLE;
@@ -265,7 +265,7 @@ void BC_COM_Initialize_Runtime(void) {
 void BC_COM_DeInitialize_Runtime(void) {
     BC_COM_DEBUG_PRINT("BC_COM_DeInitialize_Runtime()\n\r");
     bc_com.state = BC_COM_STATE_SERVER_CLOSE;
-    while (bc_com.state != BC_COM_STATE_IDLE);    
+    while (bc_com.state != BC_COM_STATE_IDLE);
     bc_com.state = BC_COM_STATE_CLIENT_CLOSE;
     while (bc_com.state != BC_COM_STATE_IDLE);
     BC_COM_DEBUG_PRINT("BC_COM_DeInitialize_Runtime() - Ready\n\r");
@@ -294,6 +294,9 @@ void BC_COM_read_data(uint8_t *buffer) {
     if (bc_com.receive_buffer != 0) {
         memcpy(buffer, bc_com.receive_buffer, bc_com.receive_number_of_data_to_read);
         BC_COM_DEBUG_PRINT("BC_COM: Close Server\n\r");
+        BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free %08X\n\r", bc_com.receive_buffer);
+        free(bc_com.receive_buffer);
+        bc_com.receive_buffer = 0;
         bc_com.receive_data_has_been_received = false;
         bc_com.state = BC_COM_STATE_SERVER_STOP_WAIT;
     } else {
@@ -304,7 +307,7 @@ void BC_COM_read_data(uint8_t *buffer) {
 /*********** Transmit Interface *******************/
 bool BC_COM_send(uint8_t *buffer, int32_t count) {
     BC_COM_DEBUG_PRINT("BC_COM_send()\n\r");
-    if (bc_com.state != BC_COM_STATE_IDLE ) {
+    if (bc_com.state != BC_COM_STATE_IDLE) {
         BC_COM_DEBUG_PRINT("BC COM: send not in idle: %s %d\n\r", __FILE__, __LINE__);
         BC_COM_DEBUG_PRINT("BC COM: State: %s\n\r", bc_com_states_str[bc_com.state]);
         return true;

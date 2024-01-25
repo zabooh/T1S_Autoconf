@@ -213,7 +213,7 @@ void BC_TEST_Initialize(void) {
     bc_test.MyMacAddr.v[4] = (uint8_t) TRNG_ReadData();
     bc_test.MyMacAddr.v[5] = (uint8_t) TRNG_ReadData();
     TCPIP_Helper_MACAddressToString(&bc_test.MyMacAddr, my_mac_str, 18);
-
+    
     TC1_TimerCallbackRegister(BC_TEST_TC1_Interrupt_Handler, (uintptr_t) NULL);
 
     bc_test.watchdog = TIMEOUT_30_SECONDS;
@@ -287,7 +287,7 @@ void BC_TEST_Tasks(void) {
             gfx_mono_print_scroll("%s", TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0);
 
             BC_TEST_DEBUG_PRINT("BC_TEST: Build Time "__DATE__" "__TIME__"\n\r");
-
+            SYS_Initialization_TCP_Stack();
             SYS_Task_Start_TCP();
             bc_test.state = BC_TEST_STATE_INIT_TCPIP_WAIT_START;
             break;
@@ -418,19 +418,7 @@ void BC_TEST_Tasks(void) {
 
             bc_test.nodeid_ix = auto_conf_msg_receive.node_id;
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Received NodeId:%d\n\r", auto_conf_msg_receive.node_id);
-
-            BC_TEST_NetDown();
-            BC_TEST_SetNodeID_and_MAXcount(bc_test.nodeid_ix, bc_test_node_count);
-            BC_TEST_NetUp();
-            netH = TCPIP_STACK_NetHandleGet("eth0");
-            while (TCPIP_STACK_NetIsReady(netH) == false);
-
-            netH = TCPIP_STACK_NetHandleGet("eth0");
-            ipMask.v[0] = 255;
-            ipMask.v[1] = 255;
-            ipMask.v[2] = 255;
-            ipMask.v[3] = 0;
-            TCPIP_STACK_NetAddressSet(netH, &auto_conf_msg_receive.ip4, &ipMask, 1);
+            
             TCPIP_Helper_IPAddressToString(&auto_conf_msg_receive.ip4, buff, 20);
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init new IP:%s\n\r", buff);
             SYS_CONSOLE_PRINT("Set to Member with IP:%s\n\r", buff);
@@ -438,6 +426,20 @@ void BC_TEST_Tasks(void) {
             gfx_mono_print_scroll("%s", buff);
             bc_test.timeout_live_request = TIMEOUT_LIVE_REQUEST;
             bc_test.sync = true;
+            
+            BC_TEST_NetDown();
+            BC_TEST_SetNodeID_and_MAXcount(bc_test.nodeid_ix, bc_test_node_count);
+            BC_TEST_NetUp();
+            
+            netH = TCPIP_STACK_NetHandleGet("eth0");
+            while (TCPIP_STACK_NetIsReady(netH) == false);
+            
+            ipMask.v[0] = 255;
+            ipMask.v[1] = 255;
+            ipMask.v[2] = 255;
+            ipMask.v[3] = 0;
+            TCPIP_STACK_NetAddressSet(netH, &auto_conf_msg_receive.ip4, &ipMask, 1);            
+            
             bc_test.state = BC_TEST_STATE_IDLE;
             break;
         }
