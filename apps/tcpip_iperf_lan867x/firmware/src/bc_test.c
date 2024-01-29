@@ -802,10 +802,28 @@ void BS_TEST_Check_BC_COM_For_Idle(void) {
     } while (BC_COM_is_idle() == false);
 }
 
+static void my_ex(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
+    volatile uint32_t *ptr=0xFFFFFFFF;
+    *ptr=0xAFFE;
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    
+}
+
 const SYS_CMD_DESCRIPTOR msd_cmd_tbl[] = {
     {"dump", (SYS_CMD_FNC) my_dump, ": dump memory"},
     {"run", (SYS_CMD_FNC) my_run, ": start application"},
-    {"reinit", (SYS_CMD_FNC) my_reinit, ": Re-Initialze Server and Client"}
+    {"reinit", (SYS_CMD_FNC) my_reinit, ": Re-Initialze Server and Client"},
+    {"ex", (SYS_CMD_FNC) my_ex, ": force exception"}
 };
 
 bool BC_TEST_Command_Init(void) {
