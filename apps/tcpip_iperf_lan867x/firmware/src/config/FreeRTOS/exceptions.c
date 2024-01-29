@@ -54,25 +54,23 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/* Brief default interrupt handlers for core IRQs.*/
-
-
+void gfx_mono_print_scroll(const char* format, ...);
 
 bool my_SERCOM1_USART_Write(void *buffer, const size_t size) {
     uint8_t *pu8Data = (uint8_t*) buffer;
     uint32_t u32Index = 0U;
 
-    /* Blocks while buffer is being transferred */
     while (u32Index < size) {
-        /* Check if USART is ready for new data */
         while ((SERCOM1_REGS->USART_INT.SERCOM_INTFLAG & (uint8_t) SERCOM_USART_INT_INTFLAG_DRE_Msk) == 0U) {
-            /* Do nothing */
         }
         SERCOM1_REGS->USART_INT.SERCOM_DATA = pu8Data[u32Index];
-        /* Increment index */
         u32Index++;
     }
+        while ((SERCOM1_REGS->USART_INT.SERCOM_INTFLAG & (uint8_t) SERCOM_USART_INT_INTFLAG_DRE_Msk) == 0U) {
+        }    
 }
+
+/* Brief default interrupt handlers for core IRQs.*/
 
 void __attribute__((noreturn)) NonMaskableInt_Handler(void) {
 #if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
@@ -83,15 +81,26 @@ void __attribute__((noreturn)) NonMaskableInt_Handler(void) {
 }
 
 void __attribute__((noreturn)) HardFault_Handler(void) {
-#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
-    __builtin_software_breakpoint();
-#endif
-    char eBuff[200];
-    sprintf(eBuff, "\n\rEXCEPTION: Hard Fault\n\r");
-    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
-    while (true) {
-    }
+    __asm volatile (
+            "   tst    LR, #4           \n"
+            "   ite    EQ               \n"
+            "   mrseq  R0, MSP          \n"
+            "   mrsne  R0, PSP          \n"
+            "   b      HardFaultHandler  \n"
+            );
+    while (1);
 }
+
+
+//void __attribute__((noreturn)) HardFault_Handler(void)
+//{
+//#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
+//   __builtin_software_breakpoint();
+//#endif
+//   while (true)
+//   {
+//   }
+//}
 
 void __attribute__((noreturn)) DebugMonitor_Handler(void) {
 #if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
@@ -105,34 +114,123 @@ void __attribute__((noreturn)) MemoryManagement_Handler(void) {
 #if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
     __builtin_software_breakpoint();
 #endif
-    char eBuff[200];
-    sprintf(eBuff, "\n\rEXCEPTION: Memory Management\n\r");
-    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
     while (true) {
     }
 }
 
 void __attribute__((noreturn)) BusFault_Handler(void) {
-#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
-    __builtin_software_breakpoint();
-#endif
-    char eBuff[200];
-    sprintf(eBuff, "\n\rEXCEPTION: Bus Fault\n\r");
-    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
-    while (true) {
-    }
+    __asm volatile (
+            "   tst    LR, #4           \n"
+            "   ite    EQ               \n"
+            "   mrseq  R0, MSP          \n"
+            "   mrsne  R0, PSP          \n"
+            "   b      BusFaultHandler  \n"
+            );
+    while (1);
 }
+
+//void __attribute__((noreturn)) BusFault_Handler(void)
+//{
+//#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
+//   __builtin_software_breakpoint();
+//#endif
+//   while (true)
+//   {
+//   }
+//}
 
 void __attribute__((noreturn)) UsageFault_Handler(void) {
 #if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
     __builtin_software_breakpoint();
 #endif
-    char eBuff[200];
-    sprintf(eBuff, "\n\rEXCEPTION: Usage Fault\n\r");
-    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
     while (true) {
     }
 }
+
+
+#define SYSHND_CTRL  (*(volatile unsigned int*)  (0xE000ED24u))  // System Handler Control and State Register
+#define NVIC_MFSR    (*(volatile unsigned char*) (0xE000ED28u))  // Memory Management Fault Status Register
+#define NVIC_BFSR    (*(volatile unsigned char*) (0xE000ED29u))  // Bus Fault Status Register
+#define NVIC_UFSR    (*(volatile unsigned short*)(0xE000ED2Au))  // Usage Fault Status Register
+#define NVIC_HFSR    (*(volatile unsigned int*)  (0xE000ED2Cu))  // Hard Fault Status Register
+#define NVIC_DFSR    (*(volatile unsigned int*)  (0xE000ED30u))  // Debug Fault Status Register
+#define NVIC_BFAR    (*(volatile unsigned int*)  (0xE000ED38u))  // Bus Fault Manage Address Register
+#define NVIC_AFSR    (*(volatile unsigned int*)  (0xE000ED3Cu))  // Auxiliary Fault Status Register
+
+#define REG_R0  0
+#define REG_R1  1
+#define REG_R2  2
+#define REG_R3  3
+#define REG_R12 4
+#define REG_LR  5
+#define REG_PC  6
+#define REG_PSR 7
+
+void BusFaultHandler(unsigned int* pStack) {
+
+    char eBuff[200];
+    sprintf(eBuff, "\n\rEXCEPTION: Bus Fault\n\r");
+    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
+
+    sprintf(eBuff, "\n\rR0=%08X R1=%08X R2=%08X R3=%08X\n\r",
+            pStack[REG_R0],
+            pStack[REG_R1],
+            pStack[REG_R2],
+            pStack[REG_R3]);
+    
+    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
+
+    sprintf(eBuff, "\n\rR12=%08X LR=%08X PC=%08X PSR=%08X\n\r",
+            pStack[REG_R12],
+            pStack[REG_LR],
+            pStack[REG_PC],
+            pStack[REG_PSR]);
+
+    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
+
+    gfx_mono_print_scroll("BusFault:LR,PC,R0-R3");
+    gfx_mono_print_scroll("%08X %08X", pStack[REG_LR], pStack[REG_PC]);
+    gfx_mono_print_scroll("%08X %08X", pStack[REG_R0], pStack[REG_R1]);
+    gfx_mono_print_scroll("%08X %08X", pStack[REG_R2], pStack[REG_R3]);
+
+    while (true) {
+    }
+
+}
+
+void HardFaultHandler(unsigned int* pStack) {
+
+    char eBuff[200];
+    sprintf(eBuff, "\n\rEXCEPTION: Hard Fault\n\r");
+    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
+
+    sprintf(eBuff, "\n\rR0=%08X R1=%08X R2=%08X R3=%08X\n\r",
+            pStack[REG_R0],
+            pStack[REG_R1],
+            pStack[REG_R2],
+            pStack[REG_R3]);
+
+    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
+
+    sprintf(eBuff, "\n\rR12=%08X LR=%08X PC=%08X PSR=%08X\n\r",
+            pStack[REG_R12],
+            pStack[REG_LR],
+            pStack[REG_PC],
+            pStack[REG_PSR]);
+
+    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
+
+    gfx_mono_print_scroll("HrdFault:LR,PC,R0-R3");
+    gfx_mono_print_scroll("%08X %08X", pStack[REG_LR], pStack[REG_PC]);
+    gfx_mono_print_scroll("%08X %08X", pStack[REG_R0], pStack[REG_R1]);
+    gfx_mono_print_scroll("%08X %08X", pStack[REG_R2], pStack[REG_R3]);
+
+    while (true) {
+    }
+
+}
+
+
 /*******************************************************************************
  End of File
  */
