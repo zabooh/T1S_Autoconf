@@ -140,12 +140,23 @@ void __attribute__((noreturn)) BusFault_Handler(void) {
 //}
 
 void __attribute__((noreturn)) UsageFault_Handler(void) {
-#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
-    __builtin_software_breakpoint();
-#endif
-    while (true) {
-    }
+    __asm volatile (
+            "   tst    LR, #4           \n"
+            "   ite    EQ               \n"
+            "   mrseq  R0, MSP          \n"
+            "   mrsne  R0, PSP          \n"
+            "   b      UsageFaultHandler  \n"
+            );
+    while (1);
 }
+
+//void __attribute__((noreturn)) UsageFault_Handler(void) {
+//#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
+//    __builtin_software_breakpoint();
+//#endif
+//    while (true) {
+//    }
+//}
 
 
 #define SYSHND_CTRL  (*(volatile unsigned int*)  (0xE000ED24u))  // System Handler Control and State Register
@@ -169,7 +180,7 @@ void __attribute__((noreturn)) UsageFault_Handler(void) {
 void BusFaultHandler(unsigned int* pStack) {
 
     char eBuff[200];
-    sprintf(eBuff, "\n\rEXCEPTION: Bus Fault\n\r");
+    sprintf(eBuff, "\n\rEXCEPTION: Bus Fault %01X\n\r", NVIC_BFSR);
     my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
 
     sprintf(eBuff, "\n\rR0=%08X R1=%08X R2=%08X R3=%08X\n\r",
@@ -193,6 +204,8 @@ void BusFaultHandler(unsigned int* pStack) {
     gfx_mono_print_scroll("%08X %08X", pStack[REG_R0], pStack[REG_R1]);
     gfx_mono_print_scroll("%08X %08X", pStack[REG_R2], pStack[REG_R3]);
 
+    // NVIC_SystemReset();
+    
     while (true) {
     }
 
@@ -201,7 +214,7 @@ void BusFaultHandler(unsigned int* pStack) {
 void HardFaultHandler(unsigned int* pStack) {
 
     char eBuff[200];
-    sprintf(eBuff, "\n\rEXCEPTION: Hard Fault\n\r");
+    sprintf(eBuff, "\n\rEXCEPTION: Hard Fault %01x\n\r", NVIC_HFSR);
     my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
 
     sprintf(eBuff, "\n\rR0=%08X R1=%08X R2=%08X R3=%08X\n\r",
@@ -225,12 +238,46 @@ void HardFaultHandler(unsigned int* pStack) {
     gfx_mono_print_scroll("%08X %08X", pStack[REG_R0], pStack[REG_R1]);
     gfx_mono_print_scroll("%08X %08X", pStack[REG_R2], pStack[REG_R3]);
 
+    // NVIC_SystemReset();();    
+    
     while (true) {
     }
 
 }
 
+void UsageFaultHandler(unsigned int* pStack) {
 
+    char eBuff[200];
+    sprintf(eBuff, "\n\rEXCEPTION: Usage Fault %01X\n\r", NVIC_UFSR);
+    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
+
+    sprintf(eBuff, "\n\rR0=%08X R1=%08X R2=%08X R3=%08X\n\r",
+            pStack[REG_R0],
+            pStack[REG_R1],
+            pStack[REG_R2],
+            pStack[REG_R3]);
+    
+    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
+
+    sprintf(eBuff, "\n\rR12=%08X LR=%08X PC=%08X PSR=%08X\n\r",
+            pStack[REG_R12],
+            pStack[REG_LR],
+            pStack[REG_PC],
+            pStack[REG_PSR]);
+
+    my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
+
+    gfx_mono_print_scroll("UsgFault:LR,PC,R0-R3");
+    gfx_mono_print_scroll("%08X %08X", pStack[REG_LR], pStack[REG_PC]);
+    gfx_mono_print_scroll("%08X %08X", pStack[REG_R0], pStack[REG_R1]);
+    gfx_mono_print_scroll("%08X %08X", pStack[REG_R2], pStack[REG_R3]);
+
+    // NVIC_SystemReset();();
+    
+    while (true) {
+    }
+
+}
 /*******************************************************************************
  End of File
  */

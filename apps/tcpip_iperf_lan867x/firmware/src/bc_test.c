@@ -390,7 +390,8 @@ void BC_TEST_Tasks(void) {
 
                 TCPIP_Helper_MACAddressToString(&auto_conf_msg_receive.mac, mac_str, 18);
                 BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Correct Random packet from %d - %s => %0x8\n\r", auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);
-
+                BC_TEST_DEBUG_PRINT("BC_TEST: Tick Received: %d\n\r",auto_conf_msg_receive.counter_100ms);
+                
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
                 bc_test.tick_100ms = auto_conf_msg_receive.counter_100ms;
                 bc_test.led_state = auto_conf_msg_receive.led_state;
@@ -521,7 +522,7 @@ void BC_TEST_Tasks(void) {
                 }
 
                 BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Correct Random packet from %d - %s => %08x\n\r", auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);
-
+                BC_TEST_DEBUG_PRINT("BC_TEST: Tick Received: %d\n\r",auto_conf_msg_receive.counter_100ms);
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
                 bc_test.tick_100ms = auto_conf_msg_receive.counter_100ms;
                 bc_test.led_state = auto_conf_msg_receive.led_state;
@@ -623,7 +624,8 @@ void BC_TEST_Tasks(void) {
 
                 auto_conf_msg_transmit.counter_100ms = bc_test.tick_100ms;
                 auto_conf_msg_transmit.led_state = bc_test.led_state;
-
+                
+                BC_TEST_DEBUG_PRINT("BC_TEST: Tick Send: %d\n\r",auto_conf_msg_transmit.counter_100ms);
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
 
@@ -707,6 +709,27 @@ void BC_TEST_TimerCallback(uintptr_t context) {
 
 }
 
+void convertToTime(uint32_t counter, uint32_t *hours, uint32_t *minutes, uint32_t *seconds, uint32_t *hundredths) {
+    uint32_t totalMilliseconds = counter * 100;
+
+    *hundredths = totalMilliseconds / 100;
+    *hundredths = *hundredths % 10;
+    
+    *seconds = totalMilliseconds / 1000;
+    *seconds = *seconds % 60;
+           
+    *minutes = totalMilliseconds / (60*1000);
+    *minutes = *minutes % 60;
+    *minutes = *minutes % 60;
+    
+    *hours = totalMilliseconds;
+
+    *hours = totalMilliseconds / (60*60*1000);
+    *hours = *hours % (60*60);
+    *hours = *hours % 60;
+
+}
+
 char *app_states_str[] = {
     "BC_TEST_STATE_INIT_START",
     "BC_TEST_STATE_INIT_TCPIP_WAIT_START",
@@ -726,10 +749,19 @@ char *app_states_str[] = {
 
 void BC_TEST_Print_State_Change_And_Trigger_Watchdog(void) {
     static BC_TEST_STATES states = BC_TEST_VOID;
-    if (states != bc_test.state) {
+    uint32_t hours;
+    uint32_t minutes;
+    uint32_t seconds;
+    uint32_t ms_100;
+    char time_str[30];
+
+if (states != bc_test.state) {
         states = bc_test.state;
         bc_test.watchdog = TIMEOUT_WATCHDOG;
-        BC_TEST_DEBUG_PRINT("%s\n\r", app_states_str[states]);
+        convertToTime(bc_test.tick_100ms, &hours, &minutes, &seconds, &ms_100);
+        sprintf(time_str, "%02d:%02d:%02d:%01d", hours, minutes, seconds, ms_100);
+        BC_TEST_DEBUG_PRINT("%s %s\n\r", time_str, app_states_str[states]);        
+       // BC_TEST_DEBUG_PRINT("%s\n\r", app_states_str[states]);
     }
 }
 
@@ -803,7 +835,7 @@ void BS_TEST_Check_BC_COM_For_Idle(void) {
 }
 
 static void my_ex(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
-    volatile uint32_t *ptr=0xFFFFFFFF;
+    volatile uint32_t *ptr=(volatile uint32_t *)0xFFFFFFFF;
     *ptr=0xAFFE;
     asm("nop");
     asm("nop");
