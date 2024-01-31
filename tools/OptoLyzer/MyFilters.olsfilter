@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<OLSFilter>
+  <Filter Name="No Spy/Beacon" Description="" Id="f007ce57-a1ee-4183-95f9-ad95f28e41d3">
+    <Filter _object="{5B824C3F-54CC-48DC-9E96-4EB9710026EC}" _version="1.0" _class="K2L.Viewer.Filter.AndFilter">
+      <Filter _object="{E994B7B6-E2C1-41CD-9DFD-87216956704F}" _version="1.0" _class="K2L.Viewer.Filter.ComparisonFilter" Comparison="NotEqual">
+        <Source _xml="K2L.Bus.Data.DataValueId, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+          <DataValueId Scripting="true">
+            <Protocols>
+              <Protocol>Ethernet</Protocol>
+            </Protocols>
+            <MessageName>EthernetT1SFullSpyMessage</MessageName>
+            <Path>
+              <Property>MessageType</Property>
+            </Path>
+          </DataValueId>
+        </Source>
+        <Value _object="{083B5D01-D55C-48F0-B3FA-48388521ACF9}" _version="1.0" _class="K2L.Viewer.Base.SymbolicValue" Id="Ethernet T1S Full Spy Message">
+          <Value _xml="K2L.Bus.MessageType, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+            <MessageType>EthernetT1SFullSpyMessage</MessageType>
+          </Value>
+        </Value>
+      </Filter>
+      <Filter _object="{E994B7B6-E2C1-41CD-9DFD-87216956704F}" _version="1.0" _class="K2L.Viewer.Filter.ComparisonFilter" Comparison="NotEqual">
+        <Source _xml="K2L.Bus.Data.DataValueId, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+          <DataValueId Scripting="true">
+            <Protocols>
+              <Protocol>Ethernet</Protocol>
+            </Protocols>
+            <MessageName>EthernetT1SFullSpyMessage</MessageName>
+            <Path>
+              <Property>MessageType</Property>
+            </Path>
+          </DataValueId>
+        </Source>
+        <Value _object="{083B5D01-D55C-48F0-B3FA-48388521ACF9}" _version="1.0" _class="K2L.Viewer.Base.SymbolicValue" Id="Ethernet Beacon">
+          <Value _xml="K2L.Bus.MessageType, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+            <MessageType>BeaconMessage</MessageType>
+          </Value>
+        </Value>
+      </Filter>
+    </Filter>
+    <Style _xml="K2L.Viewer.Filter.FilterConditionStyle, K2L.Viewer.Framework, Version=1.8.0.16, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+      <FilterConditionStyle xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Active>true</Active>
+        <Foreground>Black</Foreground>
+        <Background>Transparent</Background>
+        <FontStyle>Normal</FontStyle>
+        <FontWeight>Normal</FontWeight>
+      </FilterConditionStyle>
+    </Style>
+  </Filter>
+  <Filter Name="No Spy/Beacon/TraceError" Description="" Id="5881e66d-2809-4c6e-8571-40a81ff91eb1">
+    <Filter _object="{5B824C3F-54CC-48DC-9E96-4EB9710026EC}" _version="1.0" _class="K2L.Viewer.Filter.AndFilter">
+      <Filter _object="{E994B7B6-E2C1-41CD-9DFD-87216956704F}" _version="1.0" _class="K2L.Viewer.Filter.ComparisonFilter" Comparison="NotEqual">
+        <Source _xml="K2L.Bus.Data.DataValueId, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+          <DataValueId Scripting="true">
+            <Protocols>
+              <Protocol>Ethernet</Protocol>
+            </Protocols>
+            <MessageName>EthernetT1SFullSpyMessage</MessageName>
+            <Path>
+              <Property>MessageType</Property>
+            </Path>
+          </DataValueId>
+        </Source>
+        <Value _object="{083B5D01-D55C-48F0-B3FA-48388521ACF9}" _version="1.0" _class="K2L.Viewer.Base.SymbolicValue" Id="Ethernet T1S Full Spy Message">
+          <Value _xml="K2L.Bus.MessageType, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+            <MessageType>EthernetT1SFullSpyMessage</MessageType>
+          </Value>
+        </Value>
+      </Filter>
+      <Filter _object="{E994B7B6-E2C1-41CD-9DFD-87216956704F}" _version="1.0" _class="K2L.Viewer.Filter.ComparisonFilter" Comparison="NotEqual">
+        <Source _xml="K2L.Bus.Data.DataValueId, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+          <DataValueId Scripting="true">
+            <Protocols>
+              <Protocol>Ethernet</Protocol>
+            </Protocols>
+            <MessageName>EthernetT1SFullSpyMessage</MessageName>
+            <Path>
+              <Property>MessageType</Property>
+            </Path>
+          </DataValueId>
+        </Source>
+        <Value _object="{083B5D01-D55C-48F0-B3FA-48388521ACF9}" _version="1.0" _class="K2L.Viewer.Base.SymbolicValue" Id="Ethernet Beacon">
+          <Value _xml="K2L.Bus.MessageType, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+            <MessageType>BeaconMessage</MessageType>
+          </Value>
+        </Value>
+      </Filter>
+      <Filter _object="{E994B7B6-E2C1-41CD-9DFD-87216956704F}" _version="1.0" _class="K2L.Viewer.Filter.ComparisonFilter" Comparison="NotEqual">
+        <Source _xml="K2L.Bus.Data.DataValueId, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+          <DataValueId Scripting="true">
+            <Protocols>
+              <Protocol>Trace</Protocol>
+            </Protocols>
+            <MessageName>ErrorMessage</MessageName>
+            <Path>
+              <Property>MessageType</Property>
+            </Path>
+          </DataValueId>
+        </Source>
+        <Value _object="{083B5D01-D55C-48F0-B3FA-48388521ACF9}" _version="1.0" _class="K2L.Viewer.Base.SymbolicValue" Id="Trace Error">
+          <Value _xml="K2L.Bus.MessageType, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+            <MessageType>Error</MessageType>
+          </Value>
+        </Value>
+      </Filter>
+    </Filter>
+    <Style _xml="K2L.Viewer.Filter.FilterConditionStyle, K2L.Viewer.Framework, Version=1.8.0.16, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+      <FilterConditionStyle xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Active>false</Active>
+        <Foreground>Black</Foreground>
+        <Background>Transparent</Background>
+        <FontStyle>Normal</FontStyle>
+        <FontWeight>Normal</FontWeight>
+      </FilterConditionStyle>
+    </Style>
+  </Filter>
+  <Filter Name="No Spy Msg" Description="" Id="43963072-8691-42a8-96bc-ae4225d5028a">
+    <Filter _object="{E994B7B6-E2C1-41CD-9DFD-87216956704F}" _version="1.0" _class="K2L.Viewer.Filter.ComparisonFilter" Comparison="NotEqual">
+      <Source _xml="K2L.Bus.Data.DataValueId, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+        <DataValueId Scripting="true">
+          <Protocols>
+            <Protocol>Ethernet</Protocol>
+          </Protocols>
+          <MessageName>EthernetT1SFullSpyMessage</MessageName>
+          <Path>
+            <Property>MessageType</Property>
+          </Path>
+        </DataValueId>
+      </Source>
+      <Value _object="{083B5D01-D55C-48F0-B3FA-48388521ACF9}" _version="1.0" _class="K2L.Viewer.Base.SymbolicValue" Id="Ethernet T1S Full Spy Message">
+        <Value _xml="K2L.Bus.MessageType, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+          <MessageType>EthernetT1SFullSpyMessage</MessageType>
+        </Value>
+      </Value>
+    </Filter>
+    <Style _xml="K2L.Viewer.Filter.FilterConditionStyle, K2L.Viewer.Framework, Version=1.8.0.16, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+      <FilterConditionStyle xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Active>false</Active>
+        <Foreground>Black</Foreground>
+        <Background>Transparent</Background>
+        <FontStyle>Normal</FontStyle>
+        <FontWeight>Normal</FontWeight>
+      </FilterConditionStyle>
+    </Style>
+  </Filter>
+  <Filter Name="LInk Layer Packet" Description="" Id="5cead2f0-c614-4845-a426-826a15ff6a6e">
+    <Filter _object="{E994B7B6-E2C1-41CD-9DFD-87216956704F}" _version="1.0" _class="K2L.Viewer.Filter.ComparisonFilter" Comparison="Equal">
+      <Source _xml="K2L.Bus.Data.DataValueId, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+        <DataValueId Scripting="true">
+          <Protocols />
+          <MessageName>LinkLayerMessage</MessageName>
+          <Path>
+            <Property>MessageType</Property>
+          </Path>
+        </DataValueId>
+      </Source>
+      <Value _object="{083B5D01-D55C-48F0-B3FA-48388521ACF9}" _version="1.0" _class="K2L.Viewer.Base.SymbolicValue" Id="Link Layer Packet">
+        <Value _xml="K2L.Bus.MessageType, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+          <MessageType>LinkLayerMessage</MessageType>
+        </Value>
+      </Value>
+    </Filter>
+    <Style _xml="K2L.Viewer.Filter.FilterConditionStyle, K2L.Viewer.Framework, Version=1.8.0.16, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+      <FilterConditionStyle xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Active>true</Active>
+        <Foreground>Black</Foreground>
+        <Background>Transparent</Background>
+        <FontStyle>Normal</FontStyle>
+        <FontWeight>Normal</FontWeight>
+      </FilterConditionStyle>
+    </Style>
+  </Filter>
+  <Filter Name="Trace Error" Description="" Id="6438dffc-cc6d-4127-baeb-cf9f981360cc">
+    <Filter _object="{E994B7B6-E2C1-41CD-9DFD-87216956704F}" _version="1.0" _class="K2L.Viewer.Filter.ComparisonFilter" Comparison="Equal">
+      <Source _xml="K2L.Bus.Data.DataValueId, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+        <DataValueId Scripting="true">
+          <Protocols>
+            <Protocol>Trace</Protocol>
+          </Protocols>
+          <MessageName>ErrorMessage</MessageName>
+          <Path>
+            <Property>MessageType</Property>
+          </Path>
+        </DataValueId>
+      </Source>
+      <Value _object="{083B5D01-D55C-48F0-B3FA-48388521ACF9}" _version="1.0" _class="K2L.Viewer.Base.SymbolicValue" Id="Trace Error">
+        <Value _xml="K2L.Bus.MessageType, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+          <MessageType>Error</MessageType>
+        </Value>
+      </Value>
+    </Filter>
+    <Style _xml="K2L.Viewer.Filter.FilterConditionStyle, K2L.Viewer.Framework, Version=1.8.0.16, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+      <FilterConditionStyle xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Active>false</Active>
+        <Foreground>Black</Foreground>
+        <Background>Transparent</Background>
+        <FontStyle>Normal</FontStyle>
+        <FontWeight>Normal</FontWeight>
+      </FilterConditionStyle>
+    </Style>
+  </Filter>
+  <Filter Name="Beacon" Description="" Id="188c9852-4639-4bd3-9c83-099a710b6130">
+    <Filter _object="{E994B7B6-E2C1-41CD-9DFD-87216956704F}" _version="1.0" _class="K2L.Viewer.Filter.ComparisonFilter" Comparison="Equal">
+      <Source _xml="K2L.Bus.Data.DataValueId, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+        <DataValueId Scripting="true">
+          <Protocols>
+            <Protocol>Ethernet</Protocol>
+          </Protocols>
+          <MessageName>EthernetT1SFullSpyMessage</MessageName>
+          <Path>
+            <Property>MessageType</Property>
+          </Path>
+        </DataValueId>
+      </Source>
+      <Value _object="{083B5D01-D55C-48F0-B3FA-48388521ACF9}" _version="1.0" _class="K2L.Viewer.Base.SymbolicValue" Id="Ethernet Beacon">
+        <Value _xml="K2L.Bus.MessageType, K2L.Bus, Version=1.8.0.11, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+          <MessageType>BeaconMessage</MessageType>
+        </Value>
+      </Value>
+    </Filter>
+    <Style _xml="K2L.Viewer.Filter.FilterConditionStyle, K2L.Viewer.Framework, Version=1.8.0.16, Culture=neutral, PublicKeyToken=9e2273b6d4830250">
+      <FilterConditionStyle xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Active>false</Active>
+        <Foreground>Black</Foreground>
+        <Background>Transparent</Background>
+        <FontStyle>Normal</FontStyle>
+        <FontWeight>Normal</FontWeight>
+      </FilterConditionStyle>
+    </Style>
+  </Filter>
+</OLSFilter>
