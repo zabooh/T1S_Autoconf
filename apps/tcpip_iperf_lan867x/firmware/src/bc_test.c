@@ -325,7 +325,7 @@ void BC_TEST_Tasks(void) {
                 BC_COM_Initialize_Runtime();
 
                 SYS_CONSOLE_PRINT("=============================================\n\r");
-                SYS_CONSOLE_PRINT("Build Time %s %s\n\r", __DATE__, __TIME__);
+                SYS_CONSOLE_PRINT("Build Time %s %s Tag:v3.4.0\n\r", __DATE__, __TIME__);
                 gfx_mono_print_scroll("Start System");
 
                 bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
