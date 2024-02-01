@@ -268,6 +268,9 @@ void BC_TEST_Tasks(void) {
         BC_TEST_DEBUG_PRINT("BC_TEST: Soft-Watchdog Triggered\r\n");
         BC_COM_DeInitialize_Runtime();
         BC_COM_Initialize_Runtime();
+        if(bc_test.state==BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST){
+            SERCOM1_USART_Virtual_Receive("iperfk\n");
+        }
         bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
         BC_TEST_DEBUG_PRINT("BC_TEST: Watchdog Triggered Restart in %d Ticks\n\r", bc_test.timeout);
         SYS_CONSOLE_PRINT("Restart Member Init Request\n\r");
@@ -390,7 +393,6 @@ void BC_TEST_Tasks(void) {
 
                 TCPIP_Helper_MACAddressToString(&auto_conf_msg_receive.mac, mac_str, 18);
                 BC_TEST_DEBUG_PRINT("BC_TEST: Member Init Correct Random packet from %d - %s => %0x8\n\r", auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);
-                BC_TEST_DEBUG_PRINT("BC_TEST: Tick Received: %d\n\r",auto_conf_msg_receive.counter_100ms);
                 
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
                 bc_test.tick_100ms = auto_conf_msg_receive.counter_100ms;
@@ -462,6 +464,7 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_NetUp();
                 netH = TCPIP_STACK_NetHandleGet("eth0");
                 while (TCPIP_STACK_NetIsReady(netH) == false);
+                SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.timeout = TIMEOUT_COORDINATOR;
                 bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
@@ -522,7 +525,6 @@ void BC_TEST_Tasks(void) {
                 }
 
                 BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Correct Random packet from %d - %s => %08x\n\r", auto_conf_msg_receive.origin, mac_str, auto_conf_msg_receive.random);
-                BC_TEST_DEBUG_PRINT("BC_TEST: Tick Received: %d\n\r",auto_conf_msg_receive.counter_100ms);
                 SYS_TIME_TimerStop(bc_test.timer_client_hdl);
                 bc_test.tick_100ms = auto_conf_msg_receive.counter_100ms;
                 bc_test.led_state = auto_conf_msg_receive.led_state;
@@ -625,7 +627,6 @@ void BC_TEST_Tasks(void) {
                 auto_conf_msg_transmit.counter_100ms = bc_test.tick_100ms;
                 auto_conf_msg_transmit.led_state = bc_test.led_state;
                 
-                BC_TEST_DEBUG_PRINT("BC_TEST: Tick Send: %d\n\r",auto_conf_msg_transmit.counter_100ms);
                 BC_COM_send((uint8_t*) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
                 BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
 
@@ -759,7 +760,7 @@ if (states != bc_test.state) {
         states = bc_test.state;
         bc_test.watchdog = TIMEOUT_WATCHDOG;
         convertToTime(bc_test.tick_100ms, &hours, &minutes, &seconds, &ms_100);
-        sprintf(time_str, "%02d:%02d:%02d:%01d", hours, minutes, seconds, ms_100);
+        sprintf(time_str, "%02d:%02d:%02d.%01d", hours, minutes, seconds, ms_100);
         BC_TEST_DEBUG_PRINT("%s %s\n\r", time_str, app_states_str[states]);        
        // BC_TEST_DEBUG_PRINT("%s\n\r", app_states_str[states]);
     }
