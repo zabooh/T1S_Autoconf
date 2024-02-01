@@ -3,7 +3,7 @@
   <Views>
     <View Region="WorkspaceRegion" Uri="WorkspaceTreeView" ItemIndex="3" />
     <View Region="DocumentRegion" Uri="FilterFileView?ViewId=0&amp;File=MyFilters.olsfilter" ItemIndex="6" />
-    <View Region="DocumentRegion" Uri="SplitView?ViewId=0&amp;File=online_15.27.22.olslog" ItemIndex="11" />
+    <View Region="ToolRegion" Uri="LogView" ItemIndex="8" />
   </Views>
   <ViewModels>
     <ViewModel>
@@ -18,8 +18,8 @@
     </ViewModel>
   </ViewModels>
   <Tabs>
-    <Tab SelectedTabIndex="0" ItemIndex="5" ItemName="DocumentRegionGroup" RibbonSelectedPageName="Trace" CategoryName="Split" ActiveDocument="K2L.Viewer.UI.SplitView.SplitView" />
-    <Tab SelectedTabIndex="0" ItemIndex="10" ItemName="dockItem7" RibbonSelectedPageName="Trace" CategoryName="Split" ActiveDocument="K2L.Viewer.UI.SplitView.SplitView" />
+    <Tab SelectedTabIndex="0" ItemIndex="5" ItemName="DocumentRegionGroup" RibbonSelectedPageName="Home" CategoryName="Split" />
+    <Tab SelectedTabIndex="-1" ItemIndex="10" ItemName="dockItem7" RibbonSelectedPageName="Home" CategoryName="Split" />
   </Tabs>
   <DockLayoutManager>
     <XtraSerializer version="1.0" application="DockLayoutManager">
@@ -30,7 +30,7 @@
         <property name="EnableWin32Compatibility">true</property>
         <property name="FloatingDocumentContainer">DocumentHost</property>
         <property name="FloatingMode">Desktop</property>
-        <property name="Items" iskey="true" value="11">
+        <property name="Items" iskey="true" value="12">
           <property name="Item1" isnull="true" iskey="true">
             <property name="SerializableSelectedTabPageIndex">-1</property>
             <property name="SerializableDockSituation" iskey="true" value="0" />
@@ -102,7 +102,7 @@
             <property name="MDISize">NaN,NaN</property>
             <property name="SerializableFloatingBounds">0,0,0,0</property>
             <property name="SerializableFloatingOffset">0,0</property>
-            <property name="IsActive">false</property>
+            <property name="IsActive">true</property>
             <property name="SerializableDockSituation" iskey="true" value="0" />
             <property name="SerializationInfo" isnull="true" iskey="true" />
             <property name="ToolTip" type="System.String">C:\work\T1S_Autoconf\work\T1S_Autoconf\tools\OptoLyzer\MyFilters.olsfilter</property>
@@ -128,76 +128,110 @@
             <property name="Name">ToolRegionGroup</property>
           </property>
           <property name="Item8" isnull="true" iskey="true">
-            <property name="FloatLocation">220,-3.20000000000002</property>
-            <property name="SerializableZOrder">300023</property>
-            <property name="ShouldRestoreOnActivate">false</property>
-            <property name="SerializableSelectedTabPageIndex">-1</property>
-            <property name="AllowMinimize">false</property>
-            <property name="FloatSize">1320,672.8</property>
-            <property name="SerializableDockSituation" iskey="true" value="0" />
-            <property name="SerializationInfo" isnull="true" iskey="true">
-              <property name="FloatOffsetBeforeClose">0,0</property>
-              <property name="FloatState">Normal</property>
-              <property name="PreviousFloatState">Maximized</property>
-              <property name="WindowRestoreBounds">220,-3.19999999999999,1320,672.8</property>
-              <property name="IsUserDefined">false</property>
-            </property>
-            <property name="TypeName">FloatGroup</property>
-            <property name="ParentName" isnull="true" />
-            <property name="ParentCollectionName">$FloatGroups</property>
-            <property name="DocumentPanel.RestoreBounds" OwnerType="DevExpress.Xpf.Docking.DocumentPanel" DependencyPropertyType="System.Windows.Rect">0,0,0,0</property>
-            <property name="Name">dockItem5</property>
-            <property name="Visibility">Visible</property>
-          </property>
-          <property name="Item9" isnull="true" iskey="true">
-            <property name="SerializableSelectedTabPageIndex">-1</property>
-            <property name="AllowMinimize">false</property>
-            <property name="SerializableDockSituation" iskey="true" value="0" />
-            <property name="SerializationInfo" isnull="true" iskey="true">
-              <property name="IsUserDefined">false</property>
-            </property>
-            <property name="TypeName">LayoutGroup</property>
-            <property name="ParentName">dockItem5</property>
-            <property name="ParentCollectionName" isnull="true" />
-            <property name="Name">dockItem6</property>
-          </property>
-          <property name="Item10" isnull="true" iskey="true">
-            <property name="SerializableSelectedTabPageIndex">0</property>
-            <property name="ItemHeight">*</property>
-            <property name="ItemWidth">*</property>
-            <property name="SerializableDockSituation" iskey="true" value="0" />
-            <property name="SerializationInfo" isnull="true" iskey="true">
-              <property name="IsUserDefined">false</property>
-            </property>
-            <property name="TypeName">DocumentGroup</property>
-            <property name="ParentName">dockItem6</property>
-            <property name="ParentCollectionName" isnull="true" />
-            <property name="Name">dockItem7</property>
-          </property>
-          <property name="Item11" isnull="true" iskey="true">
-            <property name="MDILocation">0,0</property>
-            <property name="MDISize">NaN,NaN</property>
             <property name="SerializableFloatingBounds">0,0,0,0</property>
             <property name="SerializableFloatingOffset">0,0</property>
-            <property name="IsActive">true</property>
-            <property name="SerializableDockSituation" iskey="true" value="1">
+            <property name="IsActive">false</property>
+            <property name="SerializableDockSituation" iskey="true" value="0" />
+            <property name="SerializationInfo" isnull="true" iskey="true" />
+            <property name="ToolTip" type="System.String">Display Information/Warnings/Errors reported from software components of the OptoLyzer Studio.</property>
+            <property name="TypeName">LayoutPanel</property>
+            <property name="ParentName">ToolRegionGroup</property>
+            <property name="ParentCollectionName" isnull="true" />
+            <property name="Name">dockItem9</property>
+            <property name="TabCaption" type="System.String">Errors &amp; Warnings</property>
+            <property name="Caption" type="System.String">Errors &amp; Warnings</property>
+          </property>
+          <property name="Item9" isnull="true" iskey="true">
+            <property name="MDILocation">0,0</property>
+            <property name="MDISize">NaN,NaN</property>
+            <property name="SerializableFloatingBounds">220,-3.20000000000002,1320,672.8</property>
+            <property name="SerializableFloatingOffset">0,159.2</property>
+            <property name="IsActive">false</property>
+            <property name="SerializableDockSituation" iskey="true" value="2">
               <property name="Item1" isnull="true" iskey="true">
                 <property name="DockState">Docked</property>
                 <property name="ParentName">DocumentRegionGroup</property>
                 <property name="OwnerName">dockItem8</property>
                 <property name="Index">1</property>
               </property>
+              <property name="Item2" isnull="true" iskey="true">
+                <property name="DockState">Floating</property>
+                <property name="ParentName">dockItem7</property>
+                <property name="OwnerName">dockItem8</property>
+                <property name="Index">0</property>
+              </property>
             </property>
             <property name="SerializationInfo" isnull="true" iskey="true" />
             <property name="ToolTip" type="System.String">C:\work\T1S_Autoconf\work\T1S_Autoconf\tools\OptoLyzer\online_15.27.22.olslog</property>
             <property name="TypeName">DocumentPanel</property>
-            <property name="ParentName">dockItem7</property>
-            <property name="ParentCollectionName" isnull="true" />
+            <property name="ParentName" isnull="true" />
+            <property name="ParentCollectionName">$ClosedPanels</property>
             <property name="DocumentGroup.Pinned" OwnerType="DevExpress.Xpf.Docking.DocumentGroup" DependencyPropertyType="System.Boolean">false</property>
             <property name="Name">dockItem8</property>
             <property name="SerializableMDIBounds">0,0,NaN,NaN</property>
-            <property name="TabCaption" type="K2L.Viewer.UI.PanelCaption.CaptionModel">~Xtra#NULL</property>
+            <property name="TabCaption" type="System.String">online_15.27.22.olslog</property>
             <property name="Caption" type="System.String">online_15.27.22.olslog</property>
+          </property>
+          <property name="Item10" isnull="true" iskey="true">
+            <property name="SerializableSelectedTabPageIndex">-1</property>
+            <property name="ItemHeight">*</property>
+            <property name="ItemWidth">*</property>
+            <property name="SerializableDockSituation" iskey="true" value="1">
+              <property name="Item1" isnull="true" iskey="true">
+                <property name="DockState">Floating</property>
+                <property name="ParentName">dockItem6</property>
+                <property name="OwnerName">dockItem7</property>
+                <property name="Index">0</property>
+              </property>
+            </property>
+            <property name="SerializationInfo" isnull="true" iskey="true">
+              <property name="IsUserDefined">false</property>
+            </property>
+            <property name="TypeName">DocumentGroup</property>
+            <property name="ParentName" isnull="true" />
+            <property name="ParentCollectionName">$DecomposedItems</property>
+            <property name="Name">dockItem7</property>
+          </property>
+          <property name="Item11" isnull="true" iskey="true">
+            <property name="SerializableSelectedTabPageIndex">-1</property>
+            <property name="AllowMinimize">false</property>
+            <property name="SerializableDockSituation" iskey="true" value="1">
+              <property name="Item1" isnull="true" iskey="true">
+                <property name="DockState">Floating</property>
+                <property name="ParentName">dockItem5</property>
+                <property name="OwnerName">dockItem6</property>
+                <property name="Index">0</property>
+              </property>
+            </property>
+            <property name="SerializationInfo" isnull="true" iskey="true">
+              <property name="IsUserDefined">false</property>
+            </property>
+            <property name="TypeName">LayoutGroup</property>
+            <property name="ParentName" isnull="true" />
+            <property name="ParentCollectionName">$DecomposedItems</property>
+            <property name="Name">dockItem6</property>
+          </property>
+          <property name="Item12" isnull="true" iskey="true">
+            <property name="FloatLocation">220,-3.20000000000002</property>
+            <property name="SerializableZOrder">0</property>
+            <property name="ShouldRestoreOnActivate">false</property>
+            <property name="SerializableSelectedTabPageIndex">-1</property>
+            <property name="AllowMinimize">false</property>
+            <property name="FloatSize">1320,672.8</property>
+            <property name="SerializableDockSituation" iskey="true" value="0" />
+            <property name="SerializationInfo" isnull="true" iskey="true">
+              <property name="FloatOffsetBeforeClose">0,159.2</property>
+              <property name="FloatState">Normal</property>
+              <property name="PreviousFloatState">Maximized</property>
+              <property name="WindowRestoreBounds">Empty</property>
+              <property name="IsUserDefined">false</property>
+            </property>
+            <property name="TypeName">FloatGroup</property>
+            <property name="ParentName" isnull="true" />
+            <property name="ParentCollectionName">$DecomposedItems</property>
+            <property name="DocumentPanel.RestoreBounds" OwnerType="DevExpress.Xpf.Docking.DocumentPanel" DependencyPropertyType="System.Windows.Rect">0,0,0,0</property>
+            <property name="Name">dockItem5</property>
+            <property name="Visibility">Visible</property>
           </property>
         </property>
         <property name="ManualClosedPanelsBarVisibility">false</property>

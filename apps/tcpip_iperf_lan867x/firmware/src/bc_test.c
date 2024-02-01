@@ -267,10 +267,7 @@ void BC_TEST_Tasks(void) {
         gfx_mono_print_scroll("Soft Watchdog Trg");
         BC_TEST_DEBUG_PRINT("BC_TEST: Soft-Watchdog Triggered\r\n");
         BC_COM_DeInitialize_Runtime();
-        BC_COM_Initialize_Runtime();
-        if(bc_test.state==BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST){
-            SERCOM1_USART_Virtual_Receive("iperfk\n");
-        }
+        BC_COM_Initialize_Runtime();     
         bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
         BC_TEST_DEBUG_PRINT("BC_TEST: Watchdog Triggered Restart in %d Ticks\n\r", bc_test.timeout);
         SYS_CONSOLE_PRINT("Restart Member Init Request\n\r");
@@ -348,6 +345,7 @@ void BC_TEST_Tasks(void) {
             }
             gfx_mono_print_scroll("Member Init Request");
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init\n\r");
+            SERCOM1_USART_Virtual_Receive("iperfk\n");
             BC_TEST_NetDown();
             BC_TEST_SetNodeID_and_MAXcount(1, bc_test_node_count);
             BC_TEST_NetUp();
@@ -577,7 +575,7 @@ void BC_TEST_Tasks(void) {
             }
             if (bc_test.timeout == 0) {
                 BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Timeout %s %d\n\r", __FILE__, __LINE__);
-                BC_COM_listen_stop();
+                BC_COM_listen_stop();                 
                 bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                 BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Restart as Member in %d Ticks\n\r", bc_test.timeout);
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
