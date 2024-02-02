@@ -166,7 +166,7 @@ void SYS_Tasks ( void )
     /* Maintain Device Drivers */
         xTaskCreate( _DRV_MIIM_Task,
         "DRV_MIIM_Tasks",
-        DRV_MIIM_RTOS_STACK_SIZE,
+        2048, //DRV_MIIM_RTOS_STACK_SIZE,
         (void*)NULL,
         DRV_MIIM_RTOS_TASK_PRIORITY,
         (TaskHandle_t*)NULL
@@ -200,7 +200,7 @@ void SYS_Tasks ( void )
     /* Create OS Thread for BC_COM_Tasks. */
     (void) xTaskCreate((TaskFunction_t) lBC_COM_Tasks,
                 "BC_COM_Tasks",
-                1024,
+                2048,
                 NULL,
                 1,
                 &xBC_COM_Tasks);
@@ -208,7 +208,7 @@ void SYS_Tasks ( void )
     /* Create OS Thread for BC_TEST_Tasks. */
     (void) xTaskCreate((TaskFunction_t) lBC_TEST_Tasks,
                 "BC_TEST_Tasks",
-                1024,
+                2048,
                 NULL,
                 1,
                 &xBC_TEST_Tasks);
@@ -228,7 +228,7 @@ void SYS_Tasks ( void )
 void SYS_Task_Start_TCP(void) {
     xTaskCreate(_TCPIP_STACK_Task,
             "TCPIP_STACK_Tasks",
-            TCPIP_RTOS_STACK_SIZE,
+            2048, //TCPIP_RTOS_STACK_SIZE,
             (void*) NULL,
             TCPIP_RTOS_PRIORITY,
             (TaskHandle_t*) NULL

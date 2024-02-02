@@ -32,7 +32,7 @@
 #include "config/FreeRTOS/definitions.h"
 
 
-#define __BC_TEST_DEBUG_PRINT 
+//#define __BC_TEST_DEBUG_PRINT 
 #ifdef __BC_TEST_DEBUG_PRINT
 #define BC_TEST_DEBUG_PRINT(fmt, ...)  SYS_CONSOLE_PRINT(fmt, ##__VA_ARGS__)
 #else
@@ -170,6 +170,7 @@ void BS_TEST_Check_BC_COM_For_Idle(void);
 
 void BS_TEST_CheckButtons(void);
 
+int32_t tick2_100ms;
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -270,7 +271,7 @@ void BC_TEST_Tasks(void) {
         BC_COM_Initialize_Runtime();     
         bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
         BC_TEST_DEBUG_PRINT("BC_TEST: Watchdog Triggered Restart in %d Ticks\n\r", bc_test.timeout);
-        SYS_CONSOLE_PRINT("Restart Member Init Request\n\r");
+        //SYS_CONSOLE_PRINT("Restart Member Init Request\n\r");
         bc_test.watchdog == TIMEOUT_WATCHDOG;
         bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
     }
@@ -345,7 +346,7 @@ void BC_TEST_Tasks(void) {
             }
             gfx_mono_print_scroll("Member Init Request");
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init\n\r");
-            SERCOM1_USART_Virtual_Receive("iperfk\n");
+            //SERCOM1_USART_Virtual_Receive("iperfk\n");
             BC_TEST_NetDown();
             BC_TEST_SetNodeID_and_MAXcount(1, bc_test_node_count);
             BC_TEST_NetUp();
@@ -422,7 +423,7 @@ void BC_TEST_Tasks(void) {
             
             TCPIP_Helper_IPAddressToString(&auto_conf_msg_receive.ip4, buff, 20);
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init new IP:%s\n\r", buff);
-            SYS_CONSOLE_PRINT("Set to Member with IP:%s\n\r", buff);
+            //SYS_CONSOLE_PRINT("Set to Member with IP:%s\n\r", buff);
             gfx_mono_print_scroll("New Member IP:");
             gfx_mono_print_scroll("%s", buff);
             bc_test.timeout_live_request = TIMEOUT_LIVE_REQUEST;
@@ -454,7 +455,7 @@ void BC_TEST_Tasks(void) {
             if (BC_COM_is_idle() == true) {
                 char buff[30];
                 sprintf(buff, "%d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
-                SYS_CONSOLE_PRINT("Set to Coordinator\n\r");
+                //SYS_CONSOLE_PRINT("Set to Coordinator\n\r");
                 gfx_mono_print_scroll("%s", buff);
                 gfx_mono_print_scroll("Set to Coordinator");
                 BC_TEST_NetDown();
@@ -462,8 +463,9 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_NetUp();
                 netH = TCPIP_STACK_NetHandleGet("eth0");
                 while (TCPIP_STACK_NetIsReady(netH) == false);
-                SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
+                    //SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
                 BC_COM_listen(sizeof (AUTOCONFMSG));
+                bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                 bc_test.timeout = TIMEOUT_COORDINATOR;
                 bc_test.state = BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST;
             }
@@ -554,6 +556,9 @@ void BC_TEST_Tasks(void) {
             /* ============== Coordinator States ============== */
 
         case BC_TEST_STATE_COORDINATOR_WAIT_FOR_REQUEST:
+            if (bc_test.countdown) {
+                break;
+            }            
             if (BC_COM_is_data_received() == true) {
                 memset((void*) &auto_conf_msg_receive, 0xFF, sizeof (AUTOCONFMSG));
                 BC_COM_read_data((uint8_t *) & auto_conf_msg_receive);
@@ -644,6 +649,7 @@ void BC_TEST_Tasks(void) {
             if (bc_test.nodeid_ix > 1) {
                 if (bc_test.timeout_live_request == 0) {
                     bc_test.timeout_live_request = TIMEOUT_LIVE_REQUEST;
+                    bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                     bc_test.state = BC_TEST_STATE_MEMBER_LIVE_START_REQUEST;
                 }
             }
@@ -679,6 +685,8 @@ void BC_TEST_TimerCallback(uintptr_t context) {
     bc_test.tick_100ms++;
     bc_test.tick_flag_100ms = true;
 
+    tick2_100ms++;
+    
     if ((bc_test.tick_100ms % 20) == 0) {
         if (bc_test.led_state == false) {
             bc_test.led_state = true;
@@ -753,14 +761,18 @@ void BC_TEST_Print_State_Change_And_Trigger_Watchdog(void) {
     uint32_t seconds;
     uint32_t ms_100;
     char time_str[30];
+    int32_t diff;
+    static int32_t old = 0;
 
-if (states != bc_test.state) {
+    if (states != bc_test.state) {
         states = bc_test.state;
         bc_test.watchdog = TIMEOUT_WATCHDOG;
-        convertToTime(bc_test.tick_100ms, &hours, &minutes, &seconds, &ms_100);
+        diff = tick2_100ms - old;
+        old = tick2_100ms;
+        convertToTime(diff, &hours, &minutes, &seconds, &ms_100);
         sprintf(time_str, "%02d:%02d:%02d.%01d", hours, minutes, seconds, ms_100);
-        BC_TEST_DEBUG_PRINT("%s %s\n\r", time_str, app_states_str[states]);        
-       // BC_TEST_DEBUG_PRINT("%s\n\r", app_states_str[states]);
+        SYS_CONSOLE_PRINT("%s %s\n\r", time_str, app_states_str[states]);
+        // BC_TEST_DEBUG_PRINT("%s\n\r", app_states_str[states]);
     }
 }
 
@@ -986,6 +998,16 @@ void BS_TEST_CheckButtons(void) {
     old_but3 = temp_but3;
 }
 
+void* BC_Test_Calloc(size_t nElems, size_t elemSize) {
+    size_t nBytes = nElems * elemSize;
+
+    void* ptr = pvPortMalloc(nBytes);
+    if (ptr) {
+        memset(ptr, 0, nBytes);
+    }
+
+    return ptr;
+}
 
 /*******************************************************************************
  End of File

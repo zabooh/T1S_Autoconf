@@ -133,6 +133,8 @@ void BC_COM_Initialize(void) {
     See prototype in bc_com.h.
  */
 
+BC_TEST_DATA mData;
+
 void BC_COM_Tasks(void) {
 
     BC_COM_Print_State_Change();
@@ -155,7 +157,7 @@ void BC_COM_Tasks(void) {
         case BC_COM_STATE_SERVER_WAIT_FOR_CONNECTION:
             if (TCPIP_UDP_IsConnected(bc_com.udp_server_socket) == true) {
                 BC_COM_DEBUG_PRINT("BC_COM: Server is Connected\n\r");
-                bc_com.receive_buffer = malloc(bc_com.receive_number_of_data_to_read);
+                bc_com.receive_buffer = (uint8_t *)&mData; // malloc(bc_com.receive_number_of_data_to_read);
                 BC_COM_DEBUG_PRINT("BC_COM: Server Buffer malloc %08X\n\r", bc_com.receive_buffer);
                 bc_com.state = BC_COM_STATE_SERVER_WAIT_FOR_GET_IS_READY;
             }
@@ -180,7 +182,7 @@ void BC_COM_Tasks(void) {
         case BC_COM_STATE_SERVER_STOP_WAIT:
             BC_COM_DEBUG_PRINT("BC_COM: Server Stop Wait\n\r");
             if (bc_com.receive_buffer != 0) {
-                free(bc_com.receive_buffer);
+                //free(bc_com.receive_buffer);
                 BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free %08X\n\r", bc_com.receive_buffer);
                 bc_com.receive_buffer = 0;
             }
@@ -227,7 +229,7 @@ void BC_COM_Tasks(void) {
 
         case BC_COM_STATE_CLIENT_CLOSE:
             if (bc_com.receive_buffer != 0) {
-                free(bc_com.receive_buffer);
+                //free(bc_com.receive_buffer);
                 BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free %08X\n\r", bc_com.receive_buffer);
                 bc_com.receive_buffer = 0;
             }
@@ -295,7 +297,7 @@ void BC_COM_read_data(uint8_t *buffer) {
         memcpy(buffer, bc_com.receive_buffer, bc_com.receive_number_of_data_to_read);
         BC_COM_DEBUG_PRINT("BC_COM: Close Server\n\r");
         BC_COM_DEBUG_PRINT("BC_COM: Server Buffer free %08X\n\r", bc_com.receive_buffer);
-        free(bc_com.receive_buffer);
+        //free(bc_com.receive_buffer);
         bc_com.receive_buffer = 0;
         bc_com.receive_data_has_been_received = false;
         bc_com.state = BC_COM_STATE_SERVER_STOP_WAIT;

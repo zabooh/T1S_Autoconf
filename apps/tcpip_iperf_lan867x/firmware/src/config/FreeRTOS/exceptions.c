@@ -191,11 +191,12 @@ void BusFaultHandler(unsigned int* pStack) {
     
     my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
 
-    sprintf(eBuff, "\n\rR12=%08X LR=%08X PC=%08X PSR=%08X\n\r",
+    sprintf(eBuff, "\n\rR12=%08X LR=%08X PC=%08X PSR=%08X SP=%08X\n\r",
             pStack[REG_R12],
             pStack[REG_LR],
             pStack[REG_PC],
-            pStack[REG_PSR]);
+            pStack[REG_PSR],
+            pStack);
 
     my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
 
@@ -225,11 +226,12 @@ void HardFaultHandler(unsigned int* pStack) {
 
     my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
 
-    sprintf(eBuff, "\n\rR12=%08X LR=%08X PC=%08X PSR=%08X\n\r",
+    sprintf(eBuff, "\n\rR12=%08X LR=%08X PC=%08X PSR=%08X SP=%08X\n\r",
             pStack[REG_R12],
             pStack[REG_LR],
             pStack[REG_PC],
-            pStack[REG_PSR]);
+            pStack[REG_PSR],
+            pStack);
 
     my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
 
@@ -259,11 +261,12 @@ void UsageFaultHandler(unsigned int* pStack) {
     
     my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
 
-    sprintf(eBuff, "\n\rR12=%08X LR=%08X PC=%08X PSR=%08X\n\r",
+    sprintf(eBuff, "\n\rR12=%08X LR=%08X PC=%08X PSR=%08X SP=%08X\n\r",
             pStack[REG_R12],
             pStack[REG_LR],
             pStack[REG_PC],
-            pStack[REG_PSR]);
+            pStack[REG_PSR],
+            pStack);
 
     my_SERCOM1_USART_Write(eBuff, sizeof (eBuff));
 
