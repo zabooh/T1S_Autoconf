@@ -271,7 +271,6 @@ void BC_TEST_Tasks(void) {
         BC_COM_Initialize_Runtime();     
         bc_test.timeout = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
         BC_TEST_DEBUG_PRINT("BC_TEST: Watchdog Triggered Restart in %d Ticks\n\r", bc_test.timeout);
-        //SYS_CONSOLE_PRINT("Restart Member Init Request\n\r");
         bc_test.watchdog == TIMEOUT_WATCHDOG;
         bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
     }
@@ -287,9 +286,6 @@ void BC_TEST_Tasks(void) {
             gfx_mono_print_scroll("%s", TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0);
             gfx_mono_print_scroll("%s", TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0);
 
-            BC_TEST_DEBUG_PRINT("BC_TEST: Build Time "__DATE__" "__TIME__"\n\r");
-            SYS_Initialization_TCP_Stack();
-            SYS_Task_Start_TCP();
             bc_test.state = BC_TEST_STATE_INIT_TCPIP_WAIT_START;
             break;
 
@@ -326,10 +322,11 @@ void BC_TEST_Tasks(void) {
                 BC_COM_Initialize_Runtime();
 
                 SYS_CONSOLE_PRINT("=============================================\n\r");
-                SYS_CONSOLE_PRINT("Build Time %s %s Tag:v3.6.0\n\r", __DATE__, __TIME__);
+                SYS_CONSOLE_PRINT("Build Time %s %s Tag:v3.8.0\n\r", __DATE__, __TIME__);
                 gfx_mono_print_scroll("Start System");
 
                 bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
+                BC_TEST_NetDown();
                 SYS_CONSOLE_PRINT("Start in %d Ticks\n\r", bc_test.countdown);
                 bc_test.state = BC_TEST_STATE_MEMBER_INIT_START_REQUEST;
             }
@@ -346,7 +343,10 @@ void BC_TEST_Tasks(void) {
             }
             gfx_mono_print_scroll("Member Init Request");
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init\n\r");
-            //SERCOM1_USART_Virtual_Receive("iperfk\n");
+            if (bc_test.isIperf == true) {
+                SERCOM1_USART_Virtual_Receive("iperfk\n");
+                bc_test.isIperf = false;
+            }
             BC_TEST_NetDown();
             BC_TEST_SetNodeID_and_MAXcount(1, bc_test_node_count);
             BC_TEST_NetUp();
@@ -423,7 +423,6 @@ void BC_TEST_Tasks(void) {
             
             TCPIP_Helper_IPAddressToString(&auto_conf_msg_receive.ip4, buff, 20);
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Init new IP:%s\n\r", buff);
-            //SYS_CONSOLE_PRINT("Set to Member with IP:%s\n\r", buff);
             gfx_mono_print_scroll("New Member IP:");
             gfx_mono_print_scroll("%s", buff);
             bc_test.timeout_live_request = TIMEOUT_LIVE_REQUEST;
@@ -455,7 +454,6 @@ void BC_TEST_Tasks(void) {
             if (BC_COM_is_idle() == true) {
                 char buff[30];
                 sprintf(buff, "%d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
-                //SYS_CONSOLE_PRINT("Set to Coordinator\n\r");
                 gfx_mono_print_scroll("%s", buff);
                 gfx_mono_print_scroll("Set to Coordinator");
                 BC_TEST_NetDown();
@@ -463,7 +461,8 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_NetUp();
                 netH = TCPIP_STACK_NetHandleGet("eth0");
                 while (TCPIP_STACK_NetIsReady(netH) == false);
-                    //SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
+                SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
+                bc_test.isIperf = true;
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                 bc_test.timeout = TIMEOUT_COORDINATOR;
@@ -790,13 +789,13 @@ void BC_TEST_DumpMem(uint32_t addr, uint32_t count) {
         if ((ix % 16) == 0) {
             if (flag == 1) {
                 str[16] = 0;
-                BC_TEST_DEBUG_DUMP_PRINT("   %s\n\r", str);
+                SYS_CONSOLE_PRINT("   %s\n\r", str);
             }
-            BC_TEST_DEBUG_DUMP_PRINT("%08x: ", puc);
+            SYS_CONSOLE_PRINT("%08x: ", puc);
             flag = 1;
             jx = 0;
         }
-        BC_TEST_DEBUG_DUMP_PRINT(" %02x", *puc);
+        SYS_CONSOLE_PRINT(" %02x", *puc);
         if ((*puc > 31) && (*puc < 127))
             str[jx++] = *puc;
         else
@@ -804,8 +803,8 @@ void BC_TEST_DumpMem(uint32_t addr, uint32_t count) {
         puc++;
     }
     str[jx] = 0;
-    BC_TEST_DEBUG_DUMP_PRINT("   %s", str);
-    BC_TEST_DEBUG_DUMP_PRINT("\n\r");
+    SYS_CONSOLE_PRINT("   %s", str);
+    SYS_CONSOLE_PRINT("\n\r");
 }
 
 static void my_dump(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
@@ -862,11 +861,37 @@ static void my_ex(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
     
 }
 
+static void my_heap_overflow(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
+    volatile int *p;
+    p = pvPortMalloc(100000);
+}
+
+void my_heap(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv) {
+    HeapStats_t xHeapStats;
+    const void* cmdIoParam = pCmdIO->cmdIoParam;
+    (*pCmdIO->pCmdApi->msg)(cmdIoParam, "\n\rHeap Statistics\r\n");
+
+    vPortGetHeapStats(&xHeapStats);
+    
+    (*pCmdIO->pCmdApi->print)(cmdIoParam, "configTOTAL_HEAP_SIZE \t: %d\r\n", configTOTAL_HEAP_SIZE);        
+    (*pCmdIO->pCmdApi->print)(cmdIoParam, "xAvailableHeapSpaceInBytes \t: %d\r\n", xHeapStats.xAvailableHeapSpaceInBytes);
+    (*pCmdIO->pCmdApi->print)(cmdIoParam, "xSizeOfLargestFreeBlockInBytes \t: %d\r\n", xHeapStats.xSizeOfLargestFreeBlockInBytes);
+    (*pCmdIO->pCmdApi->print)(cmdIoParam, "xSizeOfSmallestFreeBlockInBytes \t: %d\r\n", xHeapStats.xSizeOfSmallestFreeBlockInBytes);
+    (*pCmdIO->pCmdApi->print)(cmdIoParam, "xNumberOfFreeBlocks \t: %d\r\n", xHeapStats.xNumberOfFreeBlocks);
+    (*pCmdIO->pCmdApi->print)(cmdIoParam, "xMinimumEverFreeBytesRemaining \t: %d\r\n", xHeapStats.xMinimumEverFreeBytesRemaining);
+    (*pCmdIO->pCmdApi->print)(cmdIoParam, "xNumberOfSuccessfulAllocations \t: %d\r\n", xHeapStats.xNumberOfSuccessfulAllocations);
+    (*pCmdIO->pCmdApi->print)(cmdIoParam, "xNumberOfSuccessfulFrees \t: %d\r\n", xHeapStats.xNumberOfSuccessfulFrees);
+ //   (*pCmdIO->pCmdApi->print)(cmdIoParam, "xNumberOfFaileddAllocations     : %d\r\n", xHeapStats.xNumberOfFaileddAllocations);
+
+}
+
 const SYS_CMD_DESCRIPTOR msd_cmd_tbl[] = {
     {"dump", (SYS_CMD_FNC) my_dump, ": dump memory"},
     {"run", (SYS_CMD_FNC) my_run, ": start application"},
+    {"heap", (SYS_CMD_FNC) my_heap, ": show heap status"},
     {"reinit", (SYS_CMD_FNC) my_reinit, ": Re-Initialze Server and Client"},
-    {"ex", (SYS_CMD_FNC) my_ex, ": force exception"}
+    {"ex", (SYS_CMD_FNC) my_ex, ": force exception"},
+    {"mf", (SYS_CMD_FNC) my_heap_overflow, ": force malloc fail"},
 };
 
 bool BC_TEST_Command_Init(void) {

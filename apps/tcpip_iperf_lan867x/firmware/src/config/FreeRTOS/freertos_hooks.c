@@ -39,6 +39,10 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+#include <stdbool.h>
+#include <stdio.h>
+bool my_SERCOM1_USART_Write(void *buffer, const size_t size);
+
 /*
 *********************************************************************************************************
 *                                          vApplicationStackOverflowHook()
@@ -64,6 +68,9 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
    called if a task stack overflow is detected.  Note the system/interrupt
    stack is not checked. */
    taskDISABLE_INTERRUPTS();
+   char str[100];
+   sprintf(str,"FreeRTOS: Stack Overflow in Task %sX\n\r",pcTaskName);
+   my_SERCOM1_USART_Write(str,sizeof(str));   
    for( ;; );
 }
 
@@ -95,7 +102,7 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
 *********************************************************************************************************
 */
 
-void vApplicationMallocFailedHook( void )
+void vApplicationMallocFailedHook( unsigned int lr_value)
 {
    /* vApplicationMallocFailedHook() will only be called if
       configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h.  It is a hook
@@ -108,6 +115,9 @@ void vApplicationMallocFailedHook( void )
       to query the size of free heap space that remains (although it does not
       provide information on how the remaining heap might be fragmented). */
    taskDISABLE_INTERRUPTS();
+   char str[100];
+   sprintf(str,"FreeRTOS: Heap_4 Malloc Failed at %08X\n\r",lr_value);
+   my_SERCOM1_USART_Write(str,sizeof(str));
    for( ;; );
 }
 

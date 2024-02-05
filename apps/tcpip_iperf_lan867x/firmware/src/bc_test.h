@@ -111,6 +111,7 @@ extern "C" {
         uint32_t random;
         uint8_t nodeid_ix;
         bool sync;
+        bool isIperf;
     } BC_TEST_DATA;
 
     // *****************************************************************************

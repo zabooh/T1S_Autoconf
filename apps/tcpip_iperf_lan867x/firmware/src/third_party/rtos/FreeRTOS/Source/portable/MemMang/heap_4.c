@@ -142,6 +142,12 @@ void * pvPortMalloc( size_t xWantedSize )
     BlockLink_t * pxNewBlockLink;
     void * pvReturn = NULL;
     size_t xAdditionalRequiredSize;
+    uint32_t lr_value;
+
+    asm volatile (
+        "MOV %0, LR\n" // Lade den Wert des LR-Registers in lr_value
+        : "=r" (lr_value) // Ausgaberegister
+    );    
 
     vTaskSuspendAll();
     {
@@ -272,7 +278,7 @@ void * pvPortMalloc( size_t xWantedSize )
     {
         if( pvReturn == NULL )
         {
-            vApplicationMallocFailedHook();
+            vApplicationMallocFailedHook(lr_value);
         }
         else
         {
