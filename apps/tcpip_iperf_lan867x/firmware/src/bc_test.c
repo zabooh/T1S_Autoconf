@@ -753,7 +753,7 @@ char *app_states_str[] = {
     "BC_TEST_VOID"
 };
 
-void BC_TEST_Print_State_Change_And_Trigger_Watchdog(void) {
+void BC_TEST_Print_State_Change(void) {
     static BC_TEST_STATES states = BC_TEST_VOID;
     uint32_t hours;
     uint32_t minutes;
