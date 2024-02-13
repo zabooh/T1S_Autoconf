@@ -25,7 +25,6 @@
     <Folder _object="{DB455FFE-FED4-4CDA-80C7-7A1B166E1981}" _version="1.0" _class="K2L.Viewer.Workspace.ProjectFolder" Name="Tiles" />
   </RootFolder>
   <Temporary>
-    <File _object="{0F0E738A-89E2-4C61-BA93-551217BA9FB5}" _version="1.0" _class="K2L.Viewer.TraceView.TraceFileModel" Factory="{E04775B4-08AC-495E-938C-EBAE73D3074C}" Path="online_15.27.22.olslog" />
     <File _object="{F468F4CB-FE83-408B-8E0B-BB804EF47196}" _version="1.0" _class="K2L.Viewer.Filter.FilterFile" Factory="{7BBC47DB-876C-4D3A-BA20-EC408871FB40}" Path="MyFilters.olsfilter" />
   </Temporary>
 </Workspace>

@@ -56,6 +56,7 @@
 #define TIMER_MS_RESOLUTION 100
 
 #define TIMEOUT_100_MILLI_SECONDS   1
+#define TIMEOUT_200_MILLI_SECONDS   2
 #define TIMEOUT_1_SECOND            10
 
 #define TIMEOUT_2_SECONDS           10
@@ -147,7 +148,7 @@ extern SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 void BC_TEST_TimerCallback(uintptr_t context);
-void BC_TEST_Print_State_Change_And_Trigger_Watchdog(void);
+void BC_TEST_Print_State_Change(void);
 
 void SYS_Task_Start_TCP(void);
 void SYS_Initialization_TCP_Stack(void);
@@ -261,7 +262,7 @@ void BC_TEST_Tasks(void) {
     char mac_str[20];
 
 
-    BC_TEST_Print_State_Change_And_Trigger_Watchdog();
+    BC_TEST_Print_State_Change();
     BS_TEST_CheckButtons();
     
     if (bc_test.watchdog == 0) {
@@ -309,20 +310,20 @@ void BC_TEST_Tasks(void) {
 
             TCPIP_MAC_ADDR * mac_ptr;
             mac_ptr = (TCPIP_MAC_ADDR*) TCPIP_STACK_NetAddressMac(netH);
-            memcpy(&bc_test.MyMacAddr.v[0], &mac_ptr->v[0], 6);
+            memcpy(&mac_ptr->v[0], &bc_test.MyMacAddr.v[0], 6);
 
             if (dwLastIP.Val != bc_test.MyIpAddr.Val) {
 
                 dwLastIP.Val = bc_test.MyIpAddr.Val;
-                BC_TEST_DEBUG_PRINT("BC_TEST: IP Address : %d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
-                BC_TEST_DEBUG_PRINT("BC_TEST: MAC Address: %02x:%02x:%02x:%02x:%02x:%02x\r\n", bc_test.MyMacAddr.v[0], bc_test.MyMacAddr.v[1], bc_test.MyMacAddr.v[2], bc_test.MyMacAddr.v[3], bc_test.MyMacAddr.v[4], bc_test.MyMacAddr.v[5]);
+                BC_TEST_DEBUG_PRINT("BC_TEST: Default IP Address : %d.%d.%d.%d\r\n", bc_test.MyIpAddr.v[0], bc_test.MyIpAddr.v[1], bc_test.MyIpAddr.v[2], bc_test.MyIpAddr.v[3]);
+                BC_TEST_DEBUG_PRINT("BC_TEST: Default MAC Address: %02x:%02x:%02x:%02x:%02x:%02x\r\n", bc_test.MyMacAddr.v[0], bc_test.MyMacAddr.v[1], bc_test.MyMacAddr.v[2], bc_test.MyMacAddr.v[3], bc_test.MyMacAddr.v[4], bc_test.MyMacAddr.v[5]);
 
                 bc_test.init_done = true;
 
                 BC_COM_Initialize_Runtime();
 
                 SYS_CONSOLE_PRINT("=============================================\n\r");
-                SYS_CONSOLE_PRINT("Build Time %s %s Tag:v3.8.0\n\r", __DATE__, __TIME__);
+                SYS_CONSOLE_PRINT("Build Time %s %s Tag:v3.8.1\n\r", __DATE__, __TIME__);
                 gfx_mono_print_scroll("Start System");
 
                 bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
@@ -440,7 +441,12 @@ void BC_TEST_Tasks(void) {
             ipMask.v[2] = 255;
             ipMask.v[3] = 0;
             TCPIP_STACK_NetAddressSet(netH, &auto_conf_msg_receive.ip4, &ipMask, 1);            
-            
+            BC_TEST_DEBUG_PRINT("BC_TEST: New IP Address : %d.%d.%d.%d\r\n", 
+                    auto_conf_msg_receive.ip4.v[0], 
+                    auto_conf_msg_receive.ip4.v[1], 
+                    auto_conf_msg_receive.ip4.v[2], 
+                    auto_conf_msg_receive.ip4.v[3]);
+                        
             bc_test.state = BC_TEST_STATE_IDLE;
             break;
         }
@@ -613,6 +619,20 @@ void BC_TEST_Tasks(void) {
                     auto_conf_msg_transmit.ip4.v[1] = bc_test.MyIpAddr.v[1];
                     auto_conf_msg_transmit.ip4.v[2] = bc_test.MyIpAddr.v[2];
                     auto_conf_msg_transmit.ip4.v[3] = BC_TEST_calculateCRC8((uint8_t *) & auto_conf_msg_receive.mac, 6);
+
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Member MAC Address: %02x:%02x:%02x:%02x:%02x:%02x\r\n", 
+                            auto_conf_msg_receive.mac.v[0], 
+                            auto_conf_msg_receive.mac.v[1], 
+                            auto_conf_msg_receive.mac.v[2], 
+                            auto_conf_msg_receive.mac.v[3], 
+                            auto_conf_msg_receive.mac.v[4], 
+                            auto_conf_msg_receive.mac.v[5]);
+                    
+                    BC_TEST_DEBUG_PRINT("BC_TEST: Send IP Address : %d.%d.%d.%d\r\n", 
+                            auto_conf_msg_transmit.ip4.v[0], 
+                            auto_conf_msg_transmit.ip4.v[1], 
+                            auto_conf_msg_transmit.ip4.v[2], 
+                            auto_conf_msg_transmit.ip4.v[3]);
 
                     TCPIP_Helper_MACAddressToString(&auto_conf_msg_transmit.mac, mac_str, 18);
                     BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Data Sent Init - Node Id:%d to %s\n\r", auto_conf_msg_transmit.node_id, mac_str);

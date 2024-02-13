@@ -515,6 +515,7 @@ Discarded input sections
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/246609638/port.o
+ .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1665200909/heap_4.o
  .text          0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/croutine.o
  .data          0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/croutine.o
  .bss           0x00000000        0x0 build/FreeRTOS/production/_ext/404212886/croutine.o
@@ -1555,7 +1556,6 @@ Discarded input sections
  .comment       0x00000000       0x2c build/FreeRTOS/production/_ext/1664057780/evp.o
  .ARM.attributes
                 0x00000000       0x39 build/FreeRTOS/production/_ext/1664057780/evp.o
- .data          0x00000000        0x0 build/FreeRTOS/production/_ext/1665200909/heap_4.o
  .text          0x00000000        0x0 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
  .data          0x00000000        0x0 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
  .xc_stack_usage
@@ -2487,6 +2487,7 @@ LOAD build/FreeRTOS/production/_ext/161576091/startup_xc32.o
 LOAD build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
 LOAD build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
 LOAD build/FreeRTOS/production/_ext/246609638/port.o
+LOAD build/FreeRTOS/production/_ext/1665200909/heap_4.o
 LOAD build/FreeRTOS/production/_ext/404212886/croutine.o
 LOAD build/FreeRTOS/production/_ext/404212886/list.o
 LOAD build/FreeRTOS/production/_ext/404212886/queue.o
@@ -2599,7 +2600,6 @@ LOAD build/FreeRTOS/production/_ext/1360937237/bc_com.o
 LOAD build/FreeRTOS/production/_ext/1360937237/bc_test.o
 LOAD build/FreeRTOS/production/_ext/1664057780/misc.o
 LOAD build/FreeRTOS/production/_ext/1664057780/evp.o
-LOAD build/FreeRTOS/production/_ext/1665200909/heap_4.o
                 0x00000001                __MPLAB_BUILD = 0x1
                 0x00100000                __rom_end = (ORIGIN (rom) + LENGTH (rom))
                 0x20040000                __ram_end = (ORIGIN (ram) + LENGTH (ram))
@@ -2833,67 +2833,67 @@ LOAD data_init
  .ARM.attributes
                 0x00000ae2       0x34 build/FreeRTOS/production/_ext/246609638/port.o
  .ARM.attributes
-                0x00000b16       0x34 build/FreeRTOS/production/_ext/404212886/list.o
+                0x00000b16       0x34 build/FreeRTOS/production/_ext/1665200909/heap_4.o
  .ARM.attributes
-                0x00000b4a       0x34 build/FreeRTOS/production/_ext/404212886/queue.o
+                0x00000b4a       0x34 build/FreeRTOS/production/_ext/404212886/list.o
  .ARM.attributes
-                0x00000b7e       0x34 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
+                0x00000b7e       0x34 build/FreeRTOS/production/_ext/404212886/queue.o
  .ARM.attributes
-                0x00000bb2       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
+                0x00000bb2       0x34 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
  .ARM.attributes
-                0x00000be6       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
+                0x00000be6       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
  .ARM.attributes
-                0x00000c1a       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
+                0x00000c1a       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
  .ARM.attributes
-                0x00000c4e       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
+                0x00000c4e       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
  .ARM.attributes
-                0x00000c82       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
+                0x00000c82       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
  .ARM.attributes
-                0x00000cb6       0x39 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
+                0x00000cb6       0x34 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
  .ARM.attributes
-                0x00000cef       0x34 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
+                0x00000cea       0x39 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
  .ARM.attributes
-                0x00000d23       0x34 build/FreeRTOS/production/_ext/1664057780/asn.o
+                0x00000d23       0x34 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
  .ARM.attributes
-                0x00000d57       0x34 build/FreeRTOS/production/_ext/1664057780/coding.o
+                0x00000d57       0x34 build/FreeRTOS/production/_ext/1664057780/asn.o
  .ARM.attributes
-                0x00000d8b       0x34 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
+                0x00000d8b       0x34 build/FreeRTOS/production/_ext/1664057780/coding.o
  .ARM.attributes
-                0x00000dbf       0x34 build/FreeRTOS/production/_ext/1664057780/hash.o
+                0x00000dbf       0x34 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
  .ARM.attributes
-                0x00000df3       0x34 build/FreeRTOS/production/_ext/1664057780/hmac.o
+                0x00000df3       0x34 build/FreeRTOS/production/_ext/1664057780/hash.o
  .ARM.attributes
-                0x00000e27       0x34 build/FreeRTOS/production/_ext/1664057780/md5.o
+                0x00000e27       0x34 build/FreeRTOS/production/_ext/1664057780/hmac.o
  .ARM.attributes
-                0x00000e5b       0x34 build/FreeRTOS/production/_ext/1664057780/rsa.o
+                0x00000e5b       0x34 build/FreeRTOS/production/_ext/1664057780/md5.o
  .ARM.attributes
-                0x00000e8f       0x34 build/FreeRTOS/production/_ext/1664057780/tfm.o
+                0x00000e8f       0x34 build/FreeRTOS/production/_ext/1664057780/rsa.o
  .ARM.attributes
-                0x00000ec3       0x34 build/FreeRTOS/production/_ext/1664057780/wc_port.o
+                0x00000ec3       0x34 build/FreeRTOS/production/_ext/1664057780/tfm.o
  .ARM.attributes
-                0x00000ef7       0x34 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
+                0x00000ef7       0x34 build/FreeRTOS/production/_ext/1664057780/wc_port.o
  .ARM.attributes
-                0x00000f2b       0x34 build/FreeRTOS/production/_ext/1664057780/aes.o
+                0x00000f2b       0x34 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
  .ARM.attributes
-                0x00000f5f       0x34 build/FreeRTOS/production/_ext/1664057780/des3.o
+                0x00000f5f       0x34 build/FreeRTOS/production/_ext/1664057780/aes.o
  .ARM.attributes
-                0x00000f93       0x34 build/FreeRTOS/production/_ext/1664057780/random.o
+                0x00000f93       0x34 build/FreeRTOS/production/_ext/1664057780/des3.o
  .ARM.attributes
-                0x00000fc7       0x34 build/FreeRTOS/production/_ext/1664057780/sha.o
+                0x00000fc7       0x34 build/FreeRTOS/production/_ext/1664057780/random.o
  .ARM.attributes
-                0x00000ffb       0x34 build/FreeRTOS/production/_ext/1664057780/sha256.o
+                0x00000ffb       0x34 build/FreeRTOS/production/_ext/1664057780/sha.o
  .ARM.attributes
-                0x0000102f       0x34 build/FreeRTOS/production/_ext/1664057780/ecc.o
+                0x0000102f       0x34 build/FreeRTOS/production/_ext/1664057780/sha256.o
  .ARM.attributes
-                0x00001063       0x34 build/FreeRTOS/production/_ext/1360937237/app.o
+                0x00001063       0x34 build/FreeRTOS/production/_ext/1664057780/ecc.o
  .ARM.attributes
-                0x00001097       0x34 build/FreeRTOS/production/_ext/1360937237/main.o
+                0x00001097       0x34 build/FreeRTOS/production/_ext/1360937237/app.o
  .ARM.attributes
-                0x000010cb       0x34 build/FreeRTOS/production/_ext/1360937237/bc_com.o
+                0x000010cb       0x34 build/FreeRTOS/production/_ext/1360937237/main.o
  .ARM.attributes
-                0x000010ff       0x34 build/FreeRTOS/production/_ext/1360937237/bc_test.o
+                0x000010ff       0x34 build/FreeRTOS/production/_ext/1360937237/bc_com.o
  .ARM.attributes
-                0x00001133       0x34 build/FreeRTOS/production/_ext/1665200909/heap_4.o
+                0x00001133       0x34 build/FreeRTOS/production/_ext/1360937237/bc_test.o
  .ARM.attributes
                 0x00001167       0x34 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
  .ARM.attributes
@@ -3103,6 +3103,7 @@ LOAD data_init
  .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
  .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/246609638/port.o
+ .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/1665200909/heap_4.o
  .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/404212886/list.o
  .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/404212886/queue.o
  .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
@@ -3133,7 +3134,6 @@ LOAD data_init
  .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/1360937237/main.o
  .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/1360937237/bc_com.o
  .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/1360937237/bc_test.o
- .comment       0x0000002b       0x2c build/FreeRTOS/production/_ext/1665200909/heap_4.o
  .comment       0x0000002b       0x2c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
  .comment       0x0000002b       0x2c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
  .comment       0x0000002b       0x2c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
@@ -3206,7 +3206,7 @@ LOAD data_init
  .comment       0x0000002b       0x2c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
  .comment       0x0000002b       0x2c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(sbrk.o)
 
-.debug_info     0x00000000   0x12d32a
+.debug_info     0x00000000   0x12d315
  .debug_info    0x00000000     0x4122 build/FreeRTOS/production/_ext/1609394304/crypto.o
  .debug_info    0x00004122     0x8963 build/FreeRTOS/production/_ext/1231519722/drv_ethphy.o
  .debug_info    0x0000ca85     0x3e25 build/FreeRTOS/production/_ext/1231519722/drv_extphy_lan867x.o
@@ -3260,109 +3260,109 @@ LOAD data_init
  .debug_info    0x000aef3f      0x309 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .debug_info    0x000af248      0x625 build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
  .debug_info    0x000af86d      0x784 build/FreeRTOS/production/_ext/246609638/port.o
- .debug_info    0x000afff1      0x631 build/FreeRTOS/production/_ext/404212886/list.o
- .debug_info    0x000b0622     0x21eb build/FreeRTOS/production/_ext/404212886/queue.o
- .debug_info    0x000b280d     0x3169 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
- .debug_info    0x000b5976      0x9b4 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
- .debug_info    0x000b632a     0x1154 build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
- .debug_info    0x000b747e      0xfee build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
- .debug_info    0x000b846c      0xe50 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
- .debug_info    0x000b92bc      0xac3 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
- .debug_info    0x000b9d7f      0x4db build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
- .debug_info    0x000ba25a     0x25b6 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
- .debug_info    0x000bc810    0x11c5f build/FreeRTOS/production/_ext/1664057780/asn.o
- .debug_info    0x000ce46f     0x1b9f build/FreeRTOS/production/_ext/1664057780/coding.o
- .debug_info    0x000d000e     0x4f78 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
- .debug_info    0x000d4f86     0x24b5 build/FreeRTOS/production/_ext/1664057780/hash.o
- .debug_info    0x000d743b     0x24c1 build/FreeRTOS/production/_ext/1664057780/hmac.o
- .debug_info    0x000d98fc     0x25b0 build/FreeRTOS/production/_ext/1664057780/md5.o
- .debug_info    0x000dbeac     0x51ac build/FreeRTOS/production/_ext/1664057780/rsa.o
- .debug_info    0x000e1058     0x8b27 build/FreeRTOS/production/_ext/1664057780/tfm.o
- .debug_info    0x000e9b7f     0x11a5 build/FreeRTOS/production/_ext/1664057780/wc_port.o
- .debug_info    0x000ead24     0x1719 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
- .debug_info    0x000ec43d     0x8aaa build/FreeRTOS/production/_ext/1664057780/aes.o
- .debug_info    0x000f4ee7     0x31b8 build/FreeRTOS/production/_ext/1664057780/des3.o
- .debug_info    0x000f809f     0x3d15 build/FreeRTOS/production/_ext/1664057780/random.o
- .debug_info    0x000fbdb4     0x4c37 build/FreeRTOS/production/_ext/1664057780/sha.o
- .debug_info    0x001009eb     0x3dc1 build/FreeRTOS/production/_ext/1664057780/sha256.o
- .debug_info    0x001047ac     0xb058 build/FreeRTOS/production/_ext/1664057780/ecc.o
- .debug_info    0x0010f804     0x1bf5 build/FreeRTOS/production/_ext/1360937237/app.o
- .debug_info    0x001113f9      0x330 build/FreeRTOS/production/_ext/1360937237/main.o
- .debug_info    0x00111729     0x1c54 build/FreeRTOS/production/_ext/1360937237/bc_com.o
- .debug_info    0x0011337d     0x582a build/FreeRTOS/production/_ext/1360937237/bc_test.o
- .debug_info    0x00118ba7      0xb05 build/FreeRTOS/production/_ext/1665200909/heap_4.o
- .debug_info    0x001196ac      0x2ae c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
- .debug_info    0x0011995a      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
- .debug_info    0x00119cb1      0x35a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
- .debug_info    0x0011a00b      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(tolower.o)
- .debug_info    0x0011a362      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(toupper.o)
- .debug_info    0x0011a6b9      0x627 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__libc_start_main.o)
- .debug_info    0x0011ace0      0x3a7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(assert.o)
- .debug_info    0x0011b087      0x29e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(abort.o)
- .debug_info    0x0011b325      0x539 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(libc.o)
- .debug_info    0x0011b85e     0x13a9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(malloc.o)
- .debug_info    0x0011cc07      0x380 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(expand_heap.o)
- .debug_info    0x0011cf87      0x330 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(rand.o)
- .debug_info    0x0011d2b7      0x33f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(fprintf.o)
- .debug_info    0x0011d5f6      0x5ab c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(fflush.o)
- .debug_info    0x0011dba1      0x487 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stderr.o)
- .debug_info    0x0011e028      0x6c7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vfprintf.o)
- .debug_info    0x0011e6ef      0x706 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsnprintf.o)
- .debug_info    0x0011edf5      0x350 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(snprintf.o)
- .debug_info    0x0011f145      0x326 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(sprintf.o)
- .debug_info    0x0011f46b      0x320 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsprintf.o)
- .debug_info    0x0011f78b      0x2ff c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(atoi.o)
- .debug_info    0x0011fa8a      0x9f3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtol.o)
- .debug_info    0x0012047d      0x2e6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcmp.o)
- .debug_info    0x00120763      0x2fb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcpy.o)
- .debug_info    0x00120a5e      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memmove.o)
- .debug_info    0x00120d5b      0x2b9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memset.o)
- .debug_info    0x00121014      0x2aa c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strlen.o)
- .debug_info    0x001212be      0x2cc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchr.o)
- .debug_info    0x0012158a      0x3ef c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchrnul.o)
- .debug_info    0x00121979      0x28e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcmp.o)
- .debug_info    0x00121c07      0x2b8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcpy.o)
- .debug_info    0x00121ebf      0x2f4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncmp.o)
- .debug_info    0x001221b3      0x2dd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncpy.o)
- .debug_info    0x00122490      0x2e6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strrchr.o)
- .debug_info    0x00122776      0x2fa c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtok.o)
- .debug_info    0x00122a70      0x3d7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime.o)
- .debug_info    0x00122e47      0x401 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime_r.o)
- .debug_info    0x00123248      0x31f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(time.o)
- .debug_info    0x00123567      0x2b3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__environ.o)
- .debug_info    0x0012381a      0x277 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__errno_location.o)
- .debug_info    0x00123a91      0x2b5 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(_Exit.o)
- .debug_info    0x00123d46      0x849 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(intscan.o)
- .debug_info    0x0012458f      0x64e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(shgetc.o)
- .debug_info    0x00124bdd      0x61a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__uflow.o)
- .debug_info    0x001251f7      0xd37 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__printf_core.o)
- .debug_info    0x00125f2e      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memrchr.o)
- .debug_info    0x0012622b      0x2bc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpcpy.o)
- .debug_info    0x001264e7      0x2f8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpncpy.o)
- .debug_info    0x001267df      0x31f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcspn.o)
- .debug_info    0x00126afe      0x304 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strspn.o)
- .debug_info    0x00126e02      0x52f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__secs_to_tm.o)
- .debug_info    0x00127331      0x4a8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(clock_gettime.o)
- .debug_info    0x001277d9      0x326 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gettimeofday.o)
- .debug_info    0x00127aff      0x2ce c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(syscall_ret.o)
- .debug_info    0x00127dcd      0x634 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__toread.o)
- .debug_info    0x00128401      0x8fc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_a.o)
- .debug_info    0x00128cfd      0x5c6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_d.o)
- .debug_info    0x001292c3      0x9e1 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_fp.o)
- .debug_info    0x00129ca4      0x597 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_o.o)
- .debug_info    0x0012a23b      0x53b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_s.o)
- .debug_info    0x0012a776      0x664 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_u.o)
- .debug_info    0x0012adda      0x5fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_x.o)
- .debug_info    0x0012b3d7      0x330 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__init_stdio.o)
- .debug_info    0x0012b707      0x53c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__out.o)
- .debug_info    0x0012bc43      0x3e1 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_float.o)
- .debug_info    0x0012c024      0x405 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_int.o)
- .debug_info    0x0012c429      0x40b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_ptr.o)
- .debug_info    0x0012c834       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_ldivmod.o)
- .debug_info    0x0012c85a       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_info    0x0012c880      0x7f3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_info    0x0012d073       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
- .debug_info    0x0012d099      0x291 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(sbrk.o)
+ .debug_info    0x000afff1      0xb05 build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_info    0x000b0af6      0x631 build/FreeRTOS/production/_ext/404212886/list.o
+ .debug_info    0x000b1127     0x21eb build/FreeRTOS/production/_ext/404212886/queue.o
+ .debug_info    0x000b3312     0x3169 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
+ .debug_info    0x000b647b      0x9b4 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
+ .debug_info    0x000b6e2f     0x1154 build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
+ .debug_info    0x000b7f83      0xfee build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
+ .debug_info    0x000b8f71      0xe50 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
+ .debug_info    0x000b9dc1      0xac3 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
+ .debug_info    0x000ba884      0x4db build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
+ .debug_info    0x000bad5f     0x25b6 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
+ .debug_info    0x000bd315    0x11c5f build/FreeRTOS/production/_ext/1664057780/asn.o
+ .debug_info    0x000cef74     0x1b9f build/FreeRTOS/production/_ext/1664057780/coding.o
+ .debug_info    0x000d0b13     0x4f78 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
+ .debug_info    0x000d5a8b     0x24b5 build/FreeRTOS/production/_ext/1664057780/hash.o
+ .debug_info    0x000d7f40     0x24c1 build/FreeRTOS/production/_ext/1664057780/hmac.o
+ .debug_info    0x000da401     0x25b0 build/FreeRTOS/production/_ext/1664057780/md5.o
+ .debug_info    0x000dc9b1     0x51ac build/FreeRTOS/production/_ext/1664057780/rsa.o
+ .debug_info    0x000e1b5d     0x8b27 build/FreeRTOS/production/_ext/1664057780/tfm.o
+ .debug_info    0x000ea684     0x11a5 build/FreeRTOS/production/_ext/1664057780/wc_port.o
+ .debug_info    0x000eb829     0x1719 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
+ .debug_info    0x000ecf42     0x8aaa build/FreeRTOS/production/_ext/1664057780/aes.o
+ .debug_info    0x000f59ec     0x31b8 build/FreeRTOS/production/_ext/1664057780/des3.o
+ .debug_info    0x000f8ba4     0x3d15 build/FreeRTOS/production/_ext/1664057780/random.o
+ .debug_info    0x000fc8b9     0x4c37 build/FreeRTOS/production/_ext/1664057780/sha.o
+ .debug_info    0x001014f0     0x3dc1 build/FreeRTOS/production/_ext/1664057780/sha256.o
+ .debug_info    0x001052b1     0xb058 build/FreeRTOS/production/_ext/1664057780/ecc.o
+ .debug_info    0x00110309     0x1bf5 build/FreeRTOS/production/_ext/1360937237/app.o
+ .debug_info    0x00111efe      0x330 build/FreeRTOS/production/_ext/1360937237/main.o
+ .debug_info    0x0011222e     0x1c54 build/FreeRTOS/production/_ext/1360937237/bc_com.o
+ .debug_info    0x00113e82     0x5815 build/FreeRTOS/production/_ext/1360937237/bc_test.o
+ .debug_info    0x00119697      0x2ae c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
+ .debug_info    0x00119945      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
+ .debug_info    0x00119c9c      0x35a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
+ .debug_info    0x00119ff6      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(tolower.o)
+ .debug_info    0x0011a34d      0x357 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(toupper.o)
+ .debug_info    0x0011a6a4      0x627 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__libc_start_main.o)
+ .debug_info    0x0011accb      0x3a7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(assert.o)
+ .debug_info    0x0011b072      0x29e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(abort.o)
+ .debug_info    0x0011b310      0x539 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(libc.o)
+ .debug_info    0x0011b849     0x13a9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(malloc.o)
+ .debug_info    0x0011cbf2      0x380 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(expand_heap.o)
+ .debug_info    0x0011cf72      0x330 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(rand.o)
+ .debug_info    0x0011d2a2      0x33f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(fprintf.o)
+ .debug_info    0x0011d5e1      0x5ab c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(fflush.o)
+ .debug_info    0x0011db8c      0x487 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stderr.o)
+ .debug_info    0x0011e013      0x6c7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vfprintf.o)
+ .debug_info    0x0011e6da      0x706 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsnprintf.o)
+ .debug_info    0x0011ede0      0x350 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(snprintf.o)
+ .debug_info    0x0011f130      0x326 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(sprintf.o)
+ .debug_info    0x0011f456      0x320 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsprintf.o)
+ .debug_info    0x0011f776      0x2ff c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(atoi.o)
+ .debug_info    0x0011fa75      0x9f3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtol.o)
+ .debug_info    0x00120468      0x2e6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcmp.o)
+ .debug_info    0x0012074e      0x2fb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcpy.o)
+ .debug_info    0x00120a49      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memmove.o)
+ .debug_info    0x00120d46      0x2b9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memset.o)
+ .debug_info    0x00120fff      0x2aa c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strlen.o)
+ .debug_info    0x001212a9      0x2cc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchr.o)
+ .debug_info    0x00121575      0x3ef c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchrnul.o)
+ .debug_info    0x00121964      0x28e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcmp.o)
+ .debug_info    0x00121bf2      0x2b8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcpy.o)
+ .debug_info    0x00121eaa      0x2f4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncmp.o)
+ .debug_info    0x0012219e      0x2dd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncpy.o)
+ .debug_info    0x0012247b      0x2e6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strrchr.o)
+ .debug_info    0x00122761      0x2fa c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtok.o)
+ .debug_info    0x00122a5b      0x3d7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime.o)
+ .debug_info    0x00122e32      0x401 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime_r.o)
+ .debug_info    0x00123233      0x31f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(time.o)
+ .debug_info    0x00123552      0x2b3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__environ.o)
+ .debug_info    0x00123805      0x277 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__errno_location.o)
+ .debug_info    0x00123a7c      0x2b5 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(_Exit.o)
+ .debug_info    0x00123d31      0x849 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(intscan.o)
+ .debug_info    0x0012457a      0x64e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(shgetc.o)
+ .debug_info    0x00124bc8      0x61a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__uflow.o)
+ .debug_info    0x001251e2      0xd37 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__printf_core.o)
+ .debug_info    0x00125f19      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memrchr.o)
+ .debug_info    0x00126216      0x2bc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpcpy.o)
+ .debug_info    0x001264d2      0x2f8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpncpy.o)
+ .debug_info    0x001267ca      0x31f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcspn.o)
+ .debug_info    0x00126ae9      0x304 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strspn.o)
+ .debug_info    0x00126ded      0x52f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__secs_to_tm.o)
+ .debug_info    0x0012731c      0x4a8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(clock_gettime.o)
+ .debug_info    0x001277c4      0x326 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gettimeofday.o)
+ .debug_info    0x00127aea      0x2ce c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(syscall_ret.o)
+ .debug_info    0x00127db8      0x634 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__toread.o)
+ .debug_info    0x001283ec      0x8fc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_a.o)
+ .debug_info    0x00128ce8      0x5c6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_d.o)
+ .debug_info    0x001292ae      0x9e1 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_fp.o)
+ .debug_info    0x00129c8f      0x597 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_o.o)
+ .debug_info    0x0012a226      0x53b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_s.o)
+ .debug_info    0x0012a761      0x664 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_u.o)
+ .debug_info    0x0012adc5      0x5fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_x.o)
+ .debug_info    0x0012b3c2      0x330 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__init_stdio.o)
+ .debug_info    0x0012b6f2      0x53c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__out.o)
+ .debug_info    0x0012bc2e      0x3e1 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_float.o)
+ .debug_info    0x0012c00f      0x405 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_int.o)
+ .debug_info    0x0012c414      0x40b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_ptr.o)
+ .debug_info    0x0012c81f       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_ldivmod.o)
+ .debug_info    0x0012c845       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_info    0x0012c86b      0x7f3 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_info    0x0012d05e       0x26 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+ .debug_info    0x0012d084      0x291 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(sbrk.o)
 
 .debug_abbrev   0x00000000    0x14d57
  .debug_abbrev  0x00000000      0x386 build/FreeRTOS/production/_ext/1609394304/crypto.o
@@ -3418,37 +3418,37 @@ LOAD data_init
  .debug_abbrev  0x0000a8a5       0x50 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .debug_abbrev  0x0000a8f5      0x165 build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
  .debug_abbrev  0x0000aa5a      0x224 build/FreeRTOS/production/_ext/246609638/port.o
- .debug_abbrev  0x0000ac7e      0x15c build/FreeRTOS/production/_ext/404212886/list.o
- .debug_abbrev  0x0000adda      0x365 build/FreeRTOS/production/_ext/404212886/queue.o
- .debug_abbrev  0x0000b13f      0x46d build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
- .debug_abbrev  0x0000b5ac      0x1b6 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
- .debug_abbrev  0x0000b762      0x1ea build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
- .debug_abbrev  0x0000b94c      0x2d8 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
- .debug_abbrev  0x0000bc24      0x2a0 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
- .debug_abbrev  0x0000bec4      0x1d9 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
- .debug_abbrev  0x0000c09d       0xf9 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
- .debug_abbrev  0x0000c196      0x25c build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
- .debug_abbrev  0x0000c3f2      0x66f build/FreeRTOS/production/_ext/1664057780/asn.o
- .debug_abbrev  0x0000ca61      0x1cc build/FreeRTOS/production/_ext/1664057780/coding.o
- .debug_abbrev  0x0000cc2d      0x43c build/FreeRTOS/production/_ext/1664057780/cryptocb.o
- .debug_abbrev  0x0000d069      0x2a0 build/FreeRTOS/production/_ext/1664057780/hash.o
- .debug_abbrev  0x0000d309      0x342 build/FreeRTOS/production/_ext/1664057780/hmac.o
- .debug_abbrev  0x0000d64b      0x2d2 build/FreeRTOS/production/_ext/1664057780/md5.o
- .debug_abbrev  0x0000d91d      0x424 build/FreeRTOS/production/_ext/1664057780/rsa.o
- .debug_abbrev  0x0000dd41      0x4f6 build/FreeRTOS/production/_ext/1664057780/tfm.o
- .debug_abbrev  0x0000e237      0x215 build/FreeRTOS/production/_ext/1664057780/wc_port.o
- .debug_abbrev  0x0000e44c      0x1fe build/FreeRTOS/production/_ext/1664057780/wolfmath.o
- .debug_abbrev  0x0000e64a      0x52d build/FreeRTOS/production/_ext/1664057780/aes.o
- .debug_abbrev  0x0000eb77      0x345 build/FreeRTOS/production/_ext/1664057780/des3.o
- .debug_abbrev  0x0000eebc      0x40e build/FreeRTOS/production/_ext/1664057780/random.o
- .debug_abbrev  0x0000f2ca      0x311 build/FreeRTOS/production/_ext/1664057780/sha.o
- .debug_abbrev  0x0000f5db      0x400 build/FreeRTOS/production/_ext/1664057780/sha256.o
- .debug_abbrev  0x0000f9db      0x4cb build/FreeRTOS/production/_ext/1664057780/ecc.o
- .debug_abbrev  0x0000fea6      0x341 build/FreeRTOS/production/_ext/1360937237/app.o
- .debug_abbrev  0x000101e7       0x75 build/FreeRTOS/production/_ext/1360937237/main.o
- .debug_abbrev  0x0001025c      0x2aa build/FreeRTOS/production/_ext/1360937237/bc_com.o
- .debug_abbrev  0x00010506      0x527 build/FreeRTOS/production/_ext/1360937237/bc_test.o
- .debug_abbrev  0x00010a2d      0x27c build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_abbrev  0x0000ac7e      0x27c build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_abbrev  0x0000aefa      0x15c build/FreeRTOS/production/_ext/404212886/list.o
+ .debug_abbrev  0x0000b056      0x365 build/FreeRTOS/production/_ext/404212886/queue.o
+ .debug_abbrev  0x0000b3bb      0x46d build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
+ .debug_abbrev  0x0000b828      0x1b6 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
+ .debug_abbrev  0x0000b9de      0x1ea build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
+ .debug_abbrev  0x0000bbc8      0x2d8 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
+ .debug_abbrev  0x0000bea0      0x2a0 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
+ .debug_abbrev  0x0000c140      0x1d9 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
+ .debug_abbrev  0x0000c319       0xf9 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
+ .debug_abbrev  0x0000c412      0x25c build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
+ .debug_abbrev  0x0000c66e      0x66f build/FreeRTOS/production/_ext/1664057780/asn.o
+ .debug_abbrev  0x0000ccdd      0x1cc build/FreeRTOS/production/_ext/1664057780/coding.o
+ .debug_abbrev  0x0000cea9      0x43c build/FreeRTOS/production/_ext/1664057780/cryptocb.o
+ .debug_abbrev  0x0000d2e5      0x2a0 build/FreeRTOS/production/_ext/1664057780/hash.o
+ .debug_abbrev  0x0000d585      0x342 build/FreeRTOS/production/_ext/1664057780/hmac.o
+ .debug_abbrev  0x0000d8c7      0x2d2 build/FreeRTOS/production/_ext/1664057780/md5.o
+ .debug_abbrev  0x0000db99      0x424 build/FreeRTOS/production/_ext/1664057780/rsa.o
+ .debug_abbrev  0x0000dfbd      0x4f6 build/FreeRTOS/production/_ext/1664057780/tfm.o
+ .debug_abbrev  0x0000e4b3      0x215 build/FreeRTOS/production/_ext/1664057780/wc_port.o
+ .debug_abbrev  0x0000e6c8      0x1fe build/FreeRTOS/production/_ext/1664057780/wolfmath.o
+ .debug_abbrev  0x0000e8c6      0x52d build/FreeRTOS/production/_ext/1664057780/aes.o
+ .debug_abbrev  0x0000edf3      0x345 build/FreeRTOS/production/_ext/1664057780/des3.o
+ .debug_abbrev  0x0000f138      0x40e build/FreeRTOS/production/_ext/1664057780/random.o
+ .debug_abbrev  0x0000f546      0x311 build/FreeRTOS/production/_ext/1664057780/sha.o
+ .debug_abbrev  0x0000f857      0x400 build/FreeRTOS/production/_ext/1664057780/sha256.o
+ .debug_abbrev  0x0000fc57      0x4cb build/FreeRTOS/production/_ext/1664057780/ecc.o
+ .debug_abbrev  0x00010122      0x341 build/FreeRTOS/production/_ext/1360937237/app.o
+ .debug_abbrev  0x00010463       0x75 build/FreeRTOS/production/_ext/1360937237/main.o
+ .debug_abbrev  0x000104d8      0x2aa build/FreeRTOS/production/_ext/1360937237/bc_com.o
+ .debug_abbrev  0x00010782      0x527 build/FreeRTOS/production/_ext/1360937237/bc_test.o
  .debug_abbrev  0x00010ca9       0x2e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
  .debug_abbrev  0x00010cd7       0xfd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
  .debug_abbrev  0x00010dd4       0xfd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
@@ -3571,36 +3571,36 @@ LOAD data_init
  .debug_loc     0x0004b731       0x15 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .debug_loc     0x0004b746      0x165 build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
  .debug_loc     0x0004b8ab      0x13a build/FreeRTOS/production/_ext/246609638/port.o
- .debug_loc     0x0004b9e5       0xb2 build/FreeRTOS/production/_ext/404212886/list.o
- .debug_loc     0x0004ba97     0x191e build/FreeRTOS/production/_ext/404212886/queue.o
- .debug_loc     0x0004d3b5     0x2667 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
- .debug_loc     0x0004fa1c      0x6e4 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
- .debug_loc     0x00050100      0xf1c build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
- .debug_loc     0x0005101c      0xf47 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
- .debug_loc     0x00051f63      0x8bc build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
- .debug_loc     0x0005281f      0x109 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
- .debug_loc     0x00052928       0x45 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
- .debug_loc     0x0005296d     0xefeb build/FreeRTOS/production/_ext/1664057780/asn.o
- .debug_loc     0x00061958      0xbeb build/FreeRTOS/production/_ext/1664057780/coding.o
- .debug_loc     0x00062543     0x30a8 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
- .debug_loc     0x000655eb     0x1af2 build/FreeRTOS/production/_ext/1664057780/hash.o
- .debug_loc     0x000670dd     0x128b build/FreeRTOS/production/_ext/1664057780/hmac.o
- .debug_loc     0x00068368     0x2df9 build/FreeRTOS/production/_ext/1664057780/md5.o
- .debug_loc     0x0006b161     0x50ef build/FreeRTOS/production/_ext/1664057780/rsa.o
- .debug_loc     0x00070250     0xb2b6 build/FreeRTOS/production/_ext/1664057780/tfm.o
- .debug_loc     0x0007b506      0x7a0 build/FreeRTOS/production/_ext/1664057780/wc_port.o
- .debug_loc     0x0007bca6      0x54c build/FreeRTOS/production/_ext/1664057780/wolfmath.o
- .debug_loc     0x0007c1f2     0xb7d0 build/FreeRTOS/production/_ext/1664057780/aes.o
- .debug_loc     0x000879c2     0x748b build/FreeRTOS/production/_ext/1664057780/des3.o
- .debug_loc     0x0008ee4d     0x2994 build/FreeRTOS/production/_ext/1664057780/random.o
- .debug_loc     0x000917e1     0x6988 build/FreeRTOS/production/_ext/1664057780/sha.o
- .debug_loc     0x00098169     0x28c9 build/FreeRTOS/production/_ext/1664057780/sha256.o
- .debug_loc     0x0009aa32     0xa52e build/FreeRTOS/production/_ext/1664057780/ecc.o
- .debug_loc     0x000a4f60      0x4c5 build/FreeRTOS/production/_ext/1360937237/app.o
- .debug_loc     0x000a5425       0x20 build/FreeRTOS/production/_ext/1360937237/main.o
- .debug_loc     0x000a5445      0x107 build/FreeRTOS/production/_ext/1360937237/bc_com.o
- .debug_loc     0x000a554c     0x1016 build/FreeRTOS/production/_ext/1360937237/bc_test.o
- .debug_loc     0x000a6562      0x6e6 build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_loc     0x0004b9e5      0x6e6 build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_loc     0x0004c0cb       0xb2 build/FreeRTOS/production/_ext/404212886/list.o
+ .debug_loc     0x0004c17d     0x191e build/FreeRTOS/production/_ext/404212886/queue.o
+ .debug_loc     0x0004da9b     0x2667 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
+ .debug_loc     0x00050102      0x6e4 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
+ .debug_loc     0x000507e6      0xf1c build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
+ .debug_loc     0x00051702      0xf47 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
+ .debug_loc     0x00052649      0x8bc build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
+ .debug_loc     0x00052f05      0x109 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
+ .debug_loc     0x0005300e       0x45 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
+ .debug_loc     0x00053053     0xefeb build/FreeRTOS/production/_ext/1664057780/asn.o
+ .debug_loc     0x0006203e      0xbeb build/FreeRTOS/production/_ext/1664057780/coding.o
+ .debug_loc     0x00062c29     0x30a8 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
+ .debug_loc     0x00065cd1     0x1af2 build/FreeRTOS/production/_ext/1664057780/hash.o
+ .debug_loc     0x000677c3     0x128b build/FreeRTOS/production/_ext/1664057780/hmac.o
+ .debug_loc     0x00068a4e     0x2df9 build/FreeRTOS/production/_ext/1664057780/md5.o
+ .debug_loc     0x0006b847     0x50ef build/FreeRTOS/production/_ext/1664057780/rsa.o
+ .debug_loc     0x00070936     0xb2b6 build/FreeRTOS/production/_ext/1664057780/tfm.o
+ .debug_loc     0x0007bbec      0x7a0 build/FreeRTOS/production/_ext/1664057780/wc_port.o
+ .debug_loc     0x0007c38c      0x54c build/FreeRTOS/production/_ext/1664057780/wolfmath.o
+ .debug_loc     0x0007c8d8     0xb7d0 build/FreeRTOS/production/_ext/1664057780/aes.o
+ .debug_loc     0x000880a8     0x748b build/FreeRTOS/production/_ext/1664057780/des3.o
+ .debug_loc     0x0008f533     0x2994 build/FreeRTOS/production/_ext/1664057780/random.o
+ .debug_loc     0x00091ec7     0x6988 build/FreeRTOS/production/_ext/1664057780/sha.o
+ .debug_loc     0x0009884f     0x28c9 build/FreeRTOS/production/_ext/1664057780/sha256.o
+ .debug_loc     0x0009b118     0xa52e build/FreeRTOS/production/_ext/1664057780/ecc.o
+ .debug_loc     0x000a5646      0x4c5 build/FreeRTOS/production/_ext/1360937237/app.o
+ .debug_loc     0x000a5b0b       0x20 build/FreeRTOS/production/_ext/1360937237/main.o
+ .debug_loc     0x000a5b2b      0x107 build/FreeRTOS/production/_ext/1360937237/bc_com.o
+ .debug_loc     0x000a5c32     0x1016 build/FreeRTOS/production/_ext/1360937237/bc_test.o
  .debug_loc     0x000a6c48       0x14 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
  .debug_loc     0x000a6c5c       0x76 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
  .debug_loc     0x000a6cd2       0x65 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
@@ -3775,67 +3775,67 @@ LOAD data_init
  .debug_aranges
                 0x00000688       0x20 build/FreeRTOS/production/_ext/246609638/port.o
  .debug_aranges
-                0x000006a8       0x20 build/FreeRTOS/production/_ext/404212886/list.o
+                0x000006a8       0x20 build/FreeRTOS/production/_ext/1665200909/heap_4.o
  .debug_aranges
-                0x000006c8       0x20 build/FreeRTOS/production/_ext/404212886/queue.o
+                0x000006c8       0x20 build/FreeRTOS/production/_ext/404212886/list.o
  .debug_aranges
-                0x000006e8       0x20 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
+                0x000006e8       0x20 build/FreeRTOS/production/_ext/404212886/queue.o
  .debug_aranges
-                0x00000708       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
+                0x00000708       0x20 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
  .debug_aranges
-                0x00000728       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
+                0x00000728       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
  .debug_aranges
-                0x00000748       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
+                0x00000748       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
  .debug_aranges
-                0x00000768       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
+                0x00000768       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
  .debug_aranges
-                0x00000788       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
+                0x00000788       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
  .debug_aranges
-                0x000007a8       0x18 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
+                0x000007a8       0x20 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
  .debug_aranges
-                0x000007c0       0x20 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
+                0x000007c8       0x18 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
  .debug_aranges
-                0x000007e0       0x20 build/FreeRTOS/production/_ext/1664057780/asn.o
+                0x000007e0       0x20 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
  .debug_aranges
-                0x00000800       0x20 build/FreeRTOS/production/_ext/1664057780/coding.o
+                0x00000800       0x20 build/FreeRTOS/production/_ext/1664057780/asn.o
  .debug_aranges
-                0x00000820       0x20 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
+                0x00000820       0x20 build/FreeRTOS/production/_ext/1664057780/coding.o
  .debug_aranges
-                0x00000840       0x20 build/FreeRTOS/production/_ext/1664057780/hash.o
+                0x00000840       0x20 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
  .debug_aranges
-                0x00000860       0x20 build/FreeRTOS/production/_ext/1664057780/hmac.o
+                0x00000860       0x20 build/FreeRTOS/production/_ext/1664057780/hash.o
  .debug_aranges
-                0x00000880       0x20 build/FreeRTOS/production/_ext/1664057780/md5.o
+                0x00000880       0x20 build/FreeRTOS/production/_ext/1664057780/hmac.o
  .debug_aranges
-                0x000008a0       0x20 build/FreeRTOS/production/_ext/1664057780/rsa.o
+                0x000008a0       0x20 build/FreeRTOS/production/_ext/1664057780/md5.o
  .debug_aranges
-                0x000008c0       0x20 build/FreeRTOS/production/_ext/1664057780/tfm.o
+                0x000008c0       0x20 build/FreeRTOS/production/_ext/1664057780/rsa.o
  .debug_aranges
-                0x000008e0       0x20 build/FreeRTOS/production/_ext/1664057780/wc_port.o
+                0x000008e0       0x20 build/FreeRTOS/production/_ext/1664057780/tfm.o
  .debug_aranges
-                0x00000900       0x20 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
+                0x00000900       0x20 build/FreeRTOS/production/_ext/1664057780/wc_port.o
  .debug_aranges
-                0x00000920       0x20 build/FreeRTOS/production/_ext/1664057780/aes.o
+                0x00000920       0x20 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
  .debug_aranges
-                0x00000940       0x20 build/FreeRTOS/production/_ext/1664057780/des3.o
+                0x00000940       0x20 build/FreeRTOS/production/_ext/1664057780/aes.o
  .debug_aranges
-                0x00000960       0x20 build/FreeRTOS/production/_ext/1664057780/random.o
+                0x00000960       0x20 build/FreeRTOS/production/_ext/1664057780/des3.o
  .debug_aranges
-                0x00000980       0x20 build/FreeRTOS/production/_ext/1664057780/sha.o
+                0x00000980       0x20 build/FreeRTOS/production/_ext/1664057780/random.o
  .debug_aranges
-                0x000009a0       0x20 build/FreeRTOS/production/_ext/1664057780/sha256.o
+                0x000009a0       0x20 build/FreeRTOS/production/_ext/1664057780/sha.o
  .debug_aranges
-                0x000009c0       0x20 build/FreeRTOS/production/_ext/1664057780/ecc.o
+                0x000009c0       0x20 build/FreeRTOS/production/_ext/1664057780/sha256.o
  .debug_aranges
-                0x000009e0       0x20 build/FreeRTOS/production/_ext/1360937237/app.o
+                0x000009e0       0x20 build/FreeRTOS/production/_ext/1664057780/ecc.o
  .debug_aranges
-                0x00000a00       0x20 build/FreeRTOS/production/_ext/1360937237/main.o
+                0x00000a00       0x20 build/FreeRTOS/production/_ext/1360937237/app.o
  .debug_aranges
-                0x00000a20       0x20 build/FreeRTOS/production/_ext/1360937237/bc_com.o
+                0x00000a20       0x20 build/FreeRTOS/production/_ext/1360937237/main.o
  .debug_aranges
-                0x00000a40       0x20 build/FreeRTOS/production/_ext/1360937237/bc_test.o
+                0x00000a40       0x20 build/FreeRTOS/production/_ext/1360937237/bc_com.o
  .debug_aranges
-                0x00000a60       0x20 build/FreeRTOS/production/_ext/1665200909/heap_4.o
+                0x00000a60       0x20 build/FreeRTOS/production/_ext/1360937237/bc_test.o
  .debug_aranges
                 0x00000a80       0x20 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
  .debug_aranges
@@ -3981,7 +3981,7 @@ LOAD data_init
  .debug_aranges
                 0x00001478       0x20 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(sbrk.o)
 
-.debug_line     0x00000000    0x51fa3
+.debug_line     0x00000000    0x51fad
  .debug_line    0x00000000      0xbc4 build/FreeRTOS/production/_ext/1609394304/crypto.o
  .debug_line    0x00000bc4     0x25b2 build/FreeRTOS/production/_ext/1231519722/drv_ethphy.o
  .debug_line    0x00003176      0xd92 build/FreeRTOS/production/_ext/1231519722/drv_extphy_lan867x.o
@@ -4035,109 +4035,109 @@ LOAD data_init
  .debug_line    0x000291d9       0x5c build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .debug_line    0x00029235      0x1bd build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
  .debug_line    0x000293f2      0x2ec build/FreeRTOS/production/_ext/246609638/port.o
- .debug_line    0x000296de      0x2a4 build/FreeRTOS/production/_ext/404212886/list.o
- .debug_line    0x00029982      0xe56 build/FreeRTOS/production/_ext/404212886/queue.o
- .debug_line    0x0002a7d8     0x1758 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
- .debug_line    0x0002bf30      0x2c5 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
- .debug_line    0x0002c1f5      0x55a build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
- .debug_line    0x0002c74f      0x4f2 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
- .debug_line    0x0002cc41      0x3fc build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
- .debug_line    0x0002d03d      0x2a1 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
- .debug_line    0x0002d2de       0xf5 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
- .debug_line    0x0002d3d3      0x14f build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
- .debug_line    0x0002d522     0x5f6b build/FreeRTOS/production/_ext/1664057780/asn.o
- .debug_line    0x0003348d      0x47c build/FreeRTOS/production/_ext/1664057780/coding.o
- .debug_line    0x00033909     0x119c build/FreeRTOS/production/_ext/1664057780/cryptocb.o
- .debug_line    0x00034aa5      0x628 build/FreeRTOS/production/_ext/1664057780/hash.o
- .debug_line    0x000350cd      0x796 build/FreeRTOS/production/_ext/1664057780/hmac.o
- .debug_line    0x00035863      0xaf7 build/FreeRTOS/production/_ext/1664057780/md5.o
- .debug_line    0x0003635a     0x1528 build/FreeRTOS/production/_ext/1664057780/rsa.o
- .debug_line    0x00037882     0x3d1f build/FreeRTOS/production/_ext/1664057780/tfm.o
- .debug_line    0x0003b5a1      0x499 build/FreeRTOS/production/_ext/1664057780/wc_port.o
- .debug_line    0x0003ba3a      0x2e4 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
- .debug_line    0x0003bd1e     0x3925 build/FreeRTOS/production/_ext/1664057780/aes.o
- .debug_line    0x0003f643      0xeeb build/FreeRTOS/production/_ext/1664057780/des3.o
- .debug_line    0x0004052e      0xf90 build/FreeRTOS/production/_ext/1664057780/random.o
- .debug_line    0x000414be     0x1d42 build/FreeRTOS/production/_ext/1664057780/sha.o
- .debug_line    0x00043200     0x1175 build/FreeRTOS/production/_ext/1664057780/sha256.o
- .debug_line    0x00044375     0x37aa build/FreeRTOS/production/_ext/1664057780/ecc.o
- .debug_line    0x00047b1f      0x47d build/FreeRTOS/production/_ext/1360937237/app.o
- .debug_line    0x00047f9c       0x6e build/FreeRTOS/production/_ext/1360937237/main.o
- .debug_line    0x0004800a      0x537 build/FreeRTOS/production/_ext/1360937237/bc_com.o
- .debug_line    0x00048541     0x117e build/FreeRTOS/production/_ext/1360937237/bc_test.o
- .debug_line    0x000496bf      0x590 build/FreeRTOS/production/_ext/1665200909/heap_4.o
- .debug_line    0x00049c4f      0x112 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
- .debug_line    0x00049d61      0x16b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
- .debug_line    0x00049ecc      0x16e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
- .debug_line    0x0004a03a      0x16b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(tolower.o)
- .debug_line    0x0004a1a5      0x16b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(toupper.o)
- .debug_line    0x0004a310      0x1db c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__libc_start_main.o)
- .debug_line    0x0004a4eb      0x1c0 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(assert.o)
- .debug_line    0x0004a6ab      0x127 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(abort.o)
- .debug_line    0x0004a7d2       0xbf c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(libc.o)
- .debug_line    0x0004a891      0xad2 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(malloc.o)
- .debug_line    0x0004b363       0xf9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(expand_heap.o)
- .debug_line    0x0004b45c       0xfb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(rand.o)
- .debug_line    0x0004b557      0x165 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(fprintf.o)
- .debug_line    0x0004b6bc      0x1ae c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(fflush.o)
- .debug_line    0x0004b86a      0x195 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stderr.o)
- .debug_line    0x0004b9ff      0x204 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vfprintf.o)
- .debug_line    0x0004bc03      0x244 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsnprintf.o)
- .debug_line    0x0004be47      0x166 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(snprintf.o)
- .debug_line    0x0004bfad      0x165 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(sprintf.o)
- .debug_line    0x0004c112      0x154 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsprintf.o)
- .debug_line    0x0004c266      0x17b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(atoi.o)
- .debug_line    0x0004c3e1      0x2f6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtol.o)
- .debug_line    0x0004c6d7       0xe9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcmp.o)
- .debug_line    0x0004c7c0       0xf4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcpy.o)
- .debug_line    0x0004c8b4      0x121 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memmove.o)
- .debug_line    0x0004c9d5       0xec c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memset.o)
- .debug_line    0x0004cac1       0xe8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strlen.o)
- .debug_line    0x0004cba9       0xbc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchr.o)
- .debug_line    0x0004cc65      0x19f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchrnul.o)
- .debug_line    0x0004ce04       0xbf c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcmp.o)
- .debug_line    0x0004cec3       0xb7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcpy.o)
- .debug_line    0x0004cf7a       0xf0 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncmp.o)
- .debug_line    0x0004d06a       0xd7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncpy.o)
- .debug_line    0x0004d141      0x131 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strrchr.o)
- .debug_line    0x0004d272      0x178 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtok.o)
- .debug_line    0x0004d3ea      0x13f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime.o)
- .debug_line    0x0004d529      0x273 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime_r.o)
- .debug_line    0x0004d79c       0xe4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(time.o)
- .debug_line    0x0004d880      0x10f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__environ.o)
- .debug_line    0x0004d98f       0xa4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__errno_location.o)
- .debug_line    0x0004da33       0xb2 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(_Exit.o)
- .debug_line    0x0004dae5      0x4cc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(intscan.o)
- .debug_line    0x0004dfb1      0x210 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(shgetc.o)
- .debug_line    0x0004e1c1      0x1dc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__uflow.o)
- .debug_line    0x0004e39d      0x699 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__printf_core.o)
- .debug_line    0x0004ea36       0xe7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memrchr.o)
- .debug_line    0x0004eb1d       0xcb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpcpy.o)
- .debug_line    0x0004ebe8      0x116 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpncpy.o)
- .debug_line    0x0004ecfe      0x194 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcspn.o)
- .debug_line    0x0004ee92      0x131 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strspn.o)
- .debug_line    0x0004efc3      0x2fb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__secs_to_tm.o)
- .debug_line    0x0004f2be      0x20a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(clock_gettime.o)
- .debug_line    0x0004f4c8       0xd5 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gettimeofday.o)
- .debug_line    0x0004f59d      0x14a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(syscall_ret.o)
- .debug_line    0x0004f6e7      0x22c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__toread.o)
- .debug_line    0x0004f913      0x626 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_a.o)
- .debug_line    0x0004ff39      0x21c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_d.o)
- .debug_line    0x00050155      0x68b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_fp.o)
- .debug_line    0x000507e0      0x1c6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_o.o)
- .debug_line    0x000509a6      0x209 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_s.o)
- .debug_line    0x00050baf      0x250 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_u.o)
- .debug_line    0x00050dff      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_x.o)
- .debug_line    0x000510fc       0xd2 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__init_stdio.o)
- .debug_line    0x000511ce      0x23d c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__out.o)
- .debug_line    0x0005140b      0x179 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_float.o)
- .debug_line    0x00051584      0x20f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_int.o)
- .debug_line    0x00051793      0x1f4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_ptr.o)
- .debug_line    0x00051987       0xbc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_ldivmod.o)
- .debug_line    0x00051a43       0x9e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_line    0x00051ae1      0x36d c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_line    0x00051e4e       0x9e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
- .debug_line    0x00051eec       0xb7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(sbrk.o)
+ .debug_line    0x000296de      0x590 build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_line    0x00029c6e      0x2a4 build/FreeRTOS/production/_ext/404212886/list.o
+ .debug_line    0x00029f12      0xe56 build/FreeRTOS/production/_ext/404212886/queue.o
+ .debug_line    0x0002ad68     0x1758 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
+ .debug_line    0x0002c4c0      0x2c5 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
+ .debug_line    0x0002c785      0x55a build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
+ .debug_line    0x0002ccdf      0x4f2 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
+ .debug_line    0x0002d1d1      0x3fc build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
+ .debug_line    0x0002d5cd      0x2a1 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
+ .debug_line    0x0002d86e       0xf5 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
+ .debug_line    0x0002d963      0x14f build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
+ .debug_line    0x0002dab2     0x5f6b build/FreeRTOS/production/_ext/1664057780/asn.o
+ .debug_line    0x00033a1d      0x47c build/FreeRTOS/production/_ext/1664057780/coding.o
+ .debug_line    0x00033e99     0x119c build/FreeRTOS/production/_ext/1664057780/cryptocb.o
+ .debug_line    0x00035035      0x628 build/FreeRTOS/production/_ext/1664057780/hash.o
+ .debug_line    0x0003565d      0x796 build/FreeRTOS/production/_ext/1664057780/hmac.o
+ .debug_line    0x00035df3      0xaf7 build/FreeRTOS/production/_ext/1664057780/md5.o
+ .debug_line    0x000368ea     0x1528 build/FreeRTOS/production/_ext/1664057780/rsa.o
+ .debug_line    0x00037e12     0x3d1f build/FreeRTOS/production/_ext/1664057780/tfm.o
+ .debug_line    0x0003bb31      0x499 build/FreeRTOS/production/_ext/1664057780/wc_port.o
+ .debug_line    0x0003bfca      0x2e4 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
+ .debug_line    0x0003c2ae     0x3925 build/FreeRTOS/production/_ext/1664057780/aes.o
+ .debug_line    0x0003fbd3      0xeeb build/FreeRTOS/production/_ext/1664057780/des3.o
+ .debug_line    0x00040abe      0xf90 build/FreeRTOS/production/_ext/1664057780/random.o
+ .debug_line    0x00041a4e     0x1d42 build/FreeRTOS/production/_ext/1664057780/sha.o
+ .debug_line    0x00043790     0x1175 build/FreeRTOS/production/_ext/1664057780/sha256.o
+ .debug_line    0x00044905     0x37aa build/FreeRTOS/production/_ext/1664057780/ecc.o
+ .debug_line    0x000480af      0x47d build/FreeRTOS/production/_ext/1360937237/app.o
+ .debug_line    0x0004852c       0x6e build/FreeRTOS/production/_ext/1360937237/main.o
+ .debug_line    0x0004859a      0x537 build/FreeRTOS/production/_ext/1360937237/bc_com.o
+ .debug_line    0x00048ad1     0x1188 build/FreeRTOS/production/_ext/1360937237/bc_test.o
+ .debug_line    0x00049c59      0x112 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
+ .debug_line    0x00049d6b      0x16b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
+ .debug_line    0x00049ed6      0x16e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
+ .debug_line    0x0004a044      0x16b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(tolower.o)
+ .debug_line    0x0004a1af      0x16b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(toupper.o)
+ .debug_line    0x0004a31a      0x1db c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__libc_start_main.o)
+ .debug_line    0x0004a4f5      0x1c0 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(assert.o)
+ .debug_line    0x0004a6b5      0x127 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(abort.o)
+ .debug_line    0x0004a7dc       0xbf c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(libc.o)
+ .debug_line    0x0004a89b      0xad2 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(malloc.o)
+ .debug_line    0x0004b36d       0xf9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(expand_heap.o)
+ .debug_line    0x0004b466       0xfb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(rand.o)
+ .debug_line    0x0004b561      0x165 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(fprintf.o)
+ .debug_line    0x0004b6c6      0x1ae c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(fflush.o)
+ .debug_line    0x0004b874      0x195 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stderr.o)
+ .debug_line    0x0004ba09      0x204 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vfprintf.o)
+ .debug_line    0x0004bc0d      0x244 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsnprintf.o)
+ .debug_line    0x0004be51      0x166 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(snprintf.o)
+ .debug_line    0x0004bfb7      0x165 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(sprintf.o)
+ .debug_line    0x0004c11c      0x154 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(vsprintf.o)
+ .debug_line    0x0004c270      0x17b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(atoi.o)
+ .debug_line    0x0004c3eb      0x2f6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtol.o)
+ .debug_line    0x0004c6e1       0xe9 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcmp.o)
+ .debug_line    0x0004c7ca       0xf4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memcpy.o)
+ .debug_line    0x0004c8be      0x121 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memmove.o)
+ .debug_line    0x0004c9df       0xec c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memset.o)
+ .debug_line    0x0004cacb       0xe8 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strlen.o)
+ .debug_line    0x0004cbb3       0xbc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchr.o)
+ .debug_line    0x0004cc6f      0x19f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strchrnul.o)
+ .debug_line    0x0004ce0e       0xbf c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcmp.o)
+ .debug_line    0x0004cecd       0xb7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcpy.o)
+ .debug_line    0x0004cf84       0xf0 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncmp.o)
+ .debug_line    0x0004d074       0xd7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strncpy.o)
+ .debug_line    0x0004d14b      0x131 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strrchr.o)
+ .debug_line    0x0004d27c      0x178 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strtok.o)
+ .debug_line    0x0004d3f4      0x13f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime.o)
+ .debug_line    0x0004d533      0x273 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gmtime_r.o)
+ .debug_line    0x0004d7a6       0xe4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(time.o)
+ .debug_line    0x0004d88a      0x10f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__environ.o)
+ .debug_line    0x0004d999       0xa4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__errno_location.o)
+ .debug_line    0x0004da3d       0xb2 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(_Exit.o)
+ .debug_line    0x0004daef      0x4cc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(intscan.o)
+ .debug_line    0x0004dfbb      0x210 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(shgetc.o)
+ .debug_line    0x0004e1cb      0x1dc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__uflow.o)
+ .debug_line    0x0004e3a7      0x699 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__printf_core.o)
+ .debug_line    0x0004ea40       0xe7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(memrchr.o)
+ .debug_line    0x0004eb27       0xcb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpcpy.o)
+ .debug_line    0x0004ebf2      0x116 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(stpncpy.o)
+ .debug_line    0x0004ed08      0x194 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strcspn.o)
+ .debug_line    0x0004ee9c      0x131 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(strspn.o)
+ .debug_line    0x0004efcd      0x2fb c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__secs_to_tm.o)
+ .debug_line    0x0004f2c8      0x20a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(clock_gettime.o)
+ .debug_line    0x0004f4d2       0xd5 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(gettimeofday.o)
+ .debug_line    0x0004f5a7      0x14a c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(syscall_ret.o)
+ .debug_line    0x0004f6f1      0x22c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__toread.o)
+ .debug_line    0x0004f91d      0x626 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_a.o)
+ .debug_line    0x0004ff43      0x21c c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_d.o)
+ .debug_line    0x0005015f      0x68b c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_fp.o)
+ .debug_line    0x000507ea      0x1c6 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_o.o)
+ .debug_line    0x000509b0      0x209 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_s.o)
+ .debug_line    0x00050bb9      0x250 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_u.o)
+ .debug_line    0x00050e09      0x2fd c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__fmt_x.o)
+ .debug_line    0x00051106       0xd2 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__init_stdio.o)
+ .debug_line    0x000511d8      0x23d c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__out.o)
+ .debug_line    0x00051415      0x179 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_float.o)
+ .debug_line    0x0005158e      0x20f c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_int.o)
+ .debug_line    0x0005179d      0x1f4 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(__pop_ptr.o)
+ .debug_line    0x00051991       0xbc c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_ldivmod.o)
+ .debug_line    0x00051a4d       0x9e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_line    0x00051aeb      0x36d c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_line    0x00051e58       0x9e c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+ .debug_line    0x00051ef6       0xb7 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(sbrk.o)
 
 .debug_str      0x00000000     0x80e6
  .debug_str     0x00000000      0x454 build/FreeRTOS/production/_ext/1609394304/crypto.o
@@ -4193,37 +4193,37 @@ LOAD data_init
  .debug_str     0x00005bca        0x0 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .debug_str     0x00005bca       0x56 build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
  .debug_str     0x00005c20       0x26 build/FreeRTOS/production/_ext/246609638/port.o
- .debug_str     0x00005c46       0x2b build/FreeRTOS/production/_ext/404212886/list.o
- .debug_str     0x00005c71      0x2a6 build/FreeRTOS/production/_ext/404212886/queue.o
- .debug_str     0x00005f17      0x2a9 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
- .debug_str     0x000061c0       0x72 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
- .debug_str     0x00006232       0xae build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
- .debug_str     0x000062e0       0xd5 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
- .debug_str     0x000063b5       0xe6 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
- .debug_str     0x0000649b       0x83 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
- .debug_str     0x0000651e        0x0 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
- .debug_str     0x0000651e       0xbb build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
- .debug_str     0x000065d9      0x451 build/FreeRTOS/production/_ext/1664057780/asn.o
- .debug_str     0x00006a2a        0x0 build/FreeRTOS/production/_ext/1664057780/coding.o
- .debug_str     0x00006a2a       0xf7 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
- .debug_str     0x00006b21      0x1e7 build/FreeRTOS/production/_ext/1664057780/hash.o
- .debug_str     0x00006d08      0x131 build/FreeRTOS/production/_ext/1664057780/hmac.o
- .debug_str     0x00006e39        0x0 build/FreeRTOS/production/_ext/1664057780/md5.o
- .debug_str     0x00006e39      0x192 build/FreeRTOS/production/_ext/1664057780/rsa.o
- .debug_str     0x00006fcb       0x3f build/FreeRTOS/production/_ext/1664057780/tfm.o
- .debug_str     0x0000700a       0x11 build/FreeRTOS/production/_ext/1664057780/wc_port.o
- .debug_str     0x0000701b       0x56 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
- .debug_str     0x00007071      0x19b build/FreeRTOS/production/_ext/1664057780/aes.o
- .debug_str     0x0000720c       0x37 build/FreeRTOS/production/_ext/1664057780/des3.o
- .debug_str     0x00007243       0xdf build/FreeRTOS/production/_ext/1664057780/random.o
- .debug_str     0x00007322       0x14 build/FreeRTOS/production/_ext/1664057780/sha.o
- .debug_str     0x00007336       0x54 build/FreeRTOS/production/_ext/1664057780/sha256.o
- .debug_str     0x0000738a      0x31e build/FreeRTOS/production/_ext/1664057780/ecc.o
- .debug_str     0x000076a8       0x9f build/FreeRTOS/production/_ext/1360937237/app.o
- .debug_str     0x00007747       0x19 build/FreeRTOS/production/_ext/1360937237/main.o
- .debug_str     0x00007760       0xd6 build/FreeRTOS/production/_ext/1360937237/bc_com.o
- .debug_str     0x00007836      0x3da build/FreeRTOS/production/_ext/1360937237/bc_test.o
- .debug_str     0x00007c10       0xb8 build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_str     0x00005c46       0xb8 build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_str     0x00005cfe       0x2b build/FreeRTOS/production/_ext/404212886/list.o
+ .debug_str     0x00005d29      0x2a6 build/FreeRTOS/production/_ext/404212886/queue.o
+ .debug_str     0x00005fcf      0x2a9 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
+ .debug_str     0x00006278       0x72 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
+ .debug_str     0x000062ea       0xae build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
+ .debug_str     0x00006398       0xd5 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
+ .debug_str     0x0000646d       0xe6 build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
+ .debug_str     0x00006553       0x83 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
+ .debug_str     0x000065d6        0x0 build/FreeRTOS/production/_ext/1434865757/gfx_sysfont.o
+ .debug_str     0x000065d6       0xbb build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
+ .debug_str     0x00006691      0x451 build/FreeRTOS/production/_ext/1664057780/asn.o
+ .debug_str     0x00006ae2        0x0 build/FreeRTOS/production/_ext/1664057780/coding.o
+ .debug_str     0x00006ae2       0xf7 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
+ .debug_str     0x00006bd9      0x1e7 build/FreeRTOS/production/_ext/1664057780/hash.o
+ .debug_str     0x00006dc0      0x131 build/FreeRTOS/production/_ext/1664057780/hmac.o
+ .debug_str     0x00006ef1        0x0 build/FreeRTOS/production/_ext/1664057780/md5.o
+ .debug_str     0x00006ef1      0x192 build/FreeRTOS/production/_ext/1664057780/rsa.o
+ .debug_str     0x00007083       0x3f build/FreeRTOS/production/_ext/1664057780/tfm.o
+ .debug_str     0x000070c2       0x11 build/FreeRTOS/production/_ext/1664057780/wc_port.o
+ .debug_str     0x000070d3       0x56 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
+ .debug_str     0x00007129      0x19b build/FreeRTOS/production/_ext/1664057780/aes.o
+ .debug_str     0x000072c4       0x37 build/FreeRTOS/production/_ext/1664057780/des3.o
+ .debug_str     0x000072fb       0xdf build/FreeRTOS/production/_ext/1664057780/random.o
+ .debug_str     0x000073da       0x14 build/FreeRTOS/production/_ext/1664057780/sha.o
+ .debug_str     0x000073ee       0x54 build/FreeRTOS/production/_ext/1664057780/sha256.o
+ .debug_str     0x00007442      0x31e build/FreeRTOS/production/_ext/1664057780/ecc.o
+ .debug_str     0x00007760       0x9f build/FreeRTOS/production/_ext/1360937237/app.o
+ .debug_str     0x000077ff       0x19 build/FreeRTOS/production/_ext/1360937237/main.o
+ .debug_str     0x00007818       0xd6 build/FreeRTOS/production/_ext/1360937237/bc_com.o
+ .debug_str     0x000078ee      0x3da build/FreeRTOS/production/_ext/1360937237/bc_test.o
  .debug_str     0x00007cc8        0x0 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
  .debug_str     0x00007cc8        0x0 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
  .debug_str     0x00007cc8        0x0 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
@@ -4351,36 +4351,36 @@ LOAD data_init
  .debug_frame   0x00007328       0x20 build/FreeRTOS/production/_ext/161576091/libc_syscalls.o
  .debug_frame   0x00007348       0x7c build/FreeRTOS/production/_ext/161576091/freertos_hooks.o
  .debug_frame   0x000073c4       0xe8 build/FreeRTOS/production/_ext/246609638/port.o
- .debug_frame   0x000074ac       0x6c build/FreeRTOS/production/_ext/404212886/list.o
- .debug_frame   0x00007518      0x29c build/FreeRTOS/production/_ext/404212886/queue.o
- .debug_frame   0x000077b4      0x498 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
- .debug_frame   0x00007c4c       0xf0 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
- .debug_frame   0x00007d3c      0x15c build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
- .debug_frame   0x00007e98      0x124 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
- .debug_frame   0x00007fbc      0x13c build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
- .debug_frame   0x000080f8       0x64 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
- .debug_frame   0x0000815c       0x38 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
- .debug_frame   0x00008194     0x103c build/FreeRTOS/production/_ext/1664057780/asn.o
- .debug_frame   0x000091d0       0x68 build/FreeRTOS/production/_ext/1664057780/coding.o
- .debug_frame   0x00009238      0x4b4 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
- .debug_frame   0x000096ec      0x1e4 build/FreeRTOS/production/_ext/1664057780/hash.o
- .debug_frame   0x000098d0      0x174 build/FreeRTOS/production/_ext/1664057780/hmac.o
- .debug_frame   0x00009a44      0x138 build/FreeRTOS/production/_ext/1664057780/md5.o
- .debug_frame   0x00009b7c      0x488 build/FreeRTOS/production/_ext/1664057780/rsa.o
- .debug_frame   0x0000a004      0xf9c build/FreeRTOS/production/_ext/1664057780/tfm.o
- .debug_frame   0x0000afa0      0x170 build/FreeRTOS/production/_ext/1664057780/wc_port.o
- .debug_frame   0x0000b110       0xc8 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
- .debug_frame   0x0000b1d8      0x6e4 build/FreeRTOS/production/_ext/1664057780/aes.o
- .debug_frame   0x0000b8bc      0x1fc build/FreeRTOS/production/_ext/1664057780/des3.o
- .debug_frame   0x0000bab8      0x320 build/FreeRTOS/production/_ext/1664057780/random.o
- .debug_frame   0x0000bdd8      0x154 build/FreeRTOS/production/_ext/1664057780/sha.o
- .debug_frame   0x0000bf2c      0x250 build/FreeRTOS/production/_ext/1664057780/sha256.o
- .debug_frame   0x0000c17c      0xd1c build/FreeRTOS/production/_ext/1664057780/ecc.o
- .debug_frame   0x0000ce98       0xb8 build/FreeRTOS/production/_ext/1360937237/app.o
- .debug_frame   0x0000cf50       0x28 build/FreeRTOS/production/_ext/1360937237/main.o
- .debug_frame   0x0000cf78       0xdc build/FreeRTOS/production/_ext/1360937237/bc_com.o
- .debug_frame   0x0000d054      0x2b8 build/FreeRTOS/production/_ext/1360937237/bc_test.o
- .debug_frame   0x0000d30c       0xdc build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_frame   0x000074ac       0xdc build/FreeRTOS/production/_ext/1665200909/heap_4.o
+ .debug_frame   0x00007588       0x6c build/FreeRTOS/production/_ext/404212886/list.o
+ .debug_frame   0x000075f4      0x29c build/FreeRTOS/production/_ext/404212886/queue.o
+ .debug_frame   0x00007890      0x498 build/FreeRTOS/production/_ext/404212886/FreeRTOS_tasks.o
+ .debug_frame   0x00007d28       0xf0 build/FreeRTOS/production/_ext/1434865757/gfx_mono_framebuffer.o
+ .debug_frame   0x00007e18      0x15c build/FreeRTOS/production/_ext/1434865757/gfx_mono_generic.o
+ .debug_frame   0x00007f74      0x124 build/FreeRTOS/production/_ext/1434865757/gfx_mono_text.o
+ .debug_frame   0x00008098      0x13c build/FreeRTOS/production/_ext/1434865757/gfx_mono_ug_2832hsweg04.o
+ .debug_frame   0x000081d4       0x64 build/FreeRTOS/production/_ext/1434865757/gfx_ssd1306.o
+ .debug_frame   0x00008238       0x38 build/FreeRTOS/production/_ext/172253694/crypt_wolfcryptcb.o
+ .debug_frame   0x00008270     0x103c build/FreeRTOS/production/_ext/1664057780/asn.o
+ .debug_frame   0x000092ac       0x68 build/FreeRTOS/production/_ext/1664057780/coding.o
+ .debug_frame   0x00009314      0x4b4 build/FreeRTOS/production/_ext/1664057780/cryptocb.o
+ .debug_frame   0x000097c8      0x1e4 build/FreeRTOS/production/_ext/1664057780/hash.o
+ .debug_frame   0x000099ac      0x174 build/FreeRTOS/production/_ext/1664057780/hmac.o
+ .debug_frame   0x00009b20      0x138 build/FreeRTOS/production/_ext/1664057780/md5.o
+ .debug_frame   0x00009c58      0x488 build/FreeRTOS/production/_ext/1664057780/rsa.o
+ .debug_frame   0x0000a0e0      0xf9c build/FreeRTOS/production/_ext/1664057780/tfm.o
+ .debug_frame   0x0000b07c      0x170 build/FreeRTOS/production/_ext/1664057780/wc_port.o
+ .debug_frame   0x0000b1ec       0xc8 build/FreeRTOS/production/_ext/1664057780/wolfmath.o
+ .debug_frame   0x0000b2b4      0x6e4 build/FreeRTOS/production/_ext/1664057780/aes.o
+ .debug_frame   0x0000b998      0x1fc build/FreeRTOS/production/_ext/1664057780/des3.o
+ .debug_frame   0x0000bb94      0x320 build/FreeRTOS/production/_ext/1664057780/random.o
+ .debug_frame   0x0000beb4      0x154 build/FreeRTOS/production/_ext/1664057780/sha.o
+ .debug_frame   0x0000c008      0x250 build/FreeRTOS/production/_ext/1664057780/sha256.o
+ .debug_frame   0x0000c258      0xd1c build/FreeRTOS/production/_ext/1664057780/ecc.o
+ .debug_frame   0x0000cf74       0xb8 build/FreeRTOS/production/_ext/1360937237/app.o
+ .debug_frame   0x0000d02c       0x28 build/FreeRTOS/production/_ext/1360937237/main.o
+ .debug_frame   0x0000d054       0xdc build/FreeRTOS/production/_ext/1360937237/bc_com.o
+ .debug_frame   0x0000d130      0x2b8 build/FreeRTOS/production/_ext/1360937237/bc_test.o
  .debug_frame   0x0000d3e8       0x38 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libpic32c.a(data_init.o)
  .debug_frame   0x0000d420       0x30 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isalnum.o)
  .debug_frame   0x0000d450       0x30 c:/program files/microchip/xc32/v4.10/bin/bin/../../lib/gcc/pic32c/8.3.1/../../../../pic32c/lib/thumb/v7e-m+fp/hard\libc-musl.a(isxdigit.o)
@@ -5767,7 +5767,7 @@ __xc_reference_data
                 0x00027dc8                BC_TEST_Time_Measure_Start
                 0x00027de4                BC_Test_Time_Measure_Stop_And_Get_Result
                 0x00027e54                convertToTime
-                0x00027ee0                BC_TEST_Print_State_Change_And_Trigger_Watchdog
+                0x00027ee0                BC_TEST_Print_State_Change
                 0x00027f50                BC_TEST_DumpMem
                 0x00028028                BS_TEST_Check_BC_COM_For_Idle
                 0x00028078                BC_TEST_Command_Init
