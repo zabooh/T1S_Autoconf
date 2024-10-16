@@ -20,10 +20,10 @@ from datetime import datetime as nowt
 #######################################################################################
 
 # Default COM Port Settings
-default_com_port_A = 'COM3'
-default_com_port_B = 'COM4'
-default_com_port_C = 'COM21'
-default_com_port_D = 'COM14'
+default_com_port_A = 'COM4'
+default_com_port_B = 'COM14'
+default_com_port_C = 'COM15'
+default_com_port_D = 'COM21'
 baud_rate = 115200
 
 com_port_A = None
@@ -268,15 +268,15 @@ def send_iperf_server_A_func():
 
 # Function to send iperf client command to COM Port B
 def send_iperf_client_B_func():
-    send_to_com_port(serial_B, "iperf -u -c 192.168.100.11")
+    send_to_com_port(serial_B, "iperf -u -c 192.168.0.150 -t 1000")
 
 # Function to send iperf client command to COM Port C
 def send_iperf_client_C_func():
-    send_to_com_port(serial_C, "iperf -u -c 192.168.100.11")
+    send_to_com_port(serial_C, "iperf -u -c 192.168.0.150")
 
 # Function to send iperf client command to COM Port D
 def send_iperf_client_D_func():
-    send_to_com_port(serial_D, "iperf -u -c 192.168.100.11")
+    send_to_com_port(serial_D, "iperf -u -c 192.168.0.150")
 
 # Function to send run command to COM Port A
 def send_run_A_func():

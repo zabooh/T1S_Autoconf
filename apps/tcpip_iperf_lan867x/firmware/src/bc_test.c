@@ -467,8 +467,8 @@ void BC_TEST_Tasks(void) {
                 BC_TEST_NetUp();
                 netH = TCPIP_STACK_NetHandleGet("eth0");
                 while (TCPIP_STACK_NetIsReady(netH) == false);
-                SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
-                bc_test.isIperf = true;
+                //SERCOM1_USART_Virtual_Receive("iperf -u -s\n");
+                //bc_test.isIperf = true;
                 BC_COM_listen(sizeof (AUTOCONFMSG));
                 bc_test.countdown = (((TRNG_ReadData() % 0xF) + 1) * RANGE_10_SECONDS) / 16;
                 bc_test.timeout = TIMEOUT_COORDINATOR;
@@ -608,7 +608,7 @@ void BC_TEST_Tasks(void) {
                     BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Received Init Request\n\r");
 
                     auto_conf_msg_transmit.control_code = MEMBER_INIT_ANSWER;
-                    if (bc_test.nodeid_ix == (DRV_ETHPHY_PLCA_NODE_COUNT - 1)) {
+                    if (bc_test.nodeid_ix == (DRV_ETHPHY_PLCA_NODE_COUNT - 2)) { // Node 7 is reserved for an non automatic node
                         bc_test.nodeid_ix = 2;
                     } else {
                         bc_test.nodeid_ix++;
@@ -1037,7 +1037,7 @@ void BS_TEST_CheckButtons(void) {
     }
     if (!temp_but3 && old_but3) {
         LED3_Clear();
-        SERCOM1_USART_Virtual_Receive("iperf -u -c 192.168.100.11\n");
+        SERCOM1_USART_Virtual_Receive("iperf -u -c 192.168.0.150\n");
         gfx_mono_print_scroll("iperf UDP client");
     }
     old_but3 = temp_but3;

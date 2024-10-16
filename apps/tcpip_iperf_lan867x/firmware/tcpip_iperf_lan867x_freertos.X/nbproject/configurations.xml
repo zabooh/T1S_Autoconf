@@ -588,6 +588,74 @@
       <itemPath>../src/bc_com.h</itemPath>
       <itemPath>../src/bc_test.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="FreeRTOS.mhc" projectFiles="true">
+        <logicalFolder name="f1" displayName="TCP_IP_STACK" projectFiles="true">
+          <logicalFolder name="f1" displayName="APPLICATION_LAYER" projectFiles="true">
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/APPLICATION_LAYER.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/tcpipDhcp.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/tcpipDns.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/tcpipIperf.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/tcpip_apps_config.yml</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="BASIC_CONFIGURATION" projectFiles="true">
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/BASIC_CONFIGURATION.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipCmd.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipNetConfig.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipStack.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpip_basic_config.yml</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="DRIVER_LAYER" projectFiles="true">
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/DRIVER_LAYER.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/drvExtPhyLan867x.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/drvGmac.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/drvMiim.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/tcpip_driver_config.yml</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="NETWORK_LAYER" projectFiles="true">
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/NETWORK_LAYER.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/tcpipArp.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/tcpipIcmp.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/tcpipIPv4.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/tcpip_network_config.yml</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f5" displayName="TRANSPORT_LAYER" projectFiles="true">
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TRANSPORT_LAYER/tcpipTcp.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TRANSPORT_LAYER/tcpipUdp.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TRANSPORT_LAYER/tcpip_transport_config.yml</itemPath>
+            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TRANSPORT_LAYER/TRANSPORT_LAYER.yml</itemPath>
+          </logicalFolder>
+          <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TCP_IP_STACK.yml</itemPath>
+        </logicalFolder>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/cmsis.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/core.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/dfp.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/evsys.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/FreeRTOS.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/GraphSettings.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/HarmonyCore.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/lib_crypto.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/lib_wolfcrypt.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/nvmctrl.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/project.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sercom1.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/settings.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_command.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_console.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_debug.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_time.yml</itemPath>
+        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/tc0.yml</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="wolfcrypt" projectFiles="true">
+        <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/misc.c</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/evp.c</itemPath>
+      </logicalFolder>
+      <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/FreeRTOS/harmony-manifest-success.yml</itemPath>
+      <itemPath>tcpip_iperf_lan867x_freertos.mc3</itemPath>
+    </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
@@ -870,74 +938,6 @@
       <itemPath>../src/bc_com.c</itemPath>
       <itemPath>../src/bc_test.c</itemPath>
     </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <logicalFolder name="f1" displayName="FreeRTOS.mhc" projectFiles="true">
-        <logicalFolder name="f1" displayName="TCP_IP_STACK" projectFiles="true">
-          <logicalFolder name="f1" displayName="APPLICATION_LAYER" projectFiles="true">
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/APPLICATION_LAYER.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/tcpipDhcp.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/tcpipDns.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/tcpipIperf.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/APPLICATION_LAYER/tcpip_apps_config.yml</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f2" displayName="BASIC_CONFIGURATION" projectFiles="true">
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/BASIC_CONFIGURATION.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipCmd.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipNetConfig.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipStack.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/BASIC_CONFIGURATION/tcpip_basic_config.yml</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f3" displayName="DRIVER_LAYER" projectFiles="true">
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/DRIVER_LAYER.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/drvExtPhyLan867x.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/drvGmac.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/drvMiim.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/DRIVER_LAYER/tcpip_driver_config.yml</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f4" displayName="NETWORK_LAYER" projectFiles="true">
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/NETWORK_LAYER.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/tcpipArp.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/tcpipIcmp.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/tcpipIPv4.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/NETWORK_LAYER/tcpip_network_config.yml</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f5" displayName="TRANSPORT_LAYER" projectFiles="true">
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TRANSPORT_LAYER/tcpipTcp.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TRANSPORT_LAYER/tcpipUdp.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TRANSPORT_LAYER/tcpip_transport_config.yml</itemPath>
-            <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TRANSPORT_LAYER/TRANSPORT_LAYER.yml</itemPath>
-          </logicalFolder>
-          <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/TCP_IP_STACK/TCP_IP_STACK.yml</itemPath>
-        </logicalFolder>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/cmsis.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/core.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/dfp.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/evsys.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/FreeRTOS.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/GraphSettings.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/HarmonyCore.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/lib_crypto.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/lib_wolfcrypt.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/nvmctrl.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/project.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sercom1.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/settings.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_command.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_console.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_debug.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/sys_time.yml</itemPath>
-        <itemPath>../src/config/FreeRTOS/FreeRTOS.mhc/tc0.yml</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="wolfcrypt" projectFiles="true">
-        <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/misc.c</itemPath>
-        <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/evp.c</itemPath>
-      </logicalFolder>
-      <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/FreeRTOS/harmony-manifest-success.yml</itemPath>
-      <itemPath>tcpip_iperf_lan867x_freertos.mc3</itemPath>
-    </logicalFolder>
   </logicalFolder>
   <sourceRootList>
     <Elem>../src</Elem>
@@ -956,8 +956,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.8.0"/>
         <pack name="SAME54_DFP" vendor="Microchip" version="3.8.234"/>
+        <pack name="CMSIS" vendor="ARM" version="5.8.0"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -1013,7 +1013,6 @@
       <C32>
         <property key="additional-warnings" value="false"/>
         <property key="addresss-attribute-use" value="false"/>
-        <property key="appendMe" value=""/>
         <property key="enable-app-io" value="false"/>
         <property key="enable-omit-frame-pointer" value="false"/>
         <property key="enable-symbols" value="true"/>
@@ -1071,7 +1070,6 @@
         <property key="additional-options-use-response-files" value="false"/>
         <property key="additional-options-write-sla" value="false"/>
         <property key="allocate-dinit" value="false"/>
-        <property key="appendMe" value=""/>
         <property key="code-dinit" value="false"/>
         <property key="ebase-addr" value=""/>
         <property key="enable-check-sections" value="false"/>
@@ -1111,7 +1109,6 @@
       <C32CPP>
         <property key="additional-warnings" value="false"/>
         <property key="addresss-attribute-use" value="false"/>
-        <property key="appendMe" value=""/>
         <property key="check-new" value="false"/>
         <property key="eh-specs" value="true"/>
         <property key="enable-app-io" value="false"/>
@@ -1140,7 +1137,6 @@
         <property key="use-indirect-calls" value="false"/>
       </C32CPP>
       <C32Global>
-        <property key="appendMe" value=""/>
         <property key="common-include-directories" value=""/>
         <property key="gp-relative-option" value=""/>
         <property key="legacy-libc" value="false"/>
@@ -1163,6 +1159,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="firmware.path"
@@ -1187,8 +1184,6 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS/tcpip_iperf_lan867x_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
@@ -1690,6 +1685,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="firmware.path"
@@ -2412,6 +2408,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="firmware.path"
@@ -2436,8 +2433,6 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_1/tcpip_iperf_lan867x_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
@@ -2939,6 +2934,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="firmware.path"
@@ -3661,6 +3657,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="firmware.path"
@@ -3685,8 +3682,6 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_1/tcpip_iperf_lan867x_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
@@ -4188,6 +4183,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="firmware.path"
@@ -4910,6 +4906,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="firmware.path"
@@ -4934,8 +4931,6 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="C:/work/T1S_Autoconf/work/T1S_Autoconf/apps/tcpip_iperf_lan867x/firmware/tcpip_iperf_lan867x_freertos.X/debug/FreeRTOS_node_1/tcpip_iperf_lan867x_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
@@ -5437,6 +5432,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
         <property key="firmware.path"
