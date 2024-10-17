@@ -91,6 +91,7 @@
 // *****************************************************************************
 
 typedef struct {
+    uint32_t magic_code;
     TCPIP_MAC_ADDR mac;
     IPV6_ADDR ip6;
     IPV4_ADDR ip4;
@@ -357,6 +358,8 @@ void BC_TEST_Tasks(void) {
             bc_test.random = TRNG_ReadData();
             memset((void*) &auto_conf_msg_transmit, 0xEE, sizeof (AUTOCONFMSG));
             memcpy(&auto_conf_msg_transmit.mac.v[0], &bc_test.MyMacAddr.v[0], 6);
+            
+            auto_conf_msg_transmit.magic_code = 0x12345678;
             auto_conf_msg_transmit.random = bc_test.random;
             auto_conf_msg_transmit.origin = BC_TEST_MEMBER;
             auto_conf_msg_transmit.control_code = MEMBER_INIT_REQUEST;
@@ -492,6 +495,7 @@ void BC_TEST_Tasks(void) {
             memset((void*) &auto_conf_msg_transmit, 0xEE, sizeof (AUTOCONFMSG));
             memcpy(&auto_conf_msg_transmit.mac.v[0], &bc_test.MyMacAddr.v[0], 6);
 
+            auto_conf_msg_transmit.magic_code = 0x12345678;
             auto_conf_msg_transmit.random = bc_test.random;
             auto_conf_msg_transmit.origin = BC_TEST_MEMBER;
             auto_conf_msg_transmit.control_code = MEMBER_LIVE_REQUEST;
@@ -645,7 +649,8 @@ void BC_TEST_Tasks(void) {
 
                 bc_test.tick_flag_100ms = false;
                 while (bc_test.tick_flag_100ms == false);
-
+                
+                auto_conf_msg_transmit.magic_code = 0x12345678;
                 auto_conf_msg_transmit.counter_100ms = bc_test.tick_100ms;
                 auto_conf_msg_transmit.led_state = bc_test.led_state;
                 
