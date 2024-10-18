@@ -1,7 +1,7 @@
--- Definiere ein neues Protokoll mit einem eindeutigen Beschreibungstext
-autoconf_proto = Proto("AutoconfMsgV3", "Autoconfiguration Message Protocol v3")
+-- Define a new protocol with a unique description text
+autoconf_proto = Proto("AutoconfMsgV3, "Autoconfiguration Message Protocol v3")
 
--- Definiere Felder für das Protokoll
+-- Define fields for the protocol
 local f_magic_code = ProtoField.uint32("autoconf.magic_code", "Magic Code", base.HEX)  -- Nur die ersten drei Argumente
 local f_mac_addr = ProtoField.ether("autoconf.mac", "MAC Address")
 local f_ip6_addr = ProtoField.ipv6("autoconf.ip6", "IPv6 Address")
@@ -14,10 +14,10 @@ local f_randommssg = ProtoField.bytes("autoconf.randommssg", "Random Message", b
 local f_led_state = ProtoField.bool("autoconf.led_state", "LED State")
 local f_random = ProtoField.uint32("autoconf.random", "Random", base.HEX)
 
--- Füge die Felder dem Protokoll hinzu
+-- Add the fields to the protocol
 autoconf_proto.fields = { f_magic_code, f_mac_addr, f_ip6_addr, f_ip4_addr, f_origin, f_control_code, f_node_max, f_node_id, f_randommssg, f_led_state, f_random }
 
--- Diese Funktion wird aufgerufen, um Pakete zu dissektieren
+-- Check if the packet is large enough to contain all fields
 function autoconf_proto.dissector(buffer, pinfo, tree)
     pinfo.cols.protocol = autoconf_proto.name
 
@@ -26,10 +26,10 @@ function autoconf_proto.dissector(buffer, pinfo, tree)
         return
     end
 
-    -- Erstelle einen Unterbaum für das Protokoll
+    -- Create a subtree for the protocol
     local subtree = tree:add(autoconf_proto, buffer(), "Autoconfiguration Message")
 
-    -- Dekodiere und zeige die Felder des Protokolls an (Magic Code und Counter als Little Endian)
+    -- Decode and display the protocol fields (Magic Code and Counter as Little Endian)
     subtree:add_le(f_magic_code, buffer(0, 4))  -- Little Endian
     subtree:add(f_mac_addr, buffer(4, 6))
     subtree:add(f_ip6_addr, buffer(10, 16))
@@ -40,22 +40,32 @@ function autoconf_proto.dissector(buffer, pinfo, tree)
     subtree:add(f_node_id, buffer(33, 1))
     subtree:add(f_randommssg, buffer(34, 20))  -- Random Message (20 Bytes)
 
-    -- Lese den Counter im 100ms Format (als Little Endian)
+    -- Read the counter in 100ms format (as Little Endian)
     local counter_100ms_value = buffer(54, 4):le_int()
     
-    -- Berechne den Fließkommawert durch Multiplikation mit 0,1
+   -- Calculate the floating-point value by multiplying by 0.1
     local counter_seconds = counter_100ms_value * 0.1
 
-    -- Füge den ursprünglichen Counter hinzu (Little Endian)
+    -- Add the original counter (Little Endian))
     subtree:add_le(buffer(54, 4), string.format("Counter (100ms): %d", counter_100ms_value))
 
-    -- Zeige den berechneten Fließkommawert an
+    -- Display the calculated floating-point value
     subtree:add(buffer(54, 4), string.format("Counter (Sekunden): %.1f", counter_seconds))
+
+    -- Calculate hours, minutes, seconds, and milliseconds
+    local hours = math.floor(counter_seconds / 3600)  -- 1 hour = 3600 seconds
+    local remaining_seconds = counter_seconds % 3600
+    local minutes = math.floor(remaining_seconds / 60)  -- 1 minute = 60 seconds
+    local seconds = math.floor(remaining_seconds % 60)
+    local milliseconds = math.floor((counter_seconds - math.floor(counter_seconds))*10)   -- Convert fractional seconds to milliseconds and round
+
+    -- Display the calculated time in hours, minutes, seconds, and milliseconds
+    subtree:add(buffer(34, 4), string.format("Up Time: %02d:%02d:%02d.%d00 (H:M:S.ms)", hours, minutes, seconds, milliseconds))
 
     subtree:add(f_led_state, buffer(58, 1))
     subtree:add(f_random, buffer(59, 4))
 end
 
--- Registriere diesen Dissector für UDP-Pakete mit einem bestimmten Port (z.B. Port 47134)
+-- Register this dissector for UDP packets on a specific port (e.g., port 47134)
 udp_table = DissectorTable.get("udp.port")
 udp_table:add(47134, autoconf_proto)
