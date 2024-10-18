@@ -103,7 +103,7 @@ typedef struct {
     int32_t counter_100ms;
     bool led_state;
     uint32_t random;
-} AUTOCONFMSG;
+}  __attribute__((packed))  AUTOCONFMSG;
 
 AUTOCONFMSG auto_conf_msg_transmit;
 AUTOCONFMSG auto_conf_msg_receive;
@@ -449,7 +449,12 @@ void BC_TEST_Tasks(void) {
                     auto_conf_msg_receive.ip4.v[1], 
                     auto_conf_msg_receive.ip4.v[2], 
                     auto_conf_msg_receive.ip4.v[3]);
-                        
+                   
+            bc_test.MyIpAddr.v[0] = auto_conf_msg_receive.ip4.v[0];
+            bc_test.MyIpAddr.v[1] = auto_conf_msg_receive.ip4.v[1];
+            bc_test.MyIpAddr.v[2] = auto_conf_msg_receive.ip4.v[2];
+            bc_test.MyIpAddr.v[3] = auto_conf_msg_receive.ip4.v[3];
+                    
             bc_test.state = BC_TEST_STATE_IDLE;
             break;
         }
@@ -495,11 +500,20 @@ void BC_TEST_Tasks(void) {
             memset((void*) &auto_conf_msg_transmit, 0xEE, sizeof (AUTOCONFMSG));
             memcpy(&auto_conf_msg_transmit.mac.v[0], &bc_test.MyMacAddr.v[0], 6);
 
+            auto_conf_msg_transmit.node_max = DRV_ETHPHY_PLCA_NODE_COUNT;
             auto_conf_msg_transmit.magic_code = 0x12345678;
             auto_conf_msg_transmit.random = bc_test.random;
+            auto_conf_msg_transmit.counter_100ms = bc_test.tick_100ms;
             auto_conf_msg_transmit.origin = BC_TEST_MEMBER;
             auto_conf_msg_transmit.control_code = MEMBER_LIVE_REQUEST;
 
+            auto_conf_msg_transmit.ip4.v[0] = bc_test.MyIpAddr.v[0];
+            auto_conf_msg_transmit.ip4.v[1] = bc_test.MyIpAddr.v[1];
+            auto_conf_msg_transmit.ip4.v[2] = bc_test.MyIpAddr.v[2];
+            auto_conf_msg_transmit.ip4.v[3] = bc_test.MyIpAddr.v[3];
+                            
+            auto_conf_msg_transmit.node_id = bc_test.nodeid_ix;
+            
             TCPIP_Helper_MACAddressToString(&auto_conf_msg_transmit.mac, mac_str, 18);
             BC_TEST_DEBUG_PRINT("BC_TEST: Member Live Radom: %s => %08x\n\r", mac_str, auto_conf_msg_transmit.random);
             BC_TEST_DEBUG_DUMP_PACKET((uint32_t) & auto_conf_msg_transmit, sizeof (AUTOCONFMSG));
@@ -619,6 +633,7 @@ void BC_TEST_Tasks(void) {
                     }
                     auto_conf_msg_transmit.node_id = bc_test.nodeid_ix;
 
+                    auto_conf_msg_transmit.node_max = DRV_ETHPHY_PLCA_NODE_COUNT;
                     auto_conf_msg_transmit.ip4.v[0] = bc_test.MyIpAddr.v[0];
                     auto_conf_msg_transmit.ip4.v[1] = bc_test.MyIpAddr.v[1];
                     auto_conf_msg_transmit.ip4.v[2] = bc_test.MyIpAddr.v[2];
@@ -640,6 +655,13 @@ void BC_TEST_Tasks(void) {
 
                     TCPIP_Helper_MACAddressToString(&auto_conf_msg_transmit.mac, mac_str, 18);
                     BC_TEST_DEBUG_PRINT("BC_TEST: Coordinator Data Sent Init - Node Id:%d to %s\n\r", auto_conf_msg_transmit.node_id, mac_str);
+                } else {
+                    auto_conf_msg_transmit.node_id = 0;
+                    auto_conf_msg_transmit.node_max = DRV_ETHPHY_PLCA_NODE_COUNT;
+                    auto_conf_msg_transmit.ip4.v[0] = bc_test.MyIpAddr.v[0];
+                    auto_conf_msg_transmit.ip4.v[1] = bc_test.MyIpAddr.v[1];
+                    auto_conf_msg_transmit.ip4.v[2] = bc_test.MyIpAddr.v[2];
+                    auto_conf_msg_transmit.ip4.v[3] = bc_test.MyIpAddr.v[3];                    
                 }
 
                 if (auto_conf_msg_receive.control_code == MEMBER_LIVE_REQUEST) {
